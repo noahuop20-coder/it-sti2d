@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projet STI2D - Renaissance</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0f1115;
+            --bg-light: #f8f9fa;
+            --text-light: #ffffff;
+            --text-dark: #1a1a1a;
+            --accent-orange: #ff5722;
+            --accent-blue: #2196f3;
+            --accent-purple: #9c27b0;
+            --accent-green: #00c853;
+            --glass-bg: rgba(255, 255, 255, 0.95);
+            --card-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .presentation-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            opacity: 0;
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            transform: translateX(60px) scale(0.98);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .slide.active {
+            opacity: 1;
+            transform: translateX(0) scale(1);
+            pointer-events: auto;
+            z-index: 10;
+        }
+
+        .slide.prev { transform: translateX(-60px) scale(0.98); }
+
+        /* --- Grille d'architecte en fond --- */
+        .grid-bg {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(rgba(0,0,0,0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,0,0,0.04) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* --- Image de fond (diapositives avec photos) --- */
+        .bg-image {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+        .bg-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to right, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.2) 100%);
+            z-index: 1;
+        }
+        .slide.reverse .bg-overlay {
+            background: linear-gradient(to left, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.2) 100%);
+        }
+        .bg-fallback {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, #2c3e50, #1a202c);
+            z-index: -1;
+        }
+        .bg-fallback.blue { background: linear-gradient(135deg, #2c5282, #1a202c); }
+        .bg-fallback.red { background: linear-gradient(135deg, #742a2a, #1a202c); }
+
+        /* --- Diapositive 1: Titre --- */
+        .slide-title {
+            text-align: center;
+            background: linear-gradient(135deg, #1a202c, #0f1115);
+        }
+        .slide-title h2 { font-family: 'Outfit', sans-serif; font-size: 1.2rem; color: var(--accent-orange); font-weight: 500; text-transform: uppercase; letter-spacing: 4px; margin-bottom: 15px; position: relative; z-index: 2; }
+        .slide-title h1 { font-family: 'Outfit', sans-serif; font-size: 4rem; font-weight: 900; margin-bottom: 20px; letter-spacing: -1px; line-height: 1.1; position: relative; z-index: 2; }
+        .slide-title p { color: #ccc; font-size: 1.1rem; max-width: 600px; line-height: 1.6; font-weight: 300; position: relative; z-index: 2; margin: 0 auto; }
+        .slide-title .badge { display: inline-block; padding: 10px 20px; border: 1px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); border-radius: 30px; margin-top: 30px; font-size: 0.9rem; position: relative; z-index: 2; }
+
+        /* --- Diapositives Bâtiments (avec photo) --- */
+        .slide-building {
+            justify-content: flex-end;
+            align-items: flex-start;
+            padding: 60px;
+        }
+        .slide-building.reverse {
+            align-items: flex-end;
+        }
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 40px;
+            border-radius: 24px;
+            max-width: 500px;
+            box-shadow: var(--card-shadow);
+            z-index: 2;
+            color: var(--text-dark);
+            position: relative;
+        }
+        .glass-panel h3 { color: var(--accent-orange); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; font-weight: 600; }
+        .glass-panel h1 { font-family: 'Outfit', sans-serif; font-size: 2.2rem; font-weight: 800; margin-bottom: 15px; line-height: 1.2; }
+        .glass-panel .location { font-size: 0.9rem; font-weight: 600; color: #666; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px; }
+        .glass-panel .feature-list { display: flex; flex-direction: column; gap: 10px; }
+        .glass-panel .feature-item { display: flex; align-items: flex-start; gap: 10px; font-size: 0.95rem; color: #444; }
+        .glass-panel .feature-item .icon { color: var(--accent-orange); font-weight: bold; }
+
+        /* --- NOUVELLE Diapositive Bâtiment SANS image (typographique) --- */
+        .slide-building-text {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            justify-content: center;
+            align-items: center;
+        }
+        .text-panel {
+            max-width: 900px;
+            width: 100%;
+            background: white;
+            padding: 60px;
+            border-radius: 24px;
+            box-shadow: var(--card-shadow);
+            position: relative;
+            z-index: 2;
+            border-left: 8px solid var(--accent-orange);
+        }
+        .text-panel .accent-line {
+            position: absolute;
+            top: 0; left: 0; height: 8px; width: 100%;
+            background: linear-gradient(90deg, var(--accent-orange), transparent);
+            border-top-left-radius: 24px;
+            border-top-right-radius: 24px;
+        }
+        .text-panel h3 { color: var(--accent-orange); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 12px; font-weight: 700; }
+        .text-panel h1 { font-family: 'Outfit', sans-serif; font-size: 3rem; font-weight: 900; margin-bottom: 8px; line-height: 1.1; letter-spacing: -1px; }
+        .text-panel .location { font-size: 1rem; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 35px; padding-bottom: 25px; border-bottom: 1px solid #eee; }
+        .text-panel .feature-list { display: grid; grid-template-columns: 1fr; gap: 18px; }
+        .text-panel .feature-item { 
+            display: flex; align-items: flex-start; gap: 18px; 
+            font-size: 1.05rem; color: #333; line-height: 1.5;
+            padding: 15px 20px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            border-left: 4px solid var(--accent-orange);
+        }
+        .text-panel .feature-item .icon { 
+            color: var(--accent-orange); 
+            font-weight: bold; 
+            font-size: 1.1rem;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        /* Grande décoration numérique */
+        .text-panel .deco-num {
+            position: absolute;
+            top: 30px; right: 40px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 8rem;
+            font-weight: 900;
+            color: rgba(255, 87, 34, 0.08);
+            line-height: 1;
+            pointer-events: none;
+        }
+
+        /* --- Navigation --- */
+        .controls { position: fixed; bottom: 30px; right: 30px; display: flex; gap: 10px; z-index: 100; }
+        .btn { background: white; border: none; width: 50px; height: 50px; border-radius: 50%; box-shadow: 0 4px 15px rgba(0,0,0,0.2); cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; transition: all 0.2s; color: #1a1a1a; }
+        .btn:hover { background: var(--accent-orange); color: white; transform: scale(1.1); }
+        .btn:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
+        .progress-bar { position: fixed; top: 0; left: 0; height: 4px; background: var(--accent-orange); transition: width 0.3s ease; z-index: 100; }
+        .slide-number { position: fixed; bottom: 30px; left: 30px; font-weight: 600; color: #fff; z-index: 100; mix-blend-mode: difference; }
+
+        @media (max-width: 900px) {
+            .slide-title h1 { font-size: 2.5rem; }
+            .text-panel { padding: 40px 30px; }
+            .text-panel h1 { font-size: 2rem; }
+            .text-panel .deco-num { font-size: 5rem; top: 15px; right: 20px; }
+            .glass-panel { max-width: 100%; padding: 25px; }
+            .slide-building { align-items: center; justify-content: flex-end; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="progress-bar" id="progressBar"></div>
+    <div class="slide-number" id="slideNumber">1 / 7</div>
+
+    <div class="presentation-container">
+
+        <!-- 1. Titre -->
+        <section class="slide slide-title active" id="slide1">
+            <h2>Projet I2d</h2>
+            <h1>Architecture de la Renaissance</h1>
+            <p>Panorama des chefs-d'œuvre de la Renaissance en Europe.</p>
+            <div class="badge">Dossier d'Étude — STI2D</div>
+        </section>
+
+        <!-- 2. Chambord (avec image vérifiée) -->
+        <section class="slide slide-building" id="slide2">
+            <div class="bg-fallback"></div>
+            <img class="bg-image" src="https://www.worldhistory.org/img/r/p/1500x1500/13128.jpg" alt="" onerror="this.style.display='none'">
+            <div class="bg-overlay"></div>
+            <div class="glass-panel">
+                <h3>France — Val de Loire</h3>
+                <h1>Château de Chambord</h1>
+                <div class="location">1519 — François Ier</div>
+                <div class="feature-list">
+                    <div class="feature-item"><span class="icon">◆</span><span>Plan centré à quatre tours massives.</span></div>
+                    <div class="feature-item"><span class="icon">◆</span><span>Escalier à double révolution inspiré par Léonard de Vinci.</span></div>
+                    <div class="feature-item"><span class="icon">◆</span><span>Toiture hérissée de cheminées et de lucarnes sculptées.</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Fontainebleau (TEXTE UNIQUEMENT) -->
+        <section class="slide slide-building-text" id="slide3">
+            <div class="grid-bg"></div>
+            <div class="text-panel">
+                <div class="accent-line"></div>
+                <div class="deco-num">03</div>
+                <h3>France — Île-de-France</h3>
+                <h1>Château de Fontainebleau</h1>
+                <div class="location">1528 — François Ier</div>
+                <div class="feature-list">
+                    <div class="feature-item"><span class="icon">◆</span><span>Galerie François Ier, décorée par des artistes italiens (Rosso Fiorentino, Primatice).</span></div>
+                    <div class="feature-item"><span class="icon">◆</span><span>Escalier en fer à cheval, chef-d'œuvre de la Renaissance française.</span></div>
+                    <div class="feature-item"><span class="icon">◆</span><span>Porte Dorée : façade à loggias superposées d'inspiration italienne.</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Blois (TEXTE UNIQUEMENT) -->
+        <section class="slide slide-building-text" id="slide4">
+            <div class="grid-bg"></div>
+            <div class="text-panel" style="border-left-color: var(--accent-purple);">
+                <div class="accent-line" style="background: linear-gradient(90deg, var(--accent-purple), transparent);"></div>
+                <div class="deco-num" style="color: rgba(156, 39, 176, 0.08);">04</div>
+                <h3 style="color: var(--accent-purple);">France — Val de Loire</h3>
+                <h1>Château de Blois</h1>
+                <div class="location">1515 — François Ier</div>
+                <div class="feature-list">
+                    <div class="feature-item" style="border-left-color: var(--accent-purple);"><span class="icon" style="color: var(--accent-purple);">◆</span><span>Escalier à vis, joyau de la première Renaissance française.</span></div>
+                    <div class="feature-item" style="border-left-color: var(--accent-purple);"><span class="icon" style="color: var(--accent-purple);">◆</span><span>Façade des Loges, inspirée de l'architecture italienne.</span></div>
+                    <div class="feature-item" style="border-left-color: var(--accent-purple);"><span class="icon" style="color: var(--accent-purple);">◆</span><span>Mélange unique d'ailes gothique, Renaissance et classique.</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Villa Rotonda (TEXTE UNIQUEMENT) -->
+        <section class="slide slide-building-text" id="slide5">
+            <div class="grid-bg"></div>
+            <div class="text-panel" style="border-left-color: var(--accent-blue);">
+                <div class="accent-line" style="background: linear-gradient(90deg, var(--accent-blue), transparent);"></div>
+                <div class="deco-num" style="color: rgba(33, 150, 243, 0.08);">05</div>
+                <h3 style="color: var(--accent-blue);">Italie — Vénétie</h3>
+                <h1>Villa Rotonda</h1>
+                <div class="location">1567 — Andrea Palladio</div>
+                <div class="feature-list">
+                    <div class="feature-item" style="border-left-color: var(--accent-blue);"><span class="icon" style="color: var(--accent-blue);">◆</span><span>Plan carré à symétrie bilatérale parfaite.</span></div>
+                    <div class="feature-item" style="border-left-color: var(--accent-blue);"><span class="icon" style="color: var(--accent-blue);">◆</span><span>Coupole centrale et quatre portiques à frontons.</span></div>
+                    <div class="feature-item" style="border-left-color: var(--accent-blue);"><span class="icon" style="color: var(--accent-blue);">◆</span><span>Proportions harmonieuses, idéal classique de la Renaissance.</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. Basilique Saint-Pierre (avec image vérifiée) -->
+        <section class="slide slide-building reverse" id="slide6">
+            <div class="bg-fallback red"></div>
+            <img class="bg-image" src="https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=1920&q=80" alt="" onerror="this.style.display='none'">
+            <div class="bg-overlay"></div>
+            <div class="glass-panel">
+                <h3>Italie — Rome</h3>
+                <h1>Basilique Saint-Pierre</h1>
+                <div class="location">1506 — Bramante, Michel-Ange...</div>
+                <div class="feature-list">
+                    <div class="feature-item"><span class="icon">◆</span><span>La plus grande église chrétienne du monde.</span></div>
+                    <div class="feature-item"><span class="icon">◆</span><span>Coupole conçue par Michel-Ange.</span></div>
+                    <div class="feature-item"><span class="icon">◆</span><span>Façade réalisée par Carlo Maderno en 1614.</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. Synthèse -->
+        <section class="slide" id="slide7" style="background-color: #f8f9fa; color: #1a1a1a;">
+            <div class="grid-bg"></div>
+            <div style="text-align: center; margin-bottom: 40px; position: relative; z-index: 2;">
+                <h3 style="color: var(--accent-orange); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; font-weight: 600;">Synthèse</h3>
+                <h1 style="font-family: 'Outfit', sans-serif; font-size: 2.5rem; font-weight: 800;">Les Piliers de la Renaissance</h1>
+            </div>
+            <div style="display: flex; gap: 30px; max-width: 1100px; width: 100%; justify-content: center; position: relative; z-index: 2;">
+                <div style="flex: 1; background: white; padding: 30px; border-radius: 20px; box-shadow: var(--card-shadow); text-align: center;">
+                    <span style="font-size: 3rem; margin-bottom: 15px; display: block;">🏛️</span>
+                    <h4 style="font-family: 'Outfit'; font-size: 1.3rem; margin-bottom: 10px;">Symétrie & Proportion</h4>
+                    <p style="color: #666; font-size: 0.9rem; line-height: 1.5;">Recherche de l'équilibre et de l'harmonie géométrique, inspirée de l'Antiquité.</p>
+                </div>
+                <div style="flex: 1; background: white; padding: 30px; border-radius: 20px; box-shadow: var(--card-shadow); text-align: center;">
+                    <span style="font-size: 3rem; margin-bottom: 15px; display: block;">📐</span>
+                    <h4 style="font-family: 'Outfit'; font-size: 1.3rem; margin-bottom: 10px;">Ordres Antiques</h4>
+                    <p style="color: #666; font-size: 0.9rem; line-height: 1.5;">Utilisation des colonnes, pilastres, frontons et dômes inspirés de Rome.</p>
+                </div>
+                <div style="flex: 1; background: white; padding: 30px; border-radius: 20px; box-shadow: var(--card-shadow); text-align: center;">
+                    <span style="font-size: 3rem; margin-bottom: 15px; display: block;">🎨</span>
+                    <h4 style="font-family: 'Outfit'; font-size: 1.3rem; margin-bottom: 10px;">Ornementation</h4>
+                    <p style="color: #666; font-size: 0.9rem; line-height: 1.5;">Décors sculptés, loggias, escaliers monumentaux et perspectives maîtrisées.</p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <div class="controls">
+        <button class="btn" id="prevBtn" onclick="changeSlide(-1)">←</button>
+        <button class="btn" id="nextBtn" onclick="changeSlide(1)">→</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        const progressBar = document.getElementById('progressBar');
+        const slideNumber = document.getElementById('slideNumber');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+
+        function updateSlide() {
+            slides.forEach((slide, index) => {
+                slide.classList.remove('active', 'prev');
+                if (index === currentSlide) slide.classList.add('active');
+                else if (index < currentSlide) slide.classList.add('prev');
+            });
+
+            const progress = ((currentSlide + 1) / totalSlides) * 100;
+            progressBar.style.width = progress + '%';
+            slideNumber.textContent = `${currentSlide + 1} / ${totalSlides}`;
+
+            prevBtn.disabled = currentSlide === 0;
+            nextBtn.disabled = currentSlide === totalSlides - 1;
+        }
+
+        function changeSlide(direction) {
+            currentSlide += direction;
+            if (currentSlide < 0) currentSlide = 0;
+            if (currentSlide >= totalSlides) currentSlide = totalSlides - 1;
+            updateSlide();
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') changeSlide(1);
+            else if (e.key === 'ArrowLeft') changeSlide(-1);
+        });
+
+        updateSlide();
+    </script>
+</body>
+</html>
