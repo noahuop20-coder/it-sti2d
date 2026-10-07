@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projet STI2D - Les Acteurs de la Construction</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0f1115;
+            --bg-light: #f8f9fa;
+            --text-dark: #1a1a1a;
+            --text-light: #ffffff;
+            --accent-orange: #ff5722;
+            --accent-blue: #2196f3;
+            --accent-green: #00c853;
+            --accent-purple: #9c27b0;
+            --grid-color: rgba(0, 0, 0, 0.04);
+            --card-shadow: 0 20px 40px rgba(0,0,0,0.08);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-dark);
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .slide-content::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .presentation-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            opacity: 0;
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            transform: translateX(60px) scale(0.98);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .slide.active {
+            opacity: 1;
+            transform: translateX(0) scale(1);
+            pointer-events: auto;
+            z-index: 10;
+        }
+
+        .slide.prev { transform: translateX(-60px) scale(0.98); }
+
+        /* --- Diapositive 1: Titre --- */
+        .slide-title {
+            background: linear-gradient(rgba(15,17,21,0.8), rgba(15,17,21,0.95)), url('https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&q=80&w=1920') center/cover;
+            color: var(--text-light);
+            text-align: center;
+        }
+        .slide-title h2 { font-family: 'Outfit', sans-serif; font-size: 1.2rem; color: var(--accent-orange); font-weight: 500; text-transform: uppercase; letter-spacing: 4px; margin-bottom: 15px; }
+        .slide-title h1 { font-family: 'Outfit', sans-serif; font-size: 4rem; font-weight: 900; margin-bottom: 20px; letter-spacing: -1px; line-height: 1.1; }
+        .slide-title p { color: #ccc; font-size: 1.1rem; max-width: 600px; line-height: 1.6; font-weight: 300; }
+        .slide-title .badge { display: inline-block; padding: 10px 20px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border-radius: 30px; margin-top: 30px; font-size: 0.9rem; }
+
+        /* --- Layouts Généraux --- */
+        .slide-content { background-color: var(--bg-light); }
+        
+        .slide-header { width: 100%; max-width: 1200px; margin-bottom: 30px; text-align: left; z-index: 2; position: relative; }
+        .slide-header h3 { color: var(--accent-orange); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; font-weight: 600; }
+        .slide-header h1 { font-family: 'Outfit', sans-serif; font-size: 2.5rem; font-weight: 800; color: var(--text-dark); }
+
+        /* --- Cartes Acteurs --- */
+        .actors-container { display: flex; gap: 30px; width: 100%; max-width: 1200px; z-index: 2; position: relative; }
+        .actor-card {
+            flex: 1; background: white; padding: 35px; border-radius: 20px; box-shadow: var(--card-shadow);
+            display: flex; flex-direction: column; gap: 15px; transition: transform 0.3s ease;
+        }
+        .actor-card:hover { transform: translateY(-5px); }
+        .actor-icon { width: 60px; height: 60px; border-radius: 15px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin-bottom: 10px; }
+        .actor-card h4 { font-family: 'Outfit', sans-serif; font-size: 1.5rem; color: var(--text-dark); }
+        .actor-card .role { color: var(--accent-blue); font-weight: 600; font-size: 1.05rem; }
+        .actor-card .detail-row { display: flex; align-items: center; gap: 10px; font-size: 0.95rem; color: #555; }
+        .actor-card .detail-row span { font-weight: 600; color: #333; min-width: 80px; }
+
+        /* --- Diapositive Concepteurs (Split) --- */
+        .split-layout { display: flex; gap: 30px; width: 100%; max-width: 1200px; align-items: stretch; z-index: 2; position: relative; }
+        .split-image {
+            flex: 0.8; border-radius: 20px; background-size: cover; background-position: center;
+            box-shadow: var(--card-shadow); position: relative; overflow: hidden; min-height: 400px;
+        }
+        .split-cards { flex: 1.2; display: flex; flex-direction: column; gap: 20px; }
+        
+        /* --- Diapositive Sécurité --- */
+        .safety-container { display: flex; gap: 30px; width: 100%; max-width: 1200px; z-index: 2; position: relative; }
+        .safety-card { flex: 1; background: white; padding: 30px; border-radius: 20px; box-shadow: var(--card-shadow); border-top: 6px solid var(--accent-orange); }
+        .safety-card.blue { border-top-color: var(--accent-blue); }
+
+        /* --- Diapositive Chronologie --- */
+        .timeline-container { width: 100%; max-width: 1200px; background: white; border-radius: 20px; padding: 40px; box-shadow: var(--card-shadow); z-index: 2; position: relative; }
+        .timeline-flow { display: flex; justify-content: space-between; align-items: center; position: relative; margin-top: 20px; }
+        .timeline-flow::before { content: ''; position: absolute; top: 50%; left: 0; width: 100%; height: 4px; background: #e0e0e0; z-index: 0; transform: translateY(-50%); }
+        .timeline-step { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; width: 180px; text-align: center; }
+        .timeline-dot { width: 40px; height: 40px; border-radius: 50%; background: white; border: 4px solid var(--accent-orange); display: flex; align-items: center; justify-content: center; font-weight: bold; color: var(--accent-orange); margin-bottom: 10px; }
+        .timeline-step h5 { font-size: 0.9rem; color: #333; }
+        .timeline-step p { font-size: 0.8rem; color: #777; margin-top: 4px; }
+
+        /* --- Navigation --- */
+        .controls { position: fixed; bottom: 30px; right: 30px; display: flex; gap: 10px; z-index: 100; }
+        .btn { background: white; border: none; width: 50px; height: 50px; border-radius: 50%; box-shadow: 0 4px 15px rgba(0,0,0,0.15); cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; transition: all 0.2s; color: var(--text-dark); }
+        .btn:hover { background: var(--accent-orange); color: white; transform: scale(1.1); }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        .progress-bar { position: fixed; top: 0; left: 0; height: 4px; background: var(--accent-orange); transition: width 0.3s ease; z-index: 100; }
+        .slide-number { position: fixed; bottom: 30px; left: 30px; font-weight: 600; color: #888; z-index: 100; }
+        .slide-title.active ~ .slide-number { color: #fff; }
+
+        @media (max-width: 900px) {
+            .actors-container, .split-layout, .safety-container, .timeline-flow { flex-direction: column; gap: 15px; }
+            .split-image { min-height: 200px; }
+            .slide-title h1 { font-size: 2.5rem; }
+            .slide-header h1 { font-size: 1.8rem; }
+            .timeline-flow::before { display: none; }
+            .timeline-step { width: 100%; flex-direction: row; text-align: left; gap: 15px; }
+            .timeline-dot { margin-bottom: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="progress-bar" id="progressBar"></div>
+    <div class="slide-number" id="slideNumber">1 / 5</div>
+
+    <div class="presentation-container">
+
+        <!-- Diapositive 1 : Titre -->
+        <section class="slide slide-title active" id="slide1">
+            <h2>Projet I2d</h2>
+            <h1>Les Acteurs de la Construction</h1>
+            <p>Rôles, responsabilités et chronologie des intervenants d'un projet.</p>
+            <div class="badge">Dossier d'Étude — STI2D</div>
+        </section>
+
+        <!-- Diapositive 2 : Les Décideurs -->
+        <section class="slide slide-content" id="slide2">
+            <div class="slide-header">
+                <h3>Partie 1 — Les Intervenants</h3>
+                <h1>Les Décideurs : MOA & AMO</h1>
+            </div>
+            <div class="actors-container">
+                <div class="actor-card">
+                    <div class="actor-icon" style="background:#fff3e0; color:#e65100;">💼</div>
+                    <h4>Maître d'Ouvrage (MOA)</h4>
+                    <p class="role">Client initiateur</p>
+                    <div class="detail-row"><span>Quand :</span> Phase initiale</div>
+                    <div class="detail-row"><span>Pourquoi :</span> Validation du besoin</div>
+                    <div class="detail-row"><span>Moyens :</span> Financement global</div>
+                </div>
+                <div class="actor-card">
+                    <div class="actor-icon" style="background:#e3f2fd; color:#1565c0;">⚖️</div>
+                    <h4>Conducteur d'Opération (AMO)</h4>
+                    <p class="role">Expert conseiller</p>
+                    <div class="detail-row"><span>Quand :</span> Toutes phases</div>
+                    <div class="detail-row"><span>Pourquoi :</span> Assistance technique</div>
+                    <div class="detail-row"><span>Moyens :</span> Expertise juridique</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Diapositive 3 : Les Concepteurs -->
+        <section class="slide slide-content" id="slide3">
+            <div class="slide-header">
+                <h3>Partie 1 — Les Intervenants</h3>
+                <h1>Les Concepteurs : MOE & Ingénierie</h1>
+            </div>
+            <div class="split-layout">
+                <div class="split-image" style="background-image: url('https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&q=80&w=800');"></div>
+                <div class="split-cards">
+                    <div class="actor-card">
+                        <div class="actor-icon" style="background:#e8f5e9; color:#2e7d32;">📐</div>
+                        <h4>Maître d'Œuvre (MOE)</h4>
+                        <p class="role">Architecte concepteur</p>
+                        <div class="detail-row"><span>Quand :</span> Conception globale</div>
+                        <div class="detail-row"><span>Pourquoi :</span> Traduction spatiale</div>
+                        <div class="detail-row"><span>Moyens :</span> Plans détaillés</div>
+                    </div>
+                    <div class="actor-card">
+                        <div class="actor-icon" style="background:#f3e5f5; color:#6a1b9a;">📊</div>
+                        <h4>Ingénierie</h4>
+                        <p class="role">Spécialiste technique</p>
+                        <div class="detail-row"><span>Quand :</span> Phase d'études</div>
+                        <div class="detail-row"><span>Pourquoi :</span> Validation dimensionnelle</div>
+                        <div class="detail-row"><span>Moyens :</span> Calculs structurels</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Diapositive 4 : Sécurité et Conformité -->
+        <section class="slide slide-content" id="slide4">
+            <div class="slide-header">
+                <h3>Partie 1 — Les Intervenants</h3>
+                <h1>Sécurité et Conformité</h1>
+            </div>
+            <div class="safety-container">
+                <div class="safety-card">
+                    <div class="actor-icon" style="background:#ffebee; color:#c62828;">🛡️</div>
+                    <h4>Bureau de Contrôle</h4>
+                    <p class="role" style="color:#c62828;">Vérificateur normatif</p>
+                    <div class="detail-row"><span>Quand :</span> Avant exécution</div>
+                    <div class="detail-row"><span>Pourquoi :</span> Prévention des risques</div>
+                    <div class="detail-row"><span>Moyens :</span> Audits réglementaires</div>
+                </div>
+                <div class="safety-card blue">
+                    <div class="actor-icon" style="background:#e3f2fd; color:#1565c0;">👷</div>
+                    <h4>Coordinateur CSPS</h4>
+                    <p class="role">Coordinateur sécurité</p>
+                    <div class="detail-row"><span>Quand :</span> Préparation du chantier</div>
+                    <div class="detail-row"><span>Pourquoi :</span> Protection des ouvriers</div>
+                    <div class="detail-row"><span>Moyens :</span> Inspections terrain</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Diapositive 5 : Panorama Chronologique -->
+        <section class="slide slide-content" id="slide5">
+            <div class="slide-header">
+                <h3>Synthèse</h3>
+                <h1>Panorama Chronologique des Intervenants</h1>
+            </div>
+            <div class="timeline-container">
+                <div class="timeline-flow">
+                    <div class="timeline-step">
+                        <div class="timeline-dot" style="border-color: #ff5722; color: #ff5722;">1</div>
+                        <h5>MOA & AMO</h5>
+                        <p>Besoin & Conseil</p>
+                    </div>
+                    <div class="timeline-step">
+                        <div class="timeline-dot" style="border-color: #2196f3; color: #2196f3;">2</div>
+                        <h5>MOE & Ingénierie</h5>
+                        <p>Conception & Calculs</p>
+                    </div>
+                    <div class="timeline-step">
+                        <div class="timeline-dot" style="border-color: #9c27b0; color: #9c27b0;">3</div>
+                        <h5>Bureau de Contrôle</h5>
+                        <p>Validation & Audits</p>
+                    </div>
+                    <div class="timeline-step">
+                        <div class="timeline-dot" style="border-color: #00c853; color: #00c853;">4</div>
+                        <h5>CSPS</h5>
+                        <p>Sécurité Chantier</p>
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 40px; color: #666; font-size: 0.9rem;">
+                    <strong>Chaque acteur intervient à une phase clé pour garantir la réussite du projet.</strong>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <div class="controls">
+        <button class="btn" id="prevBtn" onclick="changeSlide(-1)">←</button>
+        <button class="btn" id="nextBtn" onclick="changeSlide(1)">→</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        const progressBar = document.getElementById('progressBar');
+        const slideNumber = document.getElementById('slideNumber');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+
+        function updateSlide() {
+            slides.forEach((slide, index) => {
+                slide.classList.remove('active', 'prev');
+                if (index === currentSlide) slide.classList.add('active');
+                else if (index < currentSlide) slide.classList.add('prev');
+            });
+
+            const progress = ((currentSlide + 1) / totalSlides) * 100;
+            progressBar.style.width = progress + '%';
+            slideNumber.textContent = `${currentSlide + 1} / ${totalSlides}`;
+
+            prevBtn.disabled = currentSlide === 0;
+            nextBtn.disabled = currentSlide === totalSlides - 1;
+        }
+
+        function changeSlide(direction) {
+            currentSlide += direction;
+            if (currentSlide < 0) currentSlide = 0;
+            if (currentSlide >= totalSlides) currentSlide = totalSlides - 1;
+            updateSlide();
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') changeSlide(1);
+            else if (e.key === 'ArrowLeft') changeSlide(-1);
+        });
+
+        updateSlide();
+    </script>
+</body>
+</html>
