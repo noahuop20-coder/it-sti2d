@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer">
     <title>Projet STI2D - Les Acteurs de la Construction</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-dark: #0f1115;
-            --bg-light: #f8f9fa;
+            --bg-light: #eef1f5;
             --text-dark: #1a1a1a;
             --text-light: #ffffff;
             --accent-orange: #ff5722;
@@ -16,7 +17,11 @@
             --accent-green: #00c853;
             --accent-purple: #9c27b0;
             --grid-color: rgba(0, 0, 0, 0.04);
-            --card-shadow: 0 20px 40px rgba(0,0,0,0.08);
+            
+            --glass-bg: rgba(255, 255, 255, 0.55);
+            --glass-border: rgba(255, 255, 255, 0.6);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.7), inset 0 -1px 0 rgba(255, 255, 255, 0.2);
+            --glass-blur: blur(24px) saturate(180%);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -30,18 +35,6 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-        }
-
-        .slide-content::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: 
-                linear-gradient(var(--grid-color) 1px, transparent 1px),
-                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
-            background-size: 40px 40px;
-            z-index: 0;
-            pointer-events: none;
         }
 
         .presentation-container {
@@ -60,7 +53,7 @@
             align-items: center;
             padding: 40px;
             opacity: 0;
-            transition: opacity 0.8s ease, transform 0.8s ease;
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
             transform: translateX(60px) scale(0.98);
             pointer-events: none;
             z-index: 1;
@@ -75,67 +68,353 @@
 
         .slide.prev { transform: translateX(-60px) scale(0.98); }
 
-        /* --- Diapositive 1: Titre --- */
+        .bg-image {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover;
+            object-position: center;
+            z-index: 0;
+            transition: transform 12s ease-out;
+        }
+        .slide.active .bg-image { transform: scale(1.08); }
+
+        .bg-veil {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+        .veil-dark { background: linear-gradient(rgba(15,17,21,0.65), rgba(15,17,21,0.92)); }
+        .veil-medium { background: linear-gradient(135deg, rgba(238,241,245,0.88), rgba(238,241,245,0.78)); }
+
+        .slide > *:not(.bg-image):not(.bg-veil):not(.grid-bg) {
+            position: relative;
+            z-index: 2;
+        }
+
+        .grid-bg {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .glass {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow);
+            border-radius: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+        .glass::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 50%;
+            background: linear-gradient(180deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 100%);
+            pointer-events: none;
+            border-radius: 24px 24px 0 0;
+            z-index: 0;
+        }
+        .glass::after {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: linear-gradient(115deg, transparent 40%, rgba(255,255,255,0.25) 50%, transparent 60%);
+            pointer-events: none;
+            transition: transform 0.6s ease;
+            z-index: 0;
+        }
+        .glass:hover::after { transform: translateX(30%) rotate(0deg); }
+        .glass > * { position: relative; z-index: 1; }
+
         .slide-title {
-            background: linear-gradient(rgba(15,17,21,0.8), rgba(15,17,21,0.95)), url('https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&q=80&w=1920') center/cover;
             color: var(--text-light);
             text-align: center;
+            justify-content: center;
+            align-items: center;
         }
-        .slide-title h2 { font-family: 'Outfit', sans-serif; font-size: 1.2rem; color: var(--accent-orange); font-weight: 500; text-transform: uppercase; letter-spacing: 4px; margin-bottom: 15px; }
-        .slide-title h1 { font-family: 'Outfit', sans-serif; font-size: 4rem; font-weight: 900; margin-bottom: 20px; letter-spacing: -1px; line-height: 1.1; }
-        .slide-title p { color: #ccc; font-size: 1.1rem; max-width: 600px; line-height: 1.6; font-weight: 300; }
-        .slide-title .badge { display: inline-block; padding: 10px 20px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border-radius: 30px; margin-top: 30px; font-size: 0.9rem; }
+        .slide-title .title-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            max-width: 900px;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+        }
+        .slide-title h2 { 
+            font-family: 'Outfit', sans-serif; 
+            font-size: 1.2rem; 
+            color: var(--accent-orange); 
+            font-weight: 600; 
+            text-transform: uppercase; 
+            letter-spacing: 4px; 
+            margin-bottom: 15px; 
+        }
+        .slide-title h1 { 
+            font-family: 'Outfit', sans-serif; 
+            font-size: 4rem; 
+            font-weight: 900; 
+            margin-bottom: 20px; 
+            letter-spacing: -1.5px; 
+            line-height: 1.1; 
+            color: #fff;
+        }
+        .slide-title p { 
+            color: #ddd; 
+            font-size: 1.1rem; 
+            max-width: 620px; 
+            line-height: 1.6; 
+            font-weight: 300; 
+            margin: 0 auto; 
+        }
+        .slide-title .badge { 
+            display: inline-block; 
+            padding: 12px 24px; 
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(255,255,255,0.25);
+            border-radius: 30px; 
+            margin-top: 30px; 
+            font-size: 0.9rem; 
+            color: #fff;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.3);
+        }
 
-        /* --- Layouts Généraux --- */
-        .slide-content { background-color: var(--bg-light); }
+        .slide-content { color: var(--text-dark); }
         
-        .slide-header { width: 100%; max-width: 1200px; margin-bottom: 30px; text-align: left; z-index: 2; position: relative; }
-        .slide-header h3 { color: var(--accent-orange); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; font-weight: 600; }
-        .slide-header h1 { font-family: 'Outfit', sans-serif; font-size: 2.5rem; font-weight: 800; color: var(--text-dark); }
+        .slide-header { 
+            width: 100%; max-width: 1200px; margin-bottom: 30px; 
+            text-align: left; z-index: 2; position: relative; 
+        }
+        .slide-header h3 { 
+            color: var(--accent-orange); font-size: 0.9rem; 
+            text-transform: uppercase; letter-spacing: 2px; 
+            margin-bottom: 8px; font-weight: 700; 
+        }
+        .slide-header h1 { 
+            font-family: 'Outfit', sans-serif; 
+            font-size: 2.5rem; font-weight: 800; 
+            color: var(--text-dark); 
+        }
 
-        /* --- Cartes Acteurs --- */
-        .actors-container { display: flex; gap: 30px; width: 100%; max-width: 1200px; z-index: 2; position: relative; }
+        .actors-container { 
+            display: flex; gap: 25px; width: 100%; 
+            max-width: 1200px; z-index: 2; position: relative; 
+        }
         .actor-card {
-            flex: 1; background: white; padding: 35px; border-radius: 20px; box-shadow: var(--card-shadow);
-            display: flex; flex-direction: column; gap: 15px; transition: transform 0.3s ease;
+            flex: 1; 
+            display: flex; flex-direction: column; 
+            transition: transform 0.3s ease;
+            overflow: hidden;
+            border-radius: 24px;
         }
-        .actor-card:hover { transform: translateY(-5px); }
-        .actor-icon { width: 60px; height: 60px; border-radius: 15px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin-bottom: 10px; }
-        .actor-card h4 { font-family: 'Outfit', sans-serif; font-size: 1.5rem; color: var(--text-dark); }
-        .actor-card .role { color: var(--accent-blue); font-weight: 600; font-size: 1.05rem; }
-        .actor-card .detail-row { display: flex; align-items: center; gap: 10px; font-size: 0.95rem; color: #555; }
-        .actor-card .detail-row span { font-weight: 600; color: #333; min-width: 80px; }
-
-        /* --- Diapositive Concepteurs (Split) --- */
-        .split-layout { display: flex; gap: 30px; width: 100%; max-width: 1200px; align-items: stretch; z-index: 2; position: relative; }
-        .split-image {
-            flex: 0.8; border-radius: 20px; background-size: cover; background-position: center;
-            box-shadow: var(--card-shadow); position: relative; overflow: hidden; min-height: 400px;
-        }
-        .split-cards { flex: 1.2; display: flex; flex-direction: column; gap: 20px; }
+        .actor-card:hover { transform: translateY(-8px); }
         
-        /* --- Diapositive Sécurité --- */
-        .safety-container { display: flex; gap: 30px; width: 100%; max-width: 1200px; z-index: 2; position: relative; }
-        .safety-card { flex: 1; background: white; padding: 30px; border-radius: 20px; box-shadow: var(--card-shadow); border-top: 6px solid var(--accent-orange); }
-        .safety-card.blue { border-top-color: var(--accent-blue); }
+        .actor-photo {
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        .actor-photo::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; width: 100%; height: 60%;
+            background: linear-gradient(transparent, rgba(255,255,255,0.9));
+        }
+        
+        .actor-body {
+            padding: 25px;
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border);
+            border-top: none;
+            border-radius: 0 0 24px 24px;
+            flex: 1;
+            display: flex; flex-direction: column; gap: 12px;
+        }
+        
+        .actor-icon-sm { 
+            width: 45px; height: 45px; border-radius: 12px; 
+            display: flex; align-items: center; justify-content: center; 
+            font-size: 1.3rem; margin-bottom: 5px;
+            background: rgba(255,255,255,0.7);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.8), 0 4px 12px rgba(0,0,0,0.05);
+        }
+        .actor-body h4 { 
+            font-family: 'Outfit', sans-serif; 
+            font-size: 1.3rem; color: var(--text-dark); 
+        }
+        .actor-body .role { 
+            font-weight: 700; font-size: 0.95rem; 
+        }
+        .detail-row { 
+            display: flex; align-items: flex-start; gap: 10px; 
+            font-size: 0.9rem; color: #555; 
+        }
+        .detail-row span { 
+            font-weight: 700; color: #333; min-width: 75px; 
+        }
 
-        /* --- Diapositive Chronologie --- */
-        .timeline-container { width: 100%; max-width: 1200px; background: white; border-radius: 20px; padding: 40px; box-shadow: var(--card-shadow); z-index: 2; position: relative; }
-        .timeline-flow { display: flex; justify-content: space-between; align-items: center; position: relative; margin-top: 20px; }
-        .timeline-flow::before { content: ''; position: absolute; top: 50%; left: 0; width: 100%; height: 4px; background: #e0e0e0; z-index: 0; transform: translateY(-50%); }
-        .timeline-step { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; width: 180px; text-align: center; }
-        .timeline-dot { width: 40px; height: 40px; border-radius: 50%; background: white; border: 4px solid var(--accent-orange); display: flex; align-items: center; justify-content: center; font-weight: bold; color: var(--accent-orange); margin-bottom: 10px; }
-        .timeline-step h5 { font-size: 0.9rem; color: #333; }
+        .split-layout { 
+            display: flex; gap: 35px; width: 100%; 
+            max-width: 1200px; align-items: stretch; 
+            z-index: 2; position: relative; 
+        }
+        .split-image {
+            flex: 0.9; border-radius: 24px; 
+            background-size: cover; background-position: center;
+            position: relative; overflow: hidden; min-height: 420px;
+            border: 1px solid rgba(255,255,255,0.6);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.5);
+        }
+        .split-image::after { 
+            content: ''; position: absolute; 
+            top: 0; left: 0; width: 100%; height: 100%; 
+            background: linear-gradient(135deg, rgba(0,0,0,0.15), transparent 60%); 
+        }
+        .split-cards { 
+            flex: 1.1; display: flex; flex-direction: column; gap: 20px; 
+        }
+        
+        .split-card {
+            flex: 1;
+            display: flex; align-items: center; gap: 20px;
+            padding: 25px;
+            border-radius: 20px;
+        }
+        .split-card .icon-box {
+            width: 60px; height: 60px; border-radius: 16px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.6rem; flex-shrink: 0;
+            background: rgba(255,255,255,0.7);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.8), 0 4px 12px rgba(0,0,0,0.05);
+        }
+        .split-card .info { flex: 1; }
+        .split-card h4 { 
+            font-family: 'Outfit', sans-serif; 
+            font-size: 1.25rem; margin-bottom: 5px; 
+        }
+        .split-card .role { 
+            font-weight: 700; font-size: 0.9rem; margin-bottom: 8px; 
+        }
+        .split-card .detail-row { font-size: 0.85rem; }
+
+        .safety-container { 
+            display: flex; gap: 30px; width: 100%; 
+            max-width: 1200px; z-index: 2; position: relative; 
+        }
+        .safety-card { 
+            flex: 1; overflow: hidden; border-radius: 24px;
+            transition: transform 0.3s ease;
+        }
+        .safety-card:hover { transform: translateY(-8px); }
+        .safety-photo {
+            height: 200px;
+            background-size: cover; background-position: center;
+            position: relative;
+        }
+        .safety-photo::after {
+            content: ''; position: absolute;
+            bottom: 0; left: 0; width: 100%; height: 60%;
+            background: linear-gradient(transparent, rgba(255,255,255,0.9));
+        }
+        .safety-body {
+            padding: 25px;
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border);
+            border-top: none;
+            border-radius: 0 0 24px 24px;
+        }
+        .safety-body h4 { 
+            font-family: 'Outfit', sans-serif; 
+            font-size: 1.3rem; margin-bottom: 5px; 
+        }
+        .safety-body .role { 
+            font-weight: 700; font-size: 0.95rem; margin-bottom: 12px; 
+        }
+        .safety-body .detail-row { font-size: 0.9rem; margin-bottom: 8px; }
+
+        .timeline-container { 
+            width: 100%; max-width: 1200px; padding: 35px; 
+            border-radius: 24px; z-index: 2; position: relative; 
+        }
+        .timeline-flow { 
+            display: flex; justify-content: space-between; 
+            align-items: center; position: relative; margin-top: 10px; 
+        }
+        .timeline-flow::before { 
+            content: ''; position: absolute; 
+            top: 50%; left: 0; width: 100%; height: 4px; 
+            background: linear-gradient(90deg, var(--accent-orange), var(--accent-blue), var(--accent-purple), var(--accent-green));
+            z-index: 0; transform: translateY(-50%);
+            border-radius: 4px; opacity: 0.4;
+        }
+        .timeline-step { 
+            position: relative; z-index: 1; 
+            display: flex; flex-direction: column; align-items: center; 
+            width: 180px; text-align: center; 
+        }
+        .timeline-dot { 
+            width: 50px; height: 50px; border-radius: 50%; 
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 4px solid; 
+            display: flex; align-items: center; justify-content: center; 
+            font-weight: 800; font-size: 1.1rem;
+            margin-bottom: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.8);
+        }
+        .timeline-step h5 { font-size: 0.9rem; color: #333; font-weight: 700; }
         .timeline-step p { font-size: 0.8rem; color: #777; margin-top: 4px; }
 
-        /* --- Navigation --- */
         .controls { position: fixed; bottom: 30px; right: 30px; display: flex; gap: 10px; z-index: 100; }
-        .btn { background: white; border: none; width: 50px; height: 50px; border-radius: 50%; box-shadow: 0 4px 15px rgba(0,0,0,0.15); cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; transition: all 0.2s; color: var(--text-dark); }
-        .btn:hover { background: var(--accent-orange); color: white; transform: scale(1.1); }
-        .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-        .progress-bar { position: fixed; top: 0; left: 0; height: 4px; background: var(--accent-orange); transition: width 0.3s ease; z-index: 100; }
-        .slide-number { position: fixed; bottom: 30px; left: 30px; font-weight: 600; color: #888; z-index: 100; }
-        .slide-title.active ~ .slide-number { color: #fff; }
+        .btn { 
+            width: 52px; height: 52px; border-radius: 50%; cursor: pointer; 
+            font-size: 1.2rem; display: flex; align-items: center; justify-content: center; 
+            transition: all 0.3s;
+            background: rgba(255,255,255,0.7);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(255,255,255,0.6);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.8);
+            color: var(--text-dark);
+        }
+        .btn:hover { background: var(--accent-orange); color: white; transform: scale(1.1); border-color: transparent; }
+        .btn:disabled { opacity: 0.35; cursor: not-allowed; transform: none; }
+        .progress-bar { 
+            position: fixed; top: 0; left: 0; height: 4px; 
+            background: linear-gradient(90deg, var(--accent-orange), #ff8a65); 
+            transition: width 0.3s ease; z-index: 100; 
+            box-shadow: 0 0 20px rgba(255,87,34,0.5); 
+        }
+        .slide-number { 
+            position: fixed; bottom: 30px; left: 30px; font-weight: 700; 
+            z-index: 100; padding: 8px 16px;
+            background: rgba(255,255,255,0.6);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(255,255,255,0.5);
+            border-radius: 20px; color: #444; font-size: 0.85rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.8);
+        }
 
         @media (max-width: 900px) {
             .actors-container, .split-layout, .safety-container, .timeline-flow { flex-direction: column; gap: 15px; }
@@ -155,102 +434,132 @@
 
     <div class="presentation-container">
 
-        <!-- Diapositive 1 : Titre -->
+        <!-- SLIDE 1 : TITRE -->
         <section class="slide slide-title active" id="slide1">
-            <h2>Projet I2d</h2>
-            <h1>Les Acteurs de la Construction</h1>
-            <p>Rôles, responsabilités et chronologie des intervenants d'un projet.</p>
-            <div class="badge">Dossier d'Étude — STI2D</div>
+            <img class="bg-image" src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&q=80&w=1920" alt="" referrerpolicy="no-referrer" onerror="this.style.display='none'">
+            <div class="bg-veil veil-dark"></div>
+            <div class="title-content">
+                <h2>Projet I2d</h2>
+                <h1>Les Acteurs de la Construction</h1>
+                <p>Rôles, responsabilités et chronologie des intervenants d'un projet.</p>
+                <div class="badge">Dossier d'Étude — STI2D</div>
+            </div>
         </section>
 
-        <!-- Diapositive 2 : Les Décideurs -->
+        <!-- SLIDE 2 : LES DÉCIDEURS -->
         <section class="slide slide-content" id="slide2">
+            <img class="bg-image" src="https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&q=80&w=1920" alt="" referrerpolicy="no-referrer" onerror="this.style.display='none'">
+            <div class="bg-veil veil-medium"></div>
+            <div class="grid-bg"></div>
             <div class="slide-header">
                 <h3>Partie 1 — Les Intervenants</h3>
                 <h1>Les Décideurs : MOA & AMO</h1>
             </div>
             <div class="actors-container">
-                <div class="actor-card">
-                    <div class="actor-icon" style="background:#fff3e0; color:#e65100;">💼</div>
-                    <h4>Maître d'Ouvrage (MOA)</h4>
-                    <p class="role">Client initiateur</p>
-                    <div class="detail-row"><span>Quand :</span> Phase initiale</div>
-                    <div class="detail-row"><span>Pourquoi :</span> Validation du besoin</div>
-                    <div class="detail-row"><span>Moyens :</span> Financement global</div>
+                <div class="actor-card glass">
+                    <div class="actor-photo" style="background-image: url('https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=800');"></div>
+                    <div class="actor-body">
+                        <div class="actor-icon-sm" style="background:#fff3e0; color:#e65100;">💼</div>
+                        <h4>Maître d'Ouvrage (MOA)</h4>
+                        <p class="role" style="color:#e65100;">Client initiateur</p>
+                        <div class="detail-row"><span>Quand :</span> Phase initiale</div>
+                        <div class="detail-row"><span>Pourquoi :</span> Validation du besoin</div>
+                        <div class="detail-row"><span>Moyens :</span> Financement global</div>
+                    </div>
                 </div>
-                <div class="actor-card">
-                    <div class="actor-icon" style="background:#e3f2fd; color:#1565c0;">⚖️</div>
-                    <h4>Conducteur d'Opération (AMO)</h4>
-                    <p class="role">Expert conseiller</p>
-                    <div class="detail-row"><span>Quand :</span> Toutes phases</div>
-                    <div class="detail-row"><span>Pourquoi :</span> Assistance technique</div>
-                    <div class="detail-row"><span>Moyens :</span> Expertise juridique</div>
+                <div class="actor-card glass">
+                    <div class="actor-photo" style="background-image: url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=800');"></div>
+                    <div class="actor-body">
+                        <div class="actor-icon-sm" style="background:#e3f2fd; color:#1565c0;">⚖️</div>
+                        <h4>Conducteur d'Opération (AMO)</h4>
+                        <p class="role" style="color:#1565c0;">Expert conseiller</p>
+                        <div class="detail-row"><span>Quand :</span> Toutes phases</div>
+                        <div class="detail-row"><span>Pourquoi :</span> Assistance technique</div>
+                        <div class="detail-row"><span>Moyens :</span> Expertise juridique</div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Diapositive 3 : Les Concepteurs -->
+        <!-- SLIDE 3 : LES CONCEPTEURS -->
         <section class="slide slide-content" id="slide3">
+            <img class="bg-image" src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&q=80&w=1920" alt="" referrerpolicy="no-referrer" onerror="this.style.display='none'">
+            <div class="bg-veil veil-medium"></div>
+            <div class="grid-bg"></div>
             <div class="slide-header">
                 <h3>Partie 1 — Les Intervenants</h3>
                 <h1>Les Concepteurs : MOE & Ingénierie</h1>
             </div>
             <div class="split-layout">
-                <div class="split-image" style="background-image: url('https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&q=80&w=800');"></div>
+                <div class="split-image" style="background-image: url('https://images.unsplash.com/photo-1590650153855-d9e808231d41?auto=format&fit=crop&q=80&w=800');"></div>
                 <div class="split-cards">
-                    <div class="actor-card">
-                        <div class="actor-icon" style="background:#e8f5e9; color:#2e7d32;">📐</div>
-                        <h4>Maître d'Œuvre (MOE)</h4>
-                        <p class="role">Architecte concepteur</p>
-                        <div class="detail-row"><span>Quand :</span> Conception globale</div>
-                        <div class="detail-row"><span>Pourquoi :</span> Traduction spatiale</div>
-                        <div class="detail-row"><span>Moyens :</span> Plans détaillés</div>
+                    <div class="split-card glass">
+                        <div class="icon-box" style="background:#e8f5e9; color:#2e7d32;">📐</div>
+                        <div class="info">
+                            <h4>Maître d'Œuvre (MOE)</h4>
+                            <p class="role" style="color:#2e7d32;">Architecte concepteur</p>
+                            <div class="detail-row"><span>Quand :</span> Conception globale</div>
+                            <div class="detail-row"><span>Pourquoi :</span> Traduction spatiale</div>
+                            <div class="detail-row"><span>Moyens :</span> Plans détaillés</div>
+                        </div>
                     </div>
-                    <div class="actor-card">
-                        <div class="actor-icon" style="background:#f3e5f5; color:#6a1b9a;">📊</div>
-                        <h4>Ingénierie</h4>
-                        <p class="role">Spécialiste technique</p>
-                        <div class="detail-row"><span>Quand :</span> Phase d'études</div>
-                        <div class="detail-row"><span>Pourquoi :</span> Validation dimensionnelle</div>
-                        <div class="detail-row"><span>Moyens :</span> Calculs structurels</div>
+                    <div class="split-card glass">
+                        <div class="icon-box" style="background:#f3e5f5; color:#6a1b9a;">📊</div>
+                        <div class="info">
+                            <h4>Ingénierie</h4>
+                            <p class="role" style="color:#6a1b9a;">Spécialiste technique</p>
+                            <div class="detail-row"><span>Quand :</span> Phase d'études</div>
+                            <div class="detail-row"><span>Pourquoi :</span> Validation dimensionnelle</div>
+                            <div class="detail-row"><span>Moyens :</span> Calculs structurels</div>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Diapositive 4 : Sécurité et Conformité -->
+        <!-- SLIDE 4 : SÉCURITÉ ET CONFORMITÉ -->
         <section class="slide slide-content" id="slide4">
+            <img class="bg-image" src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=1920" alt="" referrerpolicy="no-referrer" onerror="this.style.display='none'">
+            <div class="bg-veil veil-medium"></div>
+            <div class="grid-bg"></div>
             <div class="slide-header">
                 <h3>Partie 1 — Les Intervenants</h3>
                 <h1>Sécurité et Conformité</h1>
             </div>
             <div class="safety-container">
-                <div class="safety-card">
-                    <div class="actor-icon" style="background:#ffebee; color:#c62828;">🛡️</div>
-                    <h4>Bureau de Contrôle</h4>
-                    <p class="role" style="color:#c62828;">Vérificateur normatif</p>
-                    <div class="detail-row"><span>Quand :</span> Avant exécution</div>
-                    <div class="detail-row"><span>Pourquoi :</span> Prévention des risques</div>
-                    <div class="detail-row"><span>Moyens :</span> Audits réglementaires</div>
+                <div class="safety-card glass">
+                    <div class="safety-photo" style="background-image: url('https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=800');"></div>
+                    <div class="safety-body">
+                        <h4>Bureau de Contrôle</h4>
+                        <p class="role" style="color:#c62828;">Vérificateur normatif</p>
+                        <div class="detail-row"><span>Quand :</span> Avant exécution</div>
+                        <div class="detail-row"><span>Pourquoi :</span> Prévention des risques</div>
+                        <div class="detail-row"><span>Moyens :</span> Audits réglementaires</div>
+                    </div>
                 </div>
-                <div class="safety-card blue">
-                    <div class="actor-icon" style="background:#e3f2fd; color:#1565c0;">👷</div>
-                    <h4>Coordinateur CSPS</h4>
-                    <p class="role">Coordinateur sécurité</p>
-                    <div class="detail-row"><span>Quand :</span> Préparation du chantier</div>
-                    <div class="detail-row"><span>Pourquoi :</span> Protection des ouvriers</div>
-                    <div class="detail-row"><span>Moyens :</span> Inspections terrain</div>
+                <div class="safety-card glass">
+                    <div class="safety-photo" style="background-image: url('https://images.unsplash.com/photo-1579847188450-597e18f6d5e6?auto=format&fit=crop&q=80&w=800');"></div>
+                    <div class="safety-body">
+                        <h4>Coordinateur CSPS</h4>
+                        <p class="role" style="color:#1565c0;">Coordinateur sécurité</p>
+                        <div class="detail-row"><span>Quand :</span> Préparation du chantier</div>
+                        <div class="detail-row"><span>Pourquoi :</span> Protection des ouvriers</div>
+                        <div class="detail-row"><span>Moyens :</span> Inspections terrain</div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Diapositive 5 : Panorama Chronologique -->
+        <!-- SLIDE 5 : PANORAMA CHRONOLOGIQUE -->
         <section class="slide slide-content" id="slide5">
+            <img class="bg-image" src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&q=80&w=1920" alt="" referrerpolicy="no-referrer" onerror="this.style.display='none'">
+            <div class="bg-veil veil-medium"></div>
+            <div class="grid-bg"></div>
             <div class="slide-header">
                 <h3>Synthèse</h3>
                 <h1>Panorama Chronologique des Intervenants</h1>
             </div>
-            <div class="timeline-container">
+            <div class="timeline-container glass">
                 <div class="timeline-flow">
                     <div class="timeline-step">
                         <div class="timeline-dot" style="border-color: #ff5722; color: #ff5722;">1</div>
@@ -273,7 +582,7 @@
                         <p>Sécurité Chantier</p>
                     </div>
                 </div>
-                <div style="text-align: center; margin-top: 40px; color: #666; font-size: 0.9rem;">
+                <div style="text-align: center; margin-top: 40px; color: #666; font-size: 0.9rem; position: relative; z-index: 2;">
                     <strong>Chaque acteur intervient à une phase clé pour garantir la réussite du projet.</strong>
                 </div>
             </div>
