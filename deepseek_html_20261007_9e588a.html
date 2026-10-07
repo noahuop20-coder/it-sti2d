@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projet Maison Colomiers</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  :root {
+    --bg:#0a1929; --line:#4fc3f7; --line-soft:rgba(79,195,247,.25);
+    --accent:#ffb74d; --accent2:#ff8a65; --text:#e8f4f8;
+    --dim:#8ea9c4; --dim2:#5a7a9b; --red:#ef5350; --blue:#4fc3f7;
+    --yellow:#fff59d;
+  }
+  html, body { height:100%; overflow:hidden; font-family:'Segoe UI',system-ui,sans-serif; background:var(--bg); color:var(--text); }
+  body::before {
+    content:''; position:fixed; inset:0;
+    background-image:
+      linear-gradient(rgba(79,195,247,.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(79,195,247,.045) 1px, transparent 1px),
+      linear-gradient(rgba(79,195,247,.09) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(79,195,247,.09) 1px, transparent 1px);
+    background-size:25px 25px,25px 25px,125px 125px,125px 125px;
+    pointer-events:none; z-index:0;
+  }
+  .progress { position:fixed; top:0; left:0; height:3px; background:linear-gradient(90deg,var(--line),var(--accent)); transition:width .35s cubic-bezier(.4,0,.2,1); z-index:200; box-shadow:0 0 12px rgba(79,195,247,.6); }
+  .deck { position:relative; width:100vw; height:100vh; z-index:1; }
+  .slide { position:absolute; inset:0; padding:40px 64px 80px; display:none; flex-direction:column; opacity:0; transform:translateY(12px); transition:opacity .45s, transform .45s; overflow-y:auto; }
+  .slide.active { display:flex; opacity:1; transform:translateY(0); }
+  .slide-head { display:flex; align-items:baseline; gap:16px; border-bottom:1px solid var(--line-soft); padding-bottom:14px; margin-bottom:22px; flex-shrink:0; }
+  .slide-num { font-family:'Consolas',monospace; font-size:13px; color:var(--accent); letter-spacing:2px; font-weight:700; }
+  .slide-title { font-size:1.55rem; font-weight:700; color:#fff; }
+  .slide-tag { margin-left:auto; font-size:11px; color:var(--dim2); font-family:'Consolas',monospace; letter-spacing:1px; }
+  .slide-body { flex:1; display:grid; gap:24px; align-items:start; min-height:0; }
+  .cols-2 { grid-template-columns:1fr 1fr; }
+  .cols-2-wide { grid-template-columns:1.4fr 1fr; }
+  .cols-2-narrow { grid-template-columns:1fr 1.5fr; }
+  .cols-2-eq { grid-template-columns:1.15fr 1fr; }
+  .card { background:rgba(19,43,71,.55); border:1px solid var(--line-soft); border-radius:10px; padding:18px 20px; backdrop-filter:blur(6px); position:relative; }
+  .card::before { content:''; position:absolute; top:-1px; left:18px; width:34px; height:3px; background:var(--accent); border-radius:0 0 3px 3px; }
+  .card h3 { font-size:.92rem; color:var(--accent); text-transform:uppercase; letter-spacing:1.6px; margin-bottom:12px; font-weight:700; }
+  ul.clean { list-style:none; }
+  ul.clean li { padding:7px 0 7px 20px; position:relative; font-size:.9rem; line-height:1.45; border-bottom:1px dashed rgba(79,195,247,.12); }
+  ul.clean li:last-child { border-bottom:none; }
+  ul.clean li::before { content:''; position:absolute; left:0; top:15px; width:8px; height:8px; border:1.5px solid var(--line); transform:rotate(45deg); }
+  .num-list { list-style:none; counter-reset:step; }
+  .num-list li { counter-increment:step; position:relative; padding:9px 0 9px 46px; font-size:.9rem; border-bottom:1px dashed rgba(79,195,247,.12); }
+  .num-list li:last-child { border-bottom:none; }
+  .num-list li::before { content:counter(step,decimal-leading-zero); position:absolute; left:0; top:7px; width:32px; height:26px; display:flex; align-items:center; justify-content:center; font-family:'Consolas',monospace; font-size:11px; font-weight:700; color:var(--bg); background:var(--line); border-radius:4px; }
+  .num-list li:nth-child(n+9)::before { background:var(--accent); }
+  .src { margin-top:12px; font-size:10.5px; color:var(--dim2); font-style:italic; border-top:1px solid rgba(79,195,247,.12); padding-top:8px; }
+  .src::before { content:'▸ '; color:var(--line); }
+  .hero { display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; height:100%; }
+  .hero h1 { font-size:3.4rem; font-weight:800; line-height:1.05; background:linear-gradient(135deg,#fff 20%,var(--line) 60%,var(--accent) 100%); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:18px; }
+  .hero .sub { font-size:1.05rem; color:var(--dim); letter-spacing:3px; text-transform:uppercase; margin-bottom:40px; font-family:'Consolas',monospace; }
+  .hero-stats { display:flex; gap:40px; margin-bottom:34px; flex-wrap:wrap; justify-content:center; }
+  .stat { text-align:center; padding:16px 26px; border:1px solid var(--line-soft); border-radius:10px; background:rgba(19,43,71,.5); min-width:140px; }
+  .stat .v { font-size:1.9rem; font-weight:800; color:var(--accent); font-family:'Consolas',monospace; line-height:1; }
+  .stat .l { font-size:.7rem; color:var(--dim); text-transform:uppercase; letter-spacing:1.5px; margin-top:8px; }
+  svg { display:block; width:100%; height:auto; max-height:100%; }
+  .svg-wrap { display:flex; align-items:center; justify-content:center; }
+  .sv-mono { font-family:'Consolas',monospace; }
+  .nav { position:fixed; bottom:22px; left:50%; transform:translateX(-50%); display:flex; gap:14px; align-items:center; background:rgba(10,25,41,.85); border:1px solid var(--line-soft); border-radius:999px; padding:7px 14px; backdrop-filter:blur(10px); z-index:150; }
+  .nav-btn { background:transparent; border:1px solid transparent; color:var(--line); width:32px; height:32px; border-radius:50%; cursor:pointer; font-size:15px; display:flex; align-items:center; justify-content:center; transition:all .2s; }
+  .nav-btn:hover { background:rgba(79,195,247,.15); border-color:var(--line-soft); }
+  .nav-btn:disabled { opacity:.25; cursor:default; }
+  .dots { display:flex; gap:5px; }
+  .dot { width:7px; height:7px; border-radius:50%; background:rgba(255,255,255,.18); cursor:pointer; transition:all .25s; }
+  .dot:hover { background:rgba(79,195,247,.5); }
+  .dot.active { background:var(--accent); width:20px; border-radius:4px; }
+  .counter { font-family:'Consolas',monospace; font-size:11px; color:var(--dim2); letter-spacing:1px; min-width:44px; text-align:center; }
+  table { width:100%; border-collapse:collapse; font-size:.84rem; }
+  th { text-align:left; padding:8px 10px; background:rgba(79,195,247,.1); color:var(--line); font-size:.72rem; letter-spacing:1.2px; text-transform:uppercase; border-bottom:1px solid var(--line-soft); }
+  td { padding:7px 10px; border-bottom:1px dashed rgba(79,195,247,.1); }
+  td:last-child, th:last-child { text-align:right; }
+  .qa { border-left:3px solid var(--accent); padding:4px 0 4px 18px; margin-bottom:22px; }
+  .qa h4 { font-size:.82rem; color:var(--accent); text-transform:uppercase; letter-spacing:1.4px; margin-bottom:10px; font-weight:700; }
+  .qa p { font-size:.87rem; line-height:1.6; margin-bottom:5px; }
+  .survey-hero { display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; height:100%; gap:26px; padding:20px 0; }
+  .survey-icon { width:96px; height:96px; border-radius:50%; background:rgba(79,195,247,.1); border:2px solid var(--line); display:flex; align-items:center; justify-content:center; animation:pulse 2.4s infinite; }
+  @keyframes pulse { 0%,100%{box-shadow:0 0 0 0 rgba(79,195,247,.4);} 50%{box-shadow:0 0 0 18px rgba(79,195,247,0);} }
+  .survey-icon svg { width:52px; height:52px; }
+  .survey-hero h2 { font-size:2.1rem; font-weight:800; background:linear-gradient(135deg,#fff,var(--line)); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+  .survey-hero p.intro { max-width:660px; color:var(--dim); font-size:1rem; line-height:1.65; }
+  .survey-url { display:inline-block; background:rgba(19,43,71,.7); border:1px solid var(--line-soft); border-radius:8px; padding:12px 18px; font-family:'Consolas',monospace; font-size:.78rem; color:var(--line); word-break:break-all; max-width:720px; line-height:1.5; }
+  .survey-btn { display:inline-flex; align-items:center; gap:12px; padding:16px 38px; border-radius:999px; background:linear-gradient(135deg,var(--accent),var(--accent2)); color:#0a1929; font-weight:800; font-size:1rem; letter-spacing:1.5px; text-transform:uppercase; text-decoration:none; transition:transform .2s,box-shadow .25s; box-shadow:0 6px 22px rgba(255,183,77,.35); }
+  .survey-btn:hover { transform:translateY(-3px); box-shadow:0 12px 30px rgba(255,183,77,.5); }
+  .survey-btn svg { width:20px; height:20px; }
+  .survey-meta { display:flex; gap:30px; margin-top:6px; flex-wrap:wrap; justify-content:center; color:var(--dim2); font-size:.78rem; font-family:'Consolas',monospace; }
+  .survey-meta span::before { content:'◆ '; color:var(--line); margin-right:4px; }
+
+  /* TABLEAU MERCATIQUE */
+  .mkt-table { font-size:.68rem; }
+  .mkt-table th { font-size:.6rem; padding:6px 4px; letter-spacing:.4px; line-height:1.15; text-align:center; text-transform:none; font-weight:700; }
+  .mkt-table th:first-child { text-align:left; }
+  .mkt-table td { padding:4px 4px; text-align:center; font-family:'Consolas',monospace; font-size:.68rem; white-space:nowrap; }
+  .mkt-table td:first-child { text-align:left; font-weight:700; color:var(--accent); }
+  .mkt-table tr.highlight td { background:rgba(255,241,118,.18); color:#fff59d; font-weight:800; }
+  .mkt-table tr.total td { background:rgba(79,195,247,.14); color:var(--line); font-weight:700; border-top:2px solid var(--line); border-bottom:none; }
+  .legend-inline { display:flex; gap:22px; margin-top:12px; justify-content:center; font-size:.8rem; }
+  .legend-inline span { display:flex; align-items:center; gap:8px; }
+  .legend-inline .swatch { width:24px; height:4px; border-radius:2px; }
+
+  /* === SLIDE ETUDE DE MARCHE === */
+  .mkt-doc { display:flex; flex-direction:column; gap:0; flex:1; min-height:0; }
+  .mkt-section { border:1px solid var(--line-soft); border-radius:8px; overflow:hidden; margin-bottom:10px; background:rgba(19,43,71,.45); flex-shrink:0; }
+  .mkt-section-header { background:linear-gradient(90deg, rgba(79,195,247,.22), rgba(79,195,247,.06)); padding:6px 14px; font-size:.8rem; font-weight:800; letter-spacing:1.6px; color:#fff; text-transform:uppercase; border-bottom:1px solid var(--line-soft); text-align:center; }
+  .mkt-section-body { padding:10px 14px; font-size:.83rem; line-height:1.55; color:var(--text); }
+  .mkt-2col { display:grid; grid-template-columns:180px 1fr; border-bottom:1px dashed rgba(79,195,247,.15); }
+  .mkt-2col:last-child { border-bottom:none; }
+  .mkt-2col-label { padding:12px 14px; font-size:.82rem; font-weight:800; color:var(--accent); background:rgba(255,183,77,.08); border-right:1px solid var(--line-soft); display:flex; align-items:center; justify-content:center; text-align:center; letter-spacing:.4px; }
+  .mkt-2col-content { padding:12px 16px; font-size:.83rem; line-height:1.55; color:var(--text); }
+  .mkt-2col-content p { margin-bottom:6px; }
+  .mkt-2col-content p:last-child { margin-bottom:0; }
+  .mkt-2col-content .highlight { color:var(--accent); font-weight:600; padding-left:12px; display:block; margin-top:4px; }
+  .mkt-question { font-style:italic; color:var(--dim); display:block; margin-bottom:6px; font-size:.8rem; }
+  .mkt-green { color:#81c784; font-weight:700; }
+
+  /* === SLIDE CHOIX DU TERRAIN === */
+  .terrain-quote { border-left:3px solid var(--accent); padding:4px 0 4px 18px; margin-bottom:16px; font-style:italic; font-size:.92rem; line-height:1.6; color:var(--text); }
+  .terrain-data-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:10px; }
+  .terrain-data-item { background:rgba(79,195,247,.08); border:1px solid var(--line-soft); border-radius:8px; padding:10px 14px; text-align:center; }
+  .terrain-data-item .label { font-size:.68rem; color:var(--dim); text-transform:uppercase; letter-spacing:1.2px; }
+  .terrain-data-item .value { font-size:1.1rem; font-weight:800; color:var(--accent); font-family:'Consolas',monospace; margin-top:4px; }
+  .terrain-photo { width:100%; border-radius:8px; border:1px solid var(--line-soft); object-fit:cover; }
+  .map-container { width:100%; height:220px; border-radius:8px; overflow:hidden; border:1px solid var(--line-soft); margin-top:12px; }
+  .map-container iframe { width:100%; height:100%; border:0; }
+  .terrain-link { display:inline-flex; align-items:center; gap:8px; margin-top:10px; padding:8px 16px; border-radius:999px; background:rgba(255,183,77,.15); border:1px solid var(--line-soft); color:var(--accent); font-weight:700; font-size:.78rem; text-decoration:none; letter-spacing:.8px; transition:background .2s; }
+  .terrain-link:hover { background:rgba(255,183,77,.3); }
+
+  @media (max-width:900px) {
+    .slide { padding:24px 22px 90px; }
+    .slide-title { font-size:1.15rem; }
+    .cols-2, .cols-2-wide, .cols-2-narrow, .cols-2-eq { grid-template-columns:1fr; }
+    .hero h1 { font-size:2rem; }
+    .survey-hero h2 { font-size:1.4rem; }
+    .survey-btn { padding:14px 26px; font-size:.85rem; }
+    .mkt-table { font-size:.55rem; }
+    .mkt-2col { grid-template-columns:1fr; }
+    .mkt-2col-label { border-right:none; border-bottom:1px solid var(--line-soft); }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+
+<div class="deck" id="deck">
+
+  <!-- ===== SLIDE 1 : TITRE ===== -->
+  <section class="slide active">
+    <div class="hero">
+      <div style="width:120px;margin-bottom:24px;">
+        <svg viewBox="0 0 100 80">
+          <path d="M10 42 L50 12 L90 42" fill="none" stroke="#4fc3f7" stroke-width="3" stroke-linejoin="round"/>
+          <rect x="22" y="42" width="56" height="34" fill="none" stroke="#4fc3f7" stroke-width="3"/>
+          <rect x="42" y="56" width="16" height="20" fill="none" stroke="#ffb74d" stroke-width="2.5"/>
+          <rect x="28" y="48" width="9" height="9" fill="none" stroke="#8ea9c4" stroke-width="2"/>
+          <rect x="63" y="48" width="9" height="9" fill="none" stroke="#8ea9c4" stroke-width="2"/>
+        </svg>
+      </div>
+      <div class="sub">Metropole Toulousaine · 31770</div>
+      <h1>PROJET MAISON<br>COLOMIERS</h1>
+      <p style="color:var(--dim);font-size:1rem;max-width:640px;line-height:1.6;margin-bottom:38px;">
+        Conception d une maison individuelle de plain pied<br>
+        90 m² maximum sur terrain plat constructible
+      </p>
+      <div class="hero-stats">
+        <div class="stat"><div class="v">90 m²</div><div class="l">Surface max</div></div>
+        <div class="stat"><div class="v">400 000 €</div><div class="l">Budget total</div></div>
+        <div class="stat"><div class="v">2 200 €</div><div class="l">Prix au m²</div></div>
+        <div class="stat"><div class="v">RT2012</div><div class="l">Norme thermique</div></div>
+      </div>
+      <p style="color:var(--dim2);font-size:.72rem;font-family:Consolas,monospace;letter-spacing:1px;">
+        SOURCE · document Analyse et definition du cahier des charges de la famille
+      </p>
+    </div>
+  </section>
+
+  <!-- ===== SLIDE 2 : CAHIER DES CHARGES ===== -->
+  <section class="slide">
+    <div class="slide-head">
+      <span class="slide-num">02</span>
+      <h2 class="slide-title">Analyse et definition du cahier des charges</h2>
+      <span class="slide-tag">PROGRAMME</span>
+    </div>
+    <div class="slide-body cols-2-wide">
+      <div>
+        <div class="card" style="margin-bottom:18px;">
+          <h3>Programme impose</h3>
+          <ul class="clean">
+            <li>Maison individuelle de plain pied</li>
+            <li>Surface 90 m² maximum</li>
+            <li>Terrain plat constructible a Colomiers</li>
+          </ul>
+          <div class="src">document Analyse et definition du cahier des charges</div>
+        </div>
+        <div class="card">
+          <h3>Composition obligatoire</h3>
+          <ul class="clean" style="columns:2;column-gap:24px;">
+            <li>Salon sejour</li><li>Cuisine</li><li>Salle de bains</li><li>Chambre parentale</li>
+            <li>2 chambres d enfants</li><li>WC independant</li><li>Cellier</li><li>Garage accole</li>
+          </ul>
+          <div class="src">document Analyse et definition du cahier des charges</div>
+        </div>
+      </div>
+      <div class="svg-wrap">
+        <div class="card" style="width:100%;">
+          <h3>Croquis de principe · 90 m²</h3>
+          <svg viewBox="0 0 560 470">
+            <rect x="8" y="18" width="544" height="444" fill="none" stroke="#2a4a6b" stroke-width="1" stroke-dasharray="6 4"/>
+            <text x="280" y="12" text-anchor="middle" fill="#5a7a9b" font-size="10" class="sv-mono" letter-spacing="2">TERRAIN · 420 m²</text>
+            <g transform="translate(508,448)">
+              <circle r="16" fill="none" stroke="#4fc3f7" stroke-width="1"/>
+              <line x1="0" y1="-14" x2="0" y2="14" stroke="#5a7a9b" stroke-width="1"/>
+              <line x1="-14" y1="0" x2="14" y2="0" stroke="#5a7a9b" stroke-width="1"/>
+              <polygon points="0,14 4,6 -4,6" fill="#ffb74d"/>
+              <text x="0" y="26" text-anchor="middle" fill="#ffb74d" font-size="8" font-weight="700">S</text>
+            </g>
+            <rect x="30" y="50" width="110" height="240" fill="#16324f" stroke="#4fc3f7" stroke-width="2.2"/>
+            <text x="85" y="165" text-anchor="middle" fill="#8ecae6" font-size="12" font-weight="700" letter-spacing="1">GARAGE</text>
+            <text x="85" y="184" text-anchor="middle" fill="#4fc3f7" font-size="11" class="sv-mono">18 m²</text>
+            <line x1="30" y1="270" x2="140" y2="270" stroke="#ffb74d" stroke-width="3" stroke-dasharray="8 3"/>
+            <rect x="140" y="50" width="400" height="360" fill="#132b47" stroke="#4fc3f7" stroke-width="3"/>
+            <rect x="140" y="50" width="110" height="150" fill="rgba(79,195,247,.05)" stroke="#4fc3f7" stroke-width="1.3"/>
+            <rect x="250" y="50" width="65" height="150" fill="rgba(79,195,247,.05)" stroke="#4fc3f7" stroke-width="1.3"/>
+            <rect x="315" y="50" width="25" height="150" fill="rgba(79,195,247,.05)" stroke="#4fc3f7" stroke-width="1.3"/>
+            <rect x="340" y="50" width="100" height="150" fill="rgba(79,195,247,.05)" stroke="#4fc3f7" stroke-width="1.3"/>
+            <rect x="440" y="50" width="100" height="150" fill="rgba(79,195,247,.05)" stroke="#4fc3f7" stroke-width="1.3"/>
+            <rect x="140" y="200" width="400" height="50" fill="rgba(79,195,247,.09)" stroke="#4fc3f7" stroke-width="1.3"/>
+            <rect x="140" y="250" width="48" height="160" fill="rgba(79,195,247,.05)" stroke="#4fc3f7" stroke-width="1.3"/>
+            <rect x="188" y="250" width="352" height="160" fill="rgba(255,183,77,.13)" stroke="#ffb74d" stroke-width="2.5"/>
+            <text x="195" y="120" text-anchor="middle" fill="#e8f4f8" font-size="10" font-weight="600">Ch. parentale</text>
+            <text x="282" y="120" text-anchor="middle" fill="#e8f4f8" font-size="10" font-weight="600">SDB</text>
+            <text x="327" y="120" text-anchor="middle" fill="#e8f4f8" font-size="9" font-weight="600">WC</text>
+            <text x="390" y="120" text-anchor="middle" fill="#e8f4f8" font-size="10" font-weight="600">Ch. enfant 1</text>
+            <text x="490" y="120" text-anchor="middle" fill="#e8f4f8" font-size="10" font-weight="600">Ch. enfant 2</text>
+            <text x="340" y="229" text-anchor="middle" fill="#8ecae6" font-size="10" font-weight="600">COULOIR · 8,5 m²</text>
+            <text x="364" y="320" text-anchor="middle" fill="#ffb74d" font-size="14" font-weight="800">SEJOUR · SALON · CUISINE</text>
+            <text x="364" y="342" text-anchor="middle" fill="#ffb74d" font-size="12" class="sv-mono" font-weight="700">36 m²</text>
+            <line x1="200" y1="410" x2="540" y2="410" stroke="#ffb74d" stroke-width="4"/>
+            <text x="370" y="432" text-anchor="middle" fill="#ffb74d" font-size="9" class="sv-mono">◄ BAIES VITREES SUD ►</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SLIDE 3 : ACTEURS ===== -->
+  <section class="slide">
+    <div class="slide-head">
+      <span class="slide-num">03</span>
+      <h2 class="slide-title">Contexte du projet et roles des acteurs</h2>
+      <span class="slide-tag">ACTEURS</span>
+    </div>
+    <div class="slide-body cols-2">
+      <div>
+        <div class="card" style="margin-bottom:18px;">
+          <h3>Contexte</h3>
+          <p style="font-size:.95rem;line-height:1.65;">Une famille souhaite s installer durablement a Colomiers dans la metropole toulousaine</p>
+          <div class="src">document Analyse et definition du cahier des charges</div>
+        </div>
+        <div class="card">
+          <h3>Les deux acteurs cles</h3>
+          <ul class="clean">
+            <li><b style="color:var(--accent);">Maitre d ouvrage</b><br><span style="color:var(--dim);font-size:.85rem;">le client qui porte le projet de construction</span></li>
+            <li><b style="color:var(--accent);">Maitre d oeuvre</b><br><span style="color:var(--dim);font-size:.85rem;">le professionnel retenu par le client pour executer et coordonner les travaux</span></li>
+          </ul>
+          <div class="src">video sur la difference entre maitre d oeuvre et maitre d ouvrage</div>
+        </div>
+      </div>
+      <div class="svg-wrap">
+        <div class="card" style="width:100%;">
+          <h3>Schema de la chaine de decision</h3>
+          <svg viewBox="0 0 460 380">
+            <rect x="110" y="20" width="240" height="80" rx="10" fill="rgba(255,183,77,.12)" stroke="#ffb74d" stroke-width="2"/>
+            <text x="230" y="52" text-anchor="middle" fill="#ffb74d" font-size="13" font-weight="800">MAITRE D OUVRAGE</text>
+            <text x="230" y="74" text-anchor="middle" fill="#e8f4f8" font-size="11">Le client porteur du projet</text>
+            <line x1="230" y1="100" x2="230" y2="150" stroke="#4fc3f7" stroke-width="2"/>
+            <polygon points="230,158 224,146 236,146" fill="#4fc3f7"/>
+            <rect x="110" y="160" width="240" height="80" rx="10" fill="rgba(79,195,247,.12)" stroke="#4fc3f7" stroke-width="2"/>
+            <text x="230" y="192" text-anchor="middle" fill="#4fc3f7" font-size="13" font-weight="800">MAITRE D OEUVRE</text>
+            <text x="230" y="214" text-anchor="middle" fill="#e8f4f8" font-size="11">Professionnel retenu</text>
+            <line x1="230" y1="240" x2="230" y2="290" stroke="#4fc3f7" stroke-width="2"/>
+            <polygon points="230,298 224,286 236,286" fill="#4fc3f7"/>
+            <rect x="110" y="300" width="240" height="60" rx="10" fill="rgba(79,195,247,.06)" stroke="#8ea9c4" stroke-width="1.5" stroke-dasharray="5 3"/>
+            <text x="230" y="326" text-anchor="middle" fill="#8ea9c4" font-size="12" font-weight="700">CHANTIER</text>
+            <text x="230" y="346" text-anchor="middle" fill="#5a7a9b" font-size="10">gros oeuvre · second oeuvre · finitions</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SLIDE 4 : ETAPES ===== -->
+  <section class="slide">
+    <div class="slide-head">
+      <span class="slide-num">04</span>
+      <h2 class="slide-title">Les 10 etapes de la construction</h2>
+      <span class="slide-tag">PROCESSUS</span>
+    </div>
+    <div class="slide-body cols-2-wide">
+      <div class="card">
+        <h3>Chronologie du projet</h3>
+        <ol class="num-list">
+          <li>Definir un plan de financement</li>
+          <li>Trouver un terrain</li>
+          <li>Acheter le terrain</li>
+          <li>Choisir un constructeur</li>
+          <li>Faire les plans</li>
+          <li>Deposer le permis de construire</li>
+          <li>Signer le contrat de construction</li>
+          <li>Souscrire les assurances construction</li>
+          <li>Realiser les travaux</li>
+          <li>Livraison et emmenagement</li>
+        </ol>
+        <div class="src">video sur les 10 etapes de la construction d une maison</div>
+      </div>
+      <div class="svg-wrap">
+        <svg viewBox="0 0 300 520">
+          <line x1="60" y1="30" x2="60" y2="490" stroke="#4fc3f7" stroke-width="2" opacity=".35"/>
+          <g font-size="11" font-family="Segoe UI">
+            <circle cx="60" cy="45" r="16" fill="#0a1929" stroke="#4fc3f7" stroke-width="2"/>
+            <text x="60" y="50" text-anchor="middle" fill="#4fc3f7" font-family="Consolas" font-size="10" font-weight="700">01</text>
+            <text x="90" y="42" fill="#e8f4f8" font-size="10.5" font-weight="600">Financement</text>
+            <circle cx="60" cy="95" r="16" fill="#0a1929" stroke="#4fc3f7" stroke-width="2"/>
+            <text x="60" y="100" text-anchor="middle" fill="#4fc3f7" font-family="Consolas" font-size="10" font-weight="700">02</text>
+            <text x="90" y="92" fill="#e8f4f8" font-size="10.5" font-weight="600">Terrain</text>
+            <circle cx="60" cy="145" r="16" fill="#0a1929" stroke="#4fc3f7" stroke-width="2"/>
+            <text x="60" y="150" text-anchor="middle" fill="#4fc3f7" font-family="Consolas" font-size="10" font-weight="700">03</text>
+            <text x="90" y="142" fill="#e8f4f8" font-size="10.5" font-weight="600">Achat</text>
+            <circle cx="60" cy="195" r="16" fill="#0a1929" stroke="#4fc3f7" stroke-width="2"/>
+            <text x="60" y="200" text-anchor="middle" fill="#4fc3f7" font-family="Consolas" font-size="10" font-weight="700">04</text>
+            <text x="90" y="192" fill="#e8f4f8" font-size="10.5" font-weight="600">Constructeur</text>
+            <circle cx="60" cy="245" r="16" fill="#0a1929" stroke="#4fc3f7" stroke-width="2"/>
+            <text x="60" y="250" text-anchor="middle" fill="#4fc3f7" font-family="Consolas" font-size="10" font-weight="700">05</text>
+            <text x="90" y="242" fill="#e8f4f8" font-size="10.5" font-weight="600">Plans</text>
+            <circle cx="60" cy="295" r="16" fill="#0a1929" stroke="#ffb74d" stroke-width="2"/>
+            <text x="60" y="300" text-anchor="middle" fill="#ffb74d" font-family="Consolas" font-size="10" font-weight="700">06</text>
+            <text x="90" y="292" fill="#ffb74d" font-size="10.5" font-weight="600">Permis</text>
+            <circle cx="60" cy="345" r="16" fill="#0a1929" stroke="#4fc3f7" stroke-width="2"/>
+            <text x="60" y="350" text-anchor="middle" fill="#4fc3f7" font-family="Consolas" font-size="10" font-weight="700">07</text>
+            <text x="90" y="342" fill="#e8f4f8" font-size="10.5" font-weight="600">Contrat</text>
+            <circle cx="60" cy="395" r="16" fill="#0a1929" stroke="#4fc3f7" stroke-width="2"/>
+            <text x="60" y="400" text-anchor="middle" fill="#4fc3f7" font-family="Consolas" font-size="10" font-weight="700">08</text>
+            <text x="90" y="392" fill="#e8f4f8" font-size="10.5" font-weight="600">Assurances</text>
+            <circle cx="60" cy="445" r="16" fill="#0a1929" stroke="#ffb74d" stroke-width="2"/>
+            <text x="60" y="450" text-anchor="middle" fill="#ffb74d" font-family="Consolas" font-size="10" font-weight="700">09</text>
+            <text x="90" y="442" fill="#ffb74d" font-size="10.5" font-weight="600">Travaux</text>
+            <circle cx="60" cy="495" r="16" fill="#0a1929" stroke="#ffb74d" stroke-width="2"/>
+            <text x="60" y="500" text-anchor="middle" fill="#ffb74d" font-family="Consolas" font-size="10" font-weight="700">10</text>
+            <text x="90" y="492" fill="#ffb74d" font-size="10.5" font-weight="600">Livraison</text>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SLIDE 5 : PLU / PPR / BIOCLIMATIQUE ===== -->
+  <section class="slide">
+    <div class="slide-head">
+      <span class="slide-num">05</span>
+      <h2 class="slide-title">Contraintes reglementaires et conception bioclimatique</h2>
+      <span class="slide-tag">REGLEMENTATION</span>
+    </div>
+    <div class="slide-body cols-2-narrow">
+      <div>
+        <div class="card" style="margin-bottom:16px;">
+          <h3>PLU · Plan Local d Urbanisme</h3>
+          <ul class="clean">
+            <li>Regles d emprise au sol</li><li>Regles de hauteur</li><li>Regles de distances</li>
+          </ul>
+          <div class="src">video sur le permis de construire et le PLU</div>
+        </div>
+        <div class="card" style="margin-bottom:16px;">
+          <h3>PPR · Plan de Prevention des Risques</h3>
+          <ul class="clean"><li>Informe sur les risques naturels de la commune</li></ul>
+          <div class="src">document Analyse et definition du cahier des charges</div>
+        </div>
+        <div class="card">
+          <h3>Conception bioclimatique</h3>
+          <ul class="clean">
+            <li>Pieces de vie orientees Sud et Sud Est</li>
+            <li>Surface vitree au moins 1 sixieme de la surface habitable</li>
+            <li>Pour capter la lumiere et la chaleur naturelle</li>
+          </ul>
+          <div class="src">document Analyse et definition du cahier des charges</div>
+        </div>
+      </div>
+      <div class="svg-wrap">
+        <div class="card" style="width:100%;">
+          <h3>Rose des vents · orientation du projet</h3>
+          <svg viewBox="0 0 340 340">
+            <circle cx="170" cy="170" r="130" fill="none" stroke="#2a4a6b"/>
+            <circle cx="170" cy="170" r="90" fill="none" stroke="#2a4a6b" stroke-dasharray="4 4"/>
+            <path d="M 170 170 L 170 40 A 130 130 0 0 1 300 170 Z" fill="rgba(255,183,77,.15)"/>
+            <path d="M 170 170 L 170 40 A 130 130 0 0 1 300 170" fill="none" stroke="#ffb74d" stroke-width="2" stroke-dasharray="6 4"/>
+            <line x1="170" y1="30" x2="170" y2="310" stroke="#4fc3f7" stroke-width="1.2"/>
+            <line x1="30" y1="170" x2="310" y2="170" stroke="#4fc3f7" stroke-width="1.2"/>
+            <polygon points="170,30 164,42 176,42" fill="#4fc3f7"/>
+            <polygon points="170,310 164,298 176,298" fill="#ffb74d"/>
+            <polygon points="310,170 298,164 298,176" fill="#4fc3f7"/>
+            <polygon points="30,170 42,164 42,176" fill="#4fc3f7"/>
+            <text x="170" y="22" text-anchor="middle" fill="#4fc3f7" font-size="11" font-weight="700">NORD</text>
+            <text x="170" y="328" text-anchor="middle" fill="#ffb74d" font-size="12" font-weight="800">SUD</text>
+            <text x="324" y="174" text-anchor="middle" fill="#4fc3f7" font-size="11" font-weight="700">EST</text>
+            <text x="16" y="174" text-anchor="middle" fill="#4fc3f7" font-size="11" font-weight="700">OUEST</text>
+            <line x1="170" y1="170" x2="270" y2="270" stroke="#ffb74d" stroke-width="3"/>
+            <circle cx="270" cy="270" r="6" fill="#ffb74d"/>
+            <text x="280" y="288" fill="#ffb74d" font-size="11" font-weight="800">SUD-EST</text>
+            <g transform="translate(170,170)">
+              <rect x="-28" y="-22" width="56" height="44" fill="#132b47" stroke="#4fc3f7" stroke-width="1.5"/>
+              <path d="M -32 -22 L 0 -46 L 32 -22" fill="none" stroke="#4fc3f7" stroke-width="1.5"/>
+              <line x1="-22" y1="22" x2="22" y2="22" stroke="#ffb74d" stroke-width="3"/>
+            </g>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SLIDE 6 : RT2012 / RE2020 ===== -->
+  <section class="slide">
+    <div class="slide-head">
+      <span class="slide-num">06</span>
+      <h2 class="slide-title">Exigences thermiques RT2012 et RE2020</h2>
+      <span class="slide-tag">THERMIQUE</span>
+    </div>
+    <div class="slide-body cols-2-wide">
+      <div class="card">
+        <h3>Les 5 postes de consommation RT2012</h3>
+        <svg viewBox="0 0 480 260">
+          <line x1="130" y1="20" x2="130" y2="240" stroke="#2a4a6b"/>
+          <line x1="130" y1="240" x2="460" y2="240" stroke="#2a4a6b"/>
+          <rect x="130" y="28" width="280" height="30" fill="#ff8a65" rx="4"/>
+          <text x="124" y="48" text-anchor="end" fill="#e8f4f8" font-size="11.5" font-weight="600">Chauffage</text>
+          <text x="420" y="48" fill="#ff8a65" font-size="11" class="sv-mono" font-weight="700">≈ 50 %</text>
+          <rect x="130" y="72" width="180" height="30" fill="#ffb74d" rx="4"/>
+          <text x="124" y="92" text-anchor="end" fill="#e8f4f8" font-size="11.5" font-weight="600">Eau chaude sanitaire</text>
+          <text x="320" y="92" fill="#ffb74d" font-size="11" class="sv-mono" font-weight="700">≈ 25 %</text>
+          <rect x="130" y="116" width="72" height="30" fill="#4fc3f7" rx="4"/>
+          <text x="124" y="136" text-anchor="end" fill="#e8f4f8" font-size="11.5" font-weight="600">Ventilation</text>
+          <text x="212" y="136" fill="#4fc3f7" font-size="11" class="sv-mono" font-weight="700">≈ 10 %</text>
+          <rect x="130" y="160" width="58" height="30" fill="#4fc3f7" rx="4"/>
+          <text x="124" y="180" text-anchor="end" fill="#e8f4f8" font-size="11.5" font-weight="600">Eclairage</text>
+          <text x="198" y="180" fill="#4fc3f7" font-size="11" class="sv-mono" font-weight="700">≈ 8 %</text>
+          <rect x="130" y="204" width="50" height="30" fill="#8ea9c4" rx="4"/>
+          <text x="124" y="224" text-anchor="end" fill="#e8f4f8" font-size="11.5" font-weight="600">Clim · auxiliaires</text>
+          <text x="190" y="224" fill="#8ea9c4" font-size="11" class="sv-mono" font-weight="700">≈ 7 %</text>
+          <rect x="300" y="160" width="150" height="76" rx="6" fill="rgba(79,195,247,.08)" stroke="#4fc3f7" stroke-dasharray="4 3"/>
+          <text x="375" y="180" text-anchor="middle" fill="#4fc3f7" font-size="10" font-weight="700">OBJECTIF RT2012</text>
+          <text x="375" y="200" text-anchor="middle" fill="#fff" font-size="18" class="sv-mono" font-weight="800">40 → 65</text>
+          <text x="375" y="218" text-anchor="middle" fill="#8ea9c4" font-size="9" class="sv-mono">kWh/m²/an</text>
+        </svg>
+      </div>
+      <div class="card">
+        <h3>Objectifs majeurs de la RE2020</h3>
+        <ul class="clean">
+          <li>Reduire l empreinte carbone des batiments sur leur cycle de vie</li>
+          <li>Ameliorer la performance energetique en diminuant le besoin bioclimatique Bbiomax</li>
+          <li>Garantir un confort d ete en cas de fortes chaleurs</li>
+        </ul>
+        <div class="src">document Analyse et definition du cahier des charges</div>
+        <h3 style="margin-top:22px;">Prescriptions RT2012</h3>
+        <ul class="clean">
+          <li>Epaisseur minimale d isolation</li>
+          <li>Ouvertures privilegiees au Sud</li>
+          <li>Chauffage responsable (pompe a chaleur)</li>
+          <li>VMC basse consommation</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SLIDE 7 : BUDGET ===== -->
+  <section class="slide">
+    <div class="slide-head">
+      <span class="slide-num">07</span>
+      <h2 class="slide-title">Budget et recherche de terrain</h2>
+      <span class="slide-tag">FINANCES</span>
+    </div>
+    <div class="slide-body cols-2">
+      <div>
+        <div class="card" style="margin-bottom:16px;">
+          <h3>Calcul du budget</h3>
+          <svg viewBox="0 0 420 120">
+            <text x="0" y="26" fill="#e8f4f8" font-size="11" font-weight="600">Construction</text>
+            <rect x="110" y="14" width="230" height="20" rx="3" fill="#ffb74d"/>
+            <text x="350" y="29" fill="#ffb74d" font-size="11" class="sv-mono" font-weight="700">198 000 €</text>
+            <text x="0" y="80" fill="#e8f4f8" font-size="11" font-weight="600">Terrain max</text>
+            <rect x="110" y="68" width="234" height="20" rx="3" fill="#4fc3f7"/>
+            <text x="354" y="83" fill="#4fc3f7" font-size="11" class="sv-mono" font-weight="700">202 000 €</text>
+          </svg>
+          <div class="src">document Analyse et definition du cahier des charges</div>
+        </div>
+        <div class="card">
+          <h3>Options de terrains a Colomiers</h3>
+          <table>
+            <thead><tr><th>Secteur</th><th>Surface</th><th>Prix</th></tr></thead>
+            <tbody>
+              <tr><td>Centre</td><td>420 m²</td><td style="color:var(--accent);">169 000 €</td></tr>
+              <tr><td>Parc Aeronautique</td><td>501 m²</td><td style="color:var(--accent);">199 900 €</td></tr>
+              <tr><td>En Jacca</td><td>357 m²</td><td style="color:var(--accent);">79 000 €</td></tr>
+            </tbody>
+          </table>
+          <div class="src">recherche terrain Colomiers · SeLoger · Bien Ici</div>
+        </div>
+      </div>
+      <div class="svg-wrap">
+        <div class="card" style="width:100%;">
+          <h3>Repartition budgetaire · projet a 367 000 €</h3>
+          <svg viewBox="0 0 320 380">
+            <g transform="translate(160,150)">
+              <circle r="80" fill="none" stroke="#2a4a6b" stroke-width="22"/>
+              <circle r="80" fill="none" stroke="#ffb74d" stroke-width="22" stroke-dasharray="271.4 502.6" transform="rotate(-90)"/>
+              <circle r="80" fill="none" stroke="#4fc3f7" stroke-width="22" stroke-dasharray="231.2 502.6" stroke-dashoffset="-271.4" transform="rotate(-90)"/>
+              <text y="-4" text-anchor="middle" fill="#fff" font-size="20" class="sv-mono" font-weight="800">367 k€</text>
+              <text y="16" text-anchor="middle" fill="#8ea9c4" font-size="9" class="sv-mono">option Centre</text>
+            </g>
+            <g transform="translate(40,290)">
+              <rect width="14" height="14" rx="3" fill="#ffb74d"/>
+              <text x="22" y="11" fill="#e8f4f8" font-size="11">Construction</text>
+              <text x="200" y="11" fill="#ffb74d" font-size="11" class="sv-mono" font-weight="700" text-anchor="end">198 000 €</text>
+              <rect y="28" width="14" height="14" rx="3" fill="#4fc3f7"/>
+              <text x="22" y="39" fill="#e8f4f8" font-size="11">Terrain</text>
+              <text x="200" y="39" fill="#4fc3f7" font-size="11" class="sv-mono" font-weight="700" text-anchor="end">169 000 €</text>
+              <text x="0" y="76" fill="#8ea9c4" font-size="10">Marge restante</text>
+              <text x="200" y="76" fill="#8ea9c4" font-size="11" class="sv-mono" text-anchor="end">33 000 €</text>
+            </g>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SLIDE 8 : 4 REPONSES ===== -->
+  <section class="slide">
+    <div class="slide-head">
+      <span class="slide-num">08</span>
+      <h2 class="slide-title">Reponses aux 4 questions du projet</h2>
+      <span class="slide-tag">SYNTHESE</span>
+    </div>
+    <div class="slide-body" style="grid-template-columns:1fr;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+        <div class="qa">
+          <h4>Q1 · Analyse et definition du cahier des charges</h4>
+          <p>Le cahier des charges impose une maison individuelle de plain pied de 90 m² maximum sur un terrain plat constructible a Colomiers</p>
+          <p>Elle doit comprendre un salon sejour une cuisine une salle de bains une chambre parentale deux chambres d enfants un wc independant un cellier et un garage accole pour un monospace</p>
+          <p>Le budget maximal est de 400 000 € terrain compris avec un prix de construction estime a 2 200 € par m²</p>
+          <p class="src">document Analyse et definition du cahier des charges</p>
+        </div>
+        <div class="qa">
+          <h4>Q2 · Contexte roles et etapes</h4>
+          <p>Une famille souhaite s installer durablement a Colomiers dans la metropole toulousaine</p>
+          <p>Maitre d ouvrage le client qui porte le projet</p>
+          <p>Maitre d oeuvre le professionnel retenu par le client pour executer et coordonner les travaux</p>
+          <p>Les 10 etapes vont du plan de financement jusqu a la livraison et l emmenagement en passant par le terrain le permis de construire les assurances et les travaux</p>
+          <p class="src">video sur les 10 etapes · video maitre d oeuvre / maitre d ouvrage</p>
+        </div>
+        <div class="qa">
+          <h4>Q3 · Contraintes PLU PPR et bioclimatique</h4>
+          <p>Le PLU fixe les regles d emprise au sol de hauteur et de distances</p>
+          <p>Le PPR informe sur les risques naturels de la commune</p>
+          <p>En conception bioclimatique les pieces de vie doivent etre orientees Sud et Sud Est et la surface vitree doit representer au moins 1 sixieme de la surface habitable pour capter la lumiere et la chaleur naturelle</p>
+          <p class="src">document Analyse et definition · video PLU</p>
+        </div>
+        <div class="qa">
+          <h4>Q4 · Exigences thermiques RT2012 et RE2020</h4>
+          <p>Les 5 postes de la RT2012 sont le chauffage la production d eau chaude sanitaire l eclairage la ventilation et la climatisation ou auxiliaires</p>
+          <p>La RE2020 vise a reduire l empreinte carbone des batiments sur leur cycle de vie a ameliorer la performance energetique en diminuant le besoin bioclimatique Bbiomax et a garantir un confort d ete en cas de fortes chaleurs</p>
+          <p class="src">document Analyse et definition · video RT2012</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SLIDE 9 : ENQUETE ===== -->
+  <section class="slide">
+    <div class="slide-head">
+      <span class="slide-num">09</span>
+      <h2 class="slide-title">Enquete en ligne</h2>
+      <span class="slide-tag">FORMULAIRE</span>
+    </div>
+    <div class="slide-body" style="grid-template-columns:1fr;">
+      <div class="survey-hero">
+        <div class="survey-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#4fc3f7" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 11l3 3L22 4"/>
+            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+          </svg>
+        </div>
+        <h2>Participez a notre enquete</h2>
+        <p class="intro">
+          Votre avis nous interesse pour mieux comprendre les attentes des familles<br>
+          autour du projet de construction a Colomiers<br>
+          Merci de prendre quelques minutes pour repondre au questionnaire
+        </p>
+        <a class="survey-btn"
+           href="https://docs.google.com/forms/d/e/1FAIpQLSfkiPmt2njBu_MU9UJYGUHfG-Q2bi3euSEgBwSTsycS7juS4A/viewform?usp=sharing&ouid=102378487339154119491"
+           target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+            <polyline points="15 3 21 3 21 9"/>
+            <line x1="10" y1="14" x2="21" y2="3"/>
+          </svg>
+          Acceder au formulaire
+        </a>
+        <div class="survey-url">
+          https://docs.google.com/forms/d/e/1FAIpQLSfkiPmt2njBu_MU9UJYGUHfG-Q2bi3euSEgBwSTsycS7juS4A/viewform?usp=sharing&ouid=102378487339154119491
+        </div>
+        <div class="survey-meta">
+          <span>Google Forms</span><span>Reponses anonymes</span><span>Duree · environ 3 minutes</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SLIDE 10 : ETUDE MERCATIQUE ===== -->
+  <section class="slide">
+    <div class="slide-head">
+      <span class="slide-num">10</span>
+      <h2 class="slide-title">Etude mercatique · Prix psychologique</h2>
+      <span class="slide-tag">MARKETING</span>
+    </div>
+    <div class="slide-body cols-2-eq">
+      <div class="card">
+        <h3>Resultats de l enquete · 662 personnes</h3>
+        <table class="mkt-table">
+          <thead>
+            <tr>
+              <th rowspan="2">Niveau de prix</th>
+              <th>Nombre<br>personnes</th>
+              <th rowspan="2">Prix<br>trop<br>élevé</th>
+              <th rowspan="2">% de prix<br>trop<br>élevé</th>
+              <th rowspan="2">% cumulé<br>croissant</th>
+              <th>Nombre<br>personnes</th>
+              <th rowspan="2">Prix de<br>mauvaise<br>qualité</th>
+              <th rowspan="2">% de prix de<br>mauvaise<br>qualité</th>
+              <th rowspan="2">% cumulé<br>décroissant</th>
+              <th rowspan="2">% de non<br>acheteurs</th>
+              <th rowspan="2">%<br>acheteur</th>
+            </tr>
+            <tr><th>interrogés</th><th>interrogés</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>10,00</td><td>2</td><td>0,30</td><td>0,30</td><td>91</td><td>17,95</td><td>100,00</td><td>100,30</td><td>-0,30</td></tr>
+            <tr><td>15,00</td><td>5</td><td>0,76</td><td>1,06</td><td>86</td><td>16,96</td><td>82,05</td><td>83,11</td><td>16,89</td></tr>
+            <tr><td>20,00</td><td>15</td><td>2,27</td><td>3,32</td><td>73</td><td>14,40</td><td>65,09</td><td>68,41</td><td>31,59</td></tr>
+            <tr><td>25,00</td><td>35</td><td>5,29</td><td>8,61</td><td>65</td><td>12,82</td><td>50,69</td><td>59,30</td><td>40,70</td></tr>
+            <tr><td>30,00</td><td>40</td><td>6,04</td><td>14,65</td><td>57</td><td>11,24</td><td>37,87</td><td>52,52</td><td>47,48</td></tr>
+            <tr class="highlight"><td>35,00</td><td>55</td><td>8,31</td><td>22,96</td><td>45</td><td>8,88</td><td>26,63</td><td>49,59</td><td>50,41</td></tr>
+            <tr><td>40,00</td><td>60</td><td>9,06</td><td>32,02</td><td>32</td><td>6,31</td><td>17,75</td><td>49,78</td><td>50,22</td></tr>
+            <tr><td>45,00</td><td>70</td><td>10,57</td><td>42,60</td><td>24</td><td>4,73</td><td>11,44</td><td>54,04</td><td>45,96</td></tr>
+            <tr><td>50,00</td><td>85</td><td>12,84</td><td>55,44</td><td>18</td><td>3,55</td><td>6,71</td><td>62,14</td><td>37,86</td></tr>
+            <tr><td>55,00</td><td>90</td><td>13,60</td><td>69,03</td><td>10</td><td>1,97</td><td>3,16</td><td>72,19</td><td>27,81</td></tr>
+            <tr><td>60,00</td><td>100</td><td>15,11</td><td>84,14</td><td>5</td><td>0,99</td><td>1,18</td><td>85,32</td><td>14,68</td></tr>
+            <tr><td>65,00</td><td>105</td><td>15,86</td><td>100,00</td><td>1</td><td>0,20</td><td>0,20</td><td>100,20</td><td>-0,20</td></tr>
+            <tr class="total">
+              <td>TOTAL</td>
+              <td>662</td>
+              <td>100</td>
+              <td colspan="2">Vérification 100%</td>
+              <td>507</td>
+              <td>100</td>
+              <td colspan="2">Vérification 100%</td>
+              <td></td><td></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="src">source · enquete terrain aupres de 662 personnes</div>
+      </div>
+
+      <div class="card">
+        <h3>Prix psychologique · courbes cumulees</h3>
+        <svg viewBox="0 0 520 340">
+          <rect x="70" y="20" width="400" height="260" fill="rgba(19,43,71,.4)" stroke="#2a4a6b"/>
+          <g stroke="rgba(79,195,247,.1)">
+            <line x1="70" y1="20"  x2="470" y2="20"/>
+            <line x1="70" y1="72"  x2="470" y2="72"/>
+            <line x1="70" y1="124" x2="470" y2="124"/>
+            <line x1="70" y1="176" x2="470" y2="176"/>
+            <line x1="70" y1="228" x2="470" y2="228"/>
+            <line x1="70" y1="280" x2="470" y2="280"/>
+          </g>
+          <line x1="70" y1="280" x2="470" y2="280" stroke="#4fc3f7" stroke-width="1.6"/>
+          <line x1="70" y1="20"  x2="70"  y2="280" stroke="#4fc3f7" stroke-width="1.6"/>
+          <g fill="#8ea9c4" font-size="10" font-family="Consolas" text-anchor="end">
+            <text x="62" y="24">100,00</text>
+            <text x="62" y="76">80,00</text>
+            <text x="62" y="128">60,00</text>
+            <text x="62" y="180">40,00</text>
+            <text x="62" y="232">20,00</text>
+            <text x="62" y="284">0,00</text>
+          </g>
+          <text x="20" y="150" fill="#5a7a9b" font-size="10" font-family="Consolas" text-anchor="middle" transform="rotate(-90 20 150)">Taux de (%)</text>
+          <g fill="#8ea9c4" font-size="9" font-family="Consolas" text-anchor="middle">
+            <text x="70"  y="296">10,00</text>
+            <text x="106" y="296">15,00</text>
+            <text x="143" y="296">20,00</text>
+            <text x="179" y="296">25,00</text>
+            <text x="215" y="296">30,00</text>
+            <text x="252" y="296">35,00</text>
+            <text x="288" y="296">40,00</text>
+            <text x="325" y="296">45,00</text>
+            <text x="361" y="296">50,00</text>
+            <text x="397" y="296">55,00</text>
+            <text x="434" y="296">60,00</text>
+            <text x="470" y="296">65,00</text>
+          </g>
+          <text x="270" y="318" fill="#5a7a9b" font-size="10" font-family="Consolas" text-anchor="middle">Prix de vente (€)</text>
+
+          <polyline fill="none" stroke="#4fc3f7" stroke-width="2.5" stroke-linejoin="round"
+            points="70,279.22 106.36,277.24 142.73,271.37 179.09,257.61 215.45,241.91 251.82,220.30 288.18,196.75 324.55,169.24 360.91,135.86 397.27,100.52 433.64,61.24 470,20"/>
+          <g fill="#4fc3f7">
+            <circle cx="70" cy="279.22" r="3"/><circle cx="106.36" cy="277.24" r="3"/>
+            <circle cx="142.73" cy="271.37" r="3"/><circle cx="179.09" cy="257.61" r="3"/>
+            <circle cx="215.45" cy="241.91" r="3"/><circle cx="251.82" cy="220.30" r="3"/>
+            <circle cx="288.18" cy="196.75" r="3"/><circle cx="324.55" cy="169.24" r="3"/>
+            <circle cx="360.91" cy="135.86" r="3"/><circle cx="397.27" cy="100.52" r="3"/>
+            <circle cx="433.64" cy="61.24" r="3"/><circle cx="470" cy="20" r="3"/>
+          </g>
+          <polyline fill="none" stroke="#ef5350" stroke-width="2.5" stroke-linejoin="round"
+            points="70,20 106.36,66.67 142.73,110.77 179.09,148.21 215.45,181.54 251.82,210.76 288.18,233.85 324.55,250.26 360.91,262.55 397.27,271.78 433.64,276.93 470,279.48"/>
+          <g fill="#ef5350">
+            <circle cx="70" cy="20" r="3"/><circle cx="106.36" cy="66.67" r="3"/>
+            <circle cx="142.73" cy="110.77" r="3"/><circle cx="179.09" cy="148.21" r="3"/>
+            <circle cx="215.45" cy="181.54" r="3"/><circle cx="251.82" cy="210.76" r="3"/>
+            <circle cx="288.18" cy="233.85" r="3"/><circle cx="324.55" cy="250.26" r="3"/>
+            <circle cx="360.91" cy="262.55" r="3"/><circle cx="397.27" cy="271.78" r="3"/>
+            <circle cx="433.64" cy="276.93" r="3"/><circle cx="470" cy="279.48" r="3"/>
+          </g>
+          <line x1="259" y1="20" x2="259" y2="280" stroke="#ffb74d" stroke-width="1.5" stroke-dasharray="4 3"/>
+          <circle cx="259" cy="215" r="6" fill="none" stroke="#ffb74d" stroke-width="2.5"/>
+          <circle cx="259" cy="215" r="3" fill="#ffb74d"/>
+          <text x="259" y="203" text-anchor="middle" fill="#ffb74d" font-size="10" font-family="Consolas" font-weight="700">≈ 37,50 €</text>
+        </svg>
+        <div class="legend-inline">
+          <span><div class="swatch" style="background:#4fc3f7;"></div>% cumule croissant</span>
+          <span><div class="swatch" style="background:#ef5350;"></div>% cumule decroissant</span>
+        </div>
+        <div class="src">source · image etude mercatique fournie par l eleve</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px;">
+      <h3>Interpretation de l enquete mercatique</h3>
+      <p style="font-size:.92rem;line-height:1.7;">
+        J ai choisi ces nombres pour montrer que plus le prix augmente plus le nombre de personnes trouvant le produit trop cher augmente de 2 a 105 personnes
+        A l inverse plus le prix est bas plus le nombre de personnes doutant de sa mauvaise qualite est eleve de 91 a 1 personnes
+      </p>
+      <p style="font-size:.92rem;line-height:1.7;color:var(--accent);margin-top:10px;font-weight:600;">
+        Le prix de 35,00 € correspond au prix psychologique c est a dire le prix ou le pourcentage d acheteurs est maximal soit 50,41 %
+      </p>
+      <div class="src">source · analyse personnelle a partir des donnees d enquete</div>
+    </div>
+  </section>
+
+  <!-- ===== SLIDE 11 : ETUDE DE MARCHE ===== -->
+  <section class="slide">
+    <div class="slide-head">
+      <span class="slide-num">11</span>
+      <h2 class="slide-title">Etude de marche</h2>
+      <span class="slide-tag">MARCHE</span>
+    </div>
+
+    <div class="mkt-doc" style="overflow-y:auto;">
+
+      <!-- INTRODUCTION -->
+      <div class="mkt-section">
+        <div class="mkt-section-header">Introduction</div>
+        <div class="mkt-section-body">
+          Cette analyse porte sur le marché de recherche de terrains c est un marché qui a vu ses ventes diminuees en quelques annees c est un marché en <span class="mkt-green">maturité / déclin</span>
+        </div>
+      </div>
+
+      <!-- ETUDE DE LA DEMANDE -->
+      <div class="mkt-section">
+        <div class="mkt-section-header">Etude de la demande</div>
+        <div class="mkt-2col">
+          <div class="mkt-2col-label">Analyse<br>quantitative de<br>la demande</div>
+          <div class="mkt-2col-content">
+            <span class="mkt-question">Combien de clients potentiels et actuels ?</span>
+            <span class="highlight">Il y a qu un seule client qui est un jeune couple.</span>
+          </div>
+        </div>
+        <div class="mkt-2col">
+          <div class="mkt-2col-label">Analyse<br>qualitative de la<br>demande</div>
+          <div class="mkt-2col-content">
+            <span class="mkt-question">Motivation / attente / frein / Profil type (âge, sexe, catégorie sociale, lieu d habitation…)</span>
+            <span class="highlight">Ce couple avec 2 enfants qui cherche a s installer dans la ville de Colomiers en banlieu toulousaine dans un quartier pavionnaire.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ETUDE DE L'OFFRE -->
+      <div class="mkt-section">
+        <div class="mkt-section-header">Etude de l offre</div>
+        <div class="mkt-2col">
+          <div class="mkt-2col-label">Analyse des<br>produits</div>
+          <div class="mkt-2col-content">
+            <span class="mkt-question">Produits proposés sur le marché en terme de : prix, design, technique, public visé…</span>
+            <p>Pour les propositions nous avons 3 possibilités avec une en centre ville de Colomiers de 420 m² au prix 169 000 € une autre dans le quartier de jacca de 357 m² pour 79 000 € et la dernière dans la zone du parc aeronautique avec 501 m² pour 199 000 €.</p>
+          </div>
+        </div>
+        <div class="mkt-2col">
+          <div class="mkt-2col-label">Analyse des<br>producteurs</div>
+          <div class="mkt-2col-content">
+            <span class="mkt-question">Analyse des entreprises concurrentes (qui, place sur le marché : leader, challenger, 3<sup>ème</sup>…, part de marché, chiffre d affaire…)</span>
+            <p>Ce terrain est disponible sur le site SeLoger et est proposé par Maison France Confort. C est un site de marché immobilier a forte utilisation.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- L'ENVIRONNEMENT -->
+      <div class="mkt-section">
+        <div class="mkt-section-header">L environnement</div>
+        <div class="mkt-section-body">
+          <p style="margin-bottom:6px;">Est ce un secteur très concurrentiel ou non ?</p>
+          <p style="margin-bottom:6px;">Contexte de crise ou non ?</p>
+          <p style="margin-bottom:6px;">Présence de contraintes législatives importantes (loi, normes, brevets… ) ?</p>
+          <p style="margin-bottom:10px;">Présence de contraintes environnementales ?</p>
+          <p class="highlight">Les seules contraintes sont le plu et le ppr, sans crises particulières avec un marché moyennement concurrentiel.</p>
+        </div>
+      </div>
+
+      <!-- CONCLUSION -->
+      <div class="mkt-section">
+        <div class="mkt-section-header">Conclusion</div>
+        <div class="mkt-section-body">
+          <p style="margin-bottom:6px;">Le marché est il un marché porteur ou en déclin ou niche ?</p>
+          <p style="margin-bottom:10px;">Cible visée par le produit (âge, sexe, catégorie sociale, lieu d habitation…).</p>
+          <p class="highlight">Ce type de marché etait en déclin et est actuellement entrain de se stabiliser ce qui indique une future augmentation des échanges.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="src" style="margin-top:10px;">source · document Etude de marche fourni par l eleve</div>
+  </section>
+
+  <!-- ===== SLIDE 12 : CHOIX DU TERRAIN ===== -->
+  <section class="slide">
+    <div class="slide-head">
+      <span class="slide-num">12</span>
+      <h2 class="slide-title">Choix du terrain</h2>
+      <span class="slide-tag">JUSTIFICATION</span>
+    </div>
+
+    <div class="slide-body cols-2-eq">
+
+      <!-- Colonne gauche : explication + données -->
+      <div>
+        <div class="card" style="margin-bottom:16px;">
+          <h3>Pourquoi avons-nous choisi ce terrain ?</h3>
+
+          <div class="terrain-quote">
+            Nous avons choisi ce terrain car il était moins cher que les autres terrains comparables.
+            Ce prix plus avantageux nous permet de mieux maîtriser notre budget et de consacrer davantage
+            de moyens à la construction de notre projet.
+          </div>
+
+          <div class="terrain-quote">
+            On a comparé avec plusieurs terrains constructibles et maisons les autres maisons étaient
+            plus chères pour moins d'espace exemple un coûtait 200 000 € pour 390 mètres carrés sans
+            être placer mieux.
+          </div>
+
+          <div class="src">source · document explicatif du choix du terrain fourni par l eleve</div>
+        </div>
+
+        <div class="card">
+          <h3>Caracteristiques du terrain</h3>
+          <div class="terrain-data-grid">
+            <div class="terrain-data-item">
+              <div class="label">Prix</div>
+              <div class="value">169 000 €</div>
+            </div>
+            <div class="terrain-data-item">
+              <div class="label">Surface</div>
+              <div class="value">420 m²</div>
+            </div>
+            <div class="terrain-data-item">
+              <div class="label">TVA</div>
+              <div class="value">33 800 €</div>
+            </div>
+            <div class="terrain-data-item">
+              <div class="label">Prix TTC</div>
+              <div class="value">202 800 €</div>
+            </div>
+            <div class="terrain-data-item" style="grid-column:span 2;">
+              <div class="label">Prix au m² HT · TTC</div>
+              <div class="value">402 €/m² HT · 483 €/m² TTC</div>
+            </div>
+          </div>
+          <div class="src">source · annonce SeLoger · Maisons France Confort</div>
+        </div>
+      </div>
+
+      <!-- Colonne droite : photo + carte -->
+      <div>
+        <div class="card" style="margin-bottom:16px;">
+          <h3>Photo du terrain</h3>
+          <img class="terrain-photo"
+               src="https://images.seloger.com/annonces/279421783/photo-terrain-colomiers.jpg"
+               alt="Terrain 420 m² Colomiers"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+          <div style="display:none;align-items:center;justify-content:center;height:180px;background:rgba(79,195,247,.08);border-radius:8px;border:1px dashed var(--line-soft);color:var(--dim2);font-size:.8rem;text-align:center;padding:12px;">
+            Photo du terrain<br>420 m² · Colomiers 31770<br><span style="font-size:.7rem;">voir l annonce SeLoger pour la photo</span>
+          </div>
+          <a class="terrain-link" href="https://www.seloger-construire.com/annonces/achat/terrain/colomiers-31/279421783/" target="_blank" rel="noopener noreferrer">
+            Voir l annonce SeLoger
+          </a>
+          <div class="src">source · SeLoger Construire · Maisons France Confort</div>
+        </div>
+
+        <div class="card">
+          <h3>Situation geographique</h3>
+          <div class="map-container">
+            <iframe
+              src="https://www.google.com/maps?q=114+chemin+de+Larramet,+Colomiers,+31770&output=embed"
+              allowfullscreen
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+          </div>
+          <div class="src">source · Google Maps · 114 chemin de Larramet · Colomiers 31770</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</div>
+
+<!-- ===== NAVIGATION ===== -->
+<nav class="nav">
+  <button class="nav-btn" id="prev" aria-label="Precedent">◄</button>
+  <div class="dots" id="dots"></div>
+  <span class="counter" id="counter">01 / 12</span>
+  <button class="nav-btn" id="next" aria-label="Suivant">►</button>
+</nav>
+
+<script>
+(function(){
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const total = slides.length;
+  let current = 0;
+  const dotsWrap = document.getElementById('dots');
+  const counter  = document.getElementById('counter');
+  const progress = document.getElementById('progress');
+  const prevBtn  = document.getElementById('prev');
+  const nextBtn  = document.getElementById('next');
+
+  slides.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.addEventListener('click', () => go(i));
+    dotsWrap.appendChild(d);
+  });
+  const dots = Array.from(dotsWrap.children);
+
+  function go(index) {
+    if (index < 0) index = 0;
+    if (index >= total) index = total - 1;
+    slides[current].classList.remove('active');
+    dots[current].classList.remove('active');
+    current = index;
+    slides[current].classList.add('active');
+    dots[current].classList.add('active');
+    counter.textContent = String(current + 1).padStart(2,'0') + ' / ' + String(total).padStart(2,'0');
+    progress.style.width = ((current + 1) / total * 100) + '%';
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === total - 1;
+    slides[current].scrollTop = 0;
+  }
+
+  prevBtn.addEventListener('click', () => go(current - 1));
+  nextBtn.addEventListener('click', () => go(current + 1));
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); go(current + 1); }
+    if (e.key === 'ArrowLeft'  || e.key === 'PageUp')  { e.preventDefault(); go(current - 1); }
+    if (e.key === 'Home') go(0);
+    if (e.key === 'End')  go(total - 1);
+  });
+
+  let x0 = null;
+  document.addEventListener('touchstart', e => x0 = e.touches[0].clientX, {passive:true});
+  document.addEventListener('touchend', e => {
+    if (x0 === null) return;
+    const dx = e.changedTouches[0].clientX - x0;
+    if (Math.abs(dx) > 60) go(current + (dx < 0 ? 1 : -1));
+    x0 = null;
+  });
+
+  go(0);
+})();
+</script>
+</body>
+</html>
