@@ -10,7 +10,7 @@
     --bg:#0a1929; --line:#4fc3f7; --line-soft:rgba(79,195,247,.25);
     --accent:#ffb74d; --accent2:#ff8a65; --text:#e8f4f8;
     --dim:#8ea9c4; --dim2:#5a7a9b; --red:#ef5350; --blue:#4fc3f7;
-    --yellow:#fff59d;
+    --yellow:#fff59d; --green:#81c784;
   }
   html, body { height:100%; overflow:hidden; font-family:'Segoe UI',system-ui,sans-serif; background:var(--bg); color:var(--text); }
   body::before {
@@ -53,10 +53,14 @@
   .hero { display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; height:100%; }
   .hero h1 { font-size:3.4rem; font-weight:800; line-height:1.05; background:linear-gradient(135deg,#fff 20%,var(--line) 60%,var(--accent) 100%); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:18px; }
   .hero .sub { font-size:1.05rem; color:var(--dim); letter-spacing:3px; text-transform:uppercase; margin-bottom:40px; font-family:'Consolas',monospace; }
-  .hero-stats { display:flex; gap:40px; margin-bottom:34px; flex-wrap:wrap; justify-content:center; }
+  .hero-stats { display:flex; gap:40px; margin-bottom:26px; flex-wrap:wrap; justify-content:center; }
   .stat { text-align:center; padding:16px 26px; border:1px solid var(--line-soft); border-radius:10px; background:rgba(19,43,71,.5); min-width:140px; }
   .stat .v { font-size:1.9rem; font-weight:800; color:var(--accent); font-family:'Consolas',monospace; line-height:1; }
   .stat .l { font-size:.7rem; color:var(--dim); text-transform:uppercase; letter-spacing:1.5px; margin-top:8px; }
+  .team { display:flex; gap:14px; flex-wrap:wrap; justify-content:center; margin-bottom:26px; }
+  .team-member { padding:10px 22px; border-radius:999px; background:rgba(79,195,247,.1); border:1px solid var(--line-soft); font-family:'Consolas',monospace; font-size:.9rem; letter-spacing:1px; color:var(--text); display:flex; align-items:center; gap:8px; }
+  .team-member.chief { background:rgba(255,183,77,.15); border-color:var(--accent); color:var(--accent); font-weight:700; }
+  .team-member.chief::before { content:'★'; color:var(--accent); }
   svg { display:block; width:100%; height:auto; max-height:100%; }
   .svg-wrap { display:flex; align-items:center; justify-content:center; }
   .sv-mono { font-family:'Consolas',monospace; }
@@ -89,7 +93,6 @@
   .survey-meta { display:flex; gap:30px; margin-top:6px; flex-wrap:wrap; justify-content:center; color:var(--dim2); font-size:.78rem; font-family:'Consolas',monospace; }
   .survey-meta span::before { content:'◆ '; color:var(--line); margin-right:4px; }
 
-  /* TABLEAU MERCATIQUE */
   .mkt-table { font-size:.68rem; }
   .mkt-table th { font-size:.6rem; padding:6px 4px; letter-spacing:.4px; line-height:1.15; text-align:center; text-transform:none; font-weight:700; }
   .mkt-table th:first-child { text-align:left; }
@@ -101,7 +104,6 @@
   .legend-inline span { display:flex; align-items:center; gap:8px; }
   .legend-inline .swatch { width:24px; height:4px; border-radius:2px; }
 
-  /* === SLIDE ETUDE DE MARCHE === */
   .mkt-doc { display:flex; flex-direction:column; gap:0; flex:1; min-height:0; }
   .mkt-section { border:1px solid var(--line-soft); border-radius:8px; overflow:hidden; margin-bottom:10px; background:rgba(19,43,71,.45); flex-shrink:0; }
   .mkt-section-header { background:linear-gradient(90deg, rgba(79,195,247,.22), rgba(79,195,247,.06)); padding:6px 14px; font-size:.8rem; font-weight:800; letter-spacing:1.6px; color:#fff; text-transform:uppercase; border-bottom:1px solid var(--line-soft); text-align:center; }
@@ -116,7 +118,6 @@
   .mkt-question { font-style:italic; color:var(--dim); display:block; margin-bottom:6px; font-size:.8rem; }
   .mkt-green { color:#81c784; font-weight:700; }
 
-  /* === SLIDE CHOIX DU TERRAIN === */
   .terrain-quote { border-left:3px solid var(--accent); padding:4px 0 4px 18px; margin-bottom:16px; font-style:italic; font-size:.92rem; line-height:1.6; color:var(--text); }
   .terrain-data-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:10px; }
   .terrain-data-item { background:rgba(79,195,247,.08); border:1px solid var(--line-soft); border-radius:8px; padding:10px 14px; text-align:center; }
@@ -128,51 +129,18 @@
   .terrain-link { display:inline-flex; align-items:center; gap:8px; margin-top:10px; padding:8px 16px; border-radius:999px; background:rgba(255,183,77,.15); border:1px solid var(--line-soft); color:var(--accent); font-weight:700; font-size:.78rem; text-decoration:none; letter-spacing:.8px; transition:background .2s; }
   .terrain-link:hover { background:rgba(255,183,77,.3); }
 
-  /* === SLIDE GANTT === */
   .gantt-sheet {
-    background: #ffffff;
-    color: #000;
-    padding: 22px;
-    border-radius: 10px;
-    font-family: Arial, 'Calibri', sans-serif;
-    font-size: 12px;
-    line-height: 1.3;
-    max-width: 100%;
-    border: 1px solid rgba(79,195,247,.3);
-    box-shadow: 0 6px 26px rgba(0,0,0,.25);
+    background: #ffffff; color: #000; padding: 22px; border-radius: 10px;
+    font-family: Arial, 'Calibri', sans-serif; font-size: 12px; line-height: 1.3;
+    max-width: 100%; border: 1px solid rgba(79,195,247,.3); box-shadow: 0 6px 26px rgba(0,0,0,.25);
   }
-  .gantt-sheet .sheet-title {
-    color: #1F4E79;
-    font-size: 22px;
-    font-weight: 900;
-    padding-bottom: 8px;
-    border-bottom: 3px solid #2E75B6;
-    margin-bottom: 18px;
-    letter-spacing: -.5px;
-    text-transform: uppercase;
-  }
-  .gantt-sheet .sheet-link {
-    background: #e8f5e9;
-    border: 1px solid #a5d6a7;
-    border-left: 5px solid #217346;
-    padding: 10px 14px;
-    border-radius: 6px;
-    margin-bottom: 18px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    flex-wrap: wrap;
-  }
+  .gantt-sheet .sheet-title { color: #1F4E79; font-size: 22px; font-weight: 900; padding-bottom: 8px; border-bottom: 3px solid #2E75B6; margin-bottom: 18px; letter-spacing: -.5px; text-transform: uppercase; }
+  .gantt-sheet .sheet-link { background: #e8f5e9; border: 1px solid #a5d6a7; border-left: 5px solid #217346; padding: 10px 14px; border-radius: 6px; margin-bottom: 18px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
   .gantt-sheet .sheet-link .label { font-weight: 800; color: #1F4E79; font-size: 11px; text-transform: uppercase; }
   .gantt-sheet .sheet-link a { color: #217346; font-weight: 700; text-decoration: underline; font-size: 11px; word-break: break-all; }
   .gantt-sheet .sheet-link a:hover { color: #0d4d2c; }
   .gantt-sheet .sheet-link .icon { font-size: 1.2rem; }
-  .gantt-sheet .project-info {
-    display: grid;
-    grid-template-columns: 150px 1fr 150px 1fr;
-    row-gap: 8px;
-    margin-bottom: 20px;
-  }
+  .gantt-sheet .project-info { display: grid; grid-template-columns: 150px 1fr 150px 1fr; row-gap: 8px; margin-bottom: 20px; }
   .gantt-sheet .project-info .label { font-weight: 700; color: #1F3864; font-size: 11px; text-transform: uppercase; letter-spacing: .3px; }
   .gantt-sheet .project-info .value { color: #C00000; font-size: 11.5px; }
 
@@ -185,17 +153,7 @@
   .gantt-sheet .col-resp { width: 120px; }
   .gantt-sheet .col-pct { width: 75px; text-align: center; }
   .gantt-sheet .col-seance { width: 58px; padding: 0 !important; position: relative; height: 26px; }
-  .gantt-sheet thead th {
-    color: white !important;
-    font-weight: 700 !important;
-    font-size: 9.5px !important;
-    text-align: center !important;
-    letter-spacing: .3px !important;
-    height: 26px;
-    text-transform: uppercase;
-    background: #1F3864;
-    padding: 4px 3px;
-  }
+  .gantt-sheet thead th { color: white !important; font-weight: 700 !important; font-size: 9.5px !important; text-align: center !important; letter-spacing: .3px !important; height: 26px; text-transform: uppercase; background: #1F3864; padding: 4px 3px; }
   .gantt-sheet thead th.group-header { font-size: 10px !important; }
   .gantt-sheet .hdr-s1 { background: #1F3864 !important; }
   .gantt-sheet .hdr-s2 { background: #2E75B6 !important; }
@@ -204,36 +162,15 @@
   .gantt-sheet .hdr-s5 { background: #BF9000 !important; }
   .gantt-sheet .hdr-s6 { background: #7030A0 !important; }
   .gantt-sheet .hdr-s7 { background: #5B2C6F !important; }
-  .gantt-sheet .hdr-fixed {
-    background: #f0f0f0 !important;
-    color: #333 !important;
-    font-weight: 800 !important;
-    font-size: 9.5px !important;
-  }
-  .gantt-sheet tr.category td {
-    background: #D9D9D9 !important;
-    font-weight: 800 !important;
-    font-size: 11.5px !important;
-    color: #000 !important;
-    padding: 6px 8px !important;
-  }
+  .gantt-sheet .hdr-fixed { background: #f0f0f0 !important; color: #333 !important; font-weight: 800 !important; font-size: 9.5px !important; }
+  .gantt-sheet tr.category td { background: #D9D9D9 !important; font-weight: 800 !important; font-size: 11.5px !important; color: #000 !important; padding: 6px 8px !important; }
   .gantt-sheet tbody tr.task-row td { background: #fff; height: 26px; }
   .gantt-sheet tbody tr.task-row:nth-child(even) td { background: #fafafa; }
   .gantt-sheet tbody tr.task-row:hover td { background: #fffbe6; }
   .gantt-sheet .task-red { color: #C00000 !important; }
   .gantt-sheet .resp { color: #C00000; font-weight: 400; font-size: 10.5px; }
   .gantt-sheet .resp::before { content: '• '; color: #C00000; font-weight: 700; }
-  .gantt-sheet .pct {
-    background: #A9D08E !important;
-    font-weight: 700;
-    color: #000;
-    text-align: center;
-    font-size: 10.5px;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+  .gantt-sheet .pct { background: #A9D08E !important; font-weight: 700; color: #000; text-align: center; font-size: 10.5px; height: 100%; display: flex; align-items: center; justify-content: center; }
   .gantt-sheet .seance-cell { position: relative; height: 26px; background: #fff; }
   .gantt-sheet .bar { position: absolute; top: 50%; transform: translateY(-50%); height: 78%; border-radius: 1px; }
   .gantt-sheet .bar-blue-dark { background: #0000FF; }
@@ -241,63 +178,50 @@
   .gantt-sheet .bar-red { background: #FF0000; }
   .gantt-sheet .bar-orange { background: #ED7D31; }
   .gantt-sheet .bar-purple { background: #7030A0; }
-
-  .gantt-sheet .legend {
-    margin-top: 16px;
-    display: flex;
-    gap: 18px;
-    flex-wrap: wrap;
-    font-size: 11px;
-    padding: 10px 14px;
-    background: #f7f7f7;
-    border-radius: 4px;
-    border: 1px solid #e0e0e0;
-  }
+  .gantt-sheet .legend { margin-top: 16px; display: flex; gap: 18px; flex-wrap: wrap; font-size: 11px; padding: 10px 14px; background: #f7f7f7; border-radius: 4px; border: 1px solid #e0e0e0; }
   .gantt-sheet .legend-item { display: flex; align-items: center; gap: 6px; font-weight: 600; color:#333; }
   .gantt-sheet .legend-swatch { width: 18px; height: 12px; border-radius: 2px; }
-
-  .gantt-sheet .footnote {
-    margin-top: 14px;
-    font-size: 10.5px;
-    color: #666;
-    text-align: right;
-    font-style: italic;
-  }
+  .gantt-sheet .footnote { margin-top: 14px; font-size: 10.5px; color: #666; text-align: right; font-style: italic; }
   .gantt-sheet .footnote strong { color: #1F4E79; }
+  .gantt-sheet .note-block { margin-top: 20px; padding: 14px 18px; background: #eef4fa; border-left: 5px solid #2E75B6; border-radius: 6px; }
+  .gantt-sheet .note-block h4 { color: #1F4E79; font-size: 12px; margin-bottom: 8px; text-transform: uppercase; }
+  .gantt-sheet .note-block ul { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 4px 20px; }
+  .gantt-sheet .note-block li { font-size: 11px; color: #333; padding-left: 18px; position: relative; line-height: 1.4; }
+  .gantt-sheet .note-block li::before { content: '✔'; color: #217346; font-weight: 700; position: absolute; left: 0; }
 
-  .gantt-sheet .note-block {
-    margin-top: 20px;
-    padding: 14px 18px;
-    background: #eef4fa;
-    border-left: 5px solid #2E75B6;
-    border-radius: 6px;
+  /* === SLIDE 14 : COMPARAISON DES PLANS === */
+  .plans-grid { display:grid; grid-template-columns: 1fr 1fr; gap:16px; }
+  .plan-card { background: rgba(19,43,71,.55); border: 1px solid var(--line-soft); border-radius: 10px; overflow: hidden; position: relative; display: flex; flex-direction: column; }
+  .plan-card.winner { border-color: var(--green); box-shadow: 0 0 0 2px rgba(129,199,132,.35), 0 8px 28px rgba(129,199,132,.15); }
+  .plan-card.winner::after {
+    content: '★ MEILLEUR PLAN'; position: absolute; top: 10px; right: -30px;
+    background: var(--green); color: #0a1929; font-weight: 800; font-size: 10px;
+    letter-spacing: 1.5px; padding: 5px 40px; transform: rotate(35deg);
+    z-index: 5; box-shadow: 0 3px 10px rgba(0,0,0,.3);
   }
-  .gantt-sheet .note-block h4 {
-    color: #1F4E79;
-    font-size: 12px;
-    margin-bottom: 8px;
-    text-transform: uppercase;
-  }
-  .gantt-sheet .note-block ul {
-    list-style: none;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4px 20px;
-  }
-  .gantt-sheet .note-block li {
-    font-size: 11px;
-    color: #333;
-    padding-left: 18px;
-    position: relative;
-    line-height: 1.4;
-  }
-  .gantt-sheet .note-block li::before {
-    content: '✔';
-    color: #217346;
-    font-weight: 700;
-    position: absolute;
-    left: 0;
-  }
+  .plan-header { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; border-bottom: 1px solid var(--line-soft); background: rgba(79,195,247,.06); }
+  .plan-header .author { font-family: 'Consolas', monospace; font-weight: 800; color: var(--accent); letter-spacing: 1px; font-size: .85rem; display: flex; align-items: center; gap: 8px; }
+  .plan-header .author::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--line); }
+  .plan-header .verdict { font-size: .68rem; padding: 3px 10px; border-radius: 4px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+  .verdict.ok { background: rgba(129,199,132,.2); color: var(--green); border: 1px solid rgba(129,199,132,.4); }
+  .verdict.ko { background: rgba(239,83,80,.15); color: var(--red); border: 1px solid rgba(239,83,80,.4); }
+  .verdict.mid { background: rgba(255,183,77,.15); color: var(--accent); border: 1px solid rgba(255,183,77,.4); }
+  .plan-svg-wrap { background: #f4f4f4; padding: 8px; flex: 1; display: flex; align-items: center; justify-content: center; min-height: 0; }
+  .plan-svg-wrap svg { max-height: 240px; }
+  .plan-info { padding: 10px 14px; font-size: .75rem; line-height: 1.45; color: var(--text); border-top: 1px solid var(--line-soft); background: rgba(10,25,41,.4); }
+  .plan-info b { color: var(--accent); }
+  .plan-info .warn { color: var(--red); }
+
+  .winner-summary { margin-top: 20px; background: linear-gradient(135deg, rgba(129,199,132,.12), rgba(79,195,247,.08)); border: 1px solid rgba(129,199,132,.35); border-radius: 10px; padding: 18px 22px; position: relative; }
+  .winner-summary::before { content: '🏆'; position: absolute; top: -16px; left: 20px; font-size: 28px; background: var(--bg); padding: 0 8px; }
+  .winner-summary h3 { color: var(--green); text-transform: uppercase; letter-spacing: 1.8px; font-size: .95rem; margin-bottom: 12px; font-weight: 800; }
+  .winner-summary ul { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 6px 26px; }
+  .winner-summary li { font-size: .82rem; color: var(--text); padding-left: 20px; position: relative; line-height: 1.5; }
+  .winner-summary li::before { content: '✓'; color: var(--green); font-weight: 800; position: absolute; left: 0; }
+  .winner-summary .score { margin-top: 14px; padding-top: 12px; border-top: 1px dashed rgba(129,199,132,.3); display: flex; gap: 30px; flex-wrap: wrap; }
+  .winner-summary .score-item { display: flex; flex-direction: column; }
+  .winner-summary .score-item .k { font-size: .68rem; color: var(--dim); text-transform: uppercase; letter-spacing: 1.2px; }
+  .winner-summary .score-item .v { font-size: 1.05rem; color: var(--green); font-weight: 800; font-family: 'Consolas', monospace; }
 
   @media (max-width:900px) {
     .slide { padding:24px 22px 90px; }
@@ -313,6 +237,8 @@
     .gantt-sheet .sheet-title { font-size: 17px; }
     .gantt-sheet .project-info { grid-template-columns: 110px 1fr; }
     .gantt-sheet .note-block ul { grid-template-columns: 1fr; }
+    .plans-grid { grid-template-columns: 1fr; }
+    .winner-summary ul { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -325,7 +251,7 @@
   <!-- ===== SLIDE 1 : TITRE ===== -->
   <section class="slide active">
     <div class="hero">
-      <div style="width:120px;margin-bottom:24px;">
+      <div style="width:120px;margin-bottom:20px;">
         <svg viewBox="0 0 100 80">
           <path d="M10 42 L50 12 L90 42" fill="none" stroke="#4fc3f7" stroke-width="3" stroke-linejoin="round"/>
           <rect x="22" y="42" width="56" height="34" fill="none" stroke="#4fc3f7" stroke-width="3"/>
@@ -336,10 +262,16 @@
       </div>
       <div class="sub">Metropole Toulousaine · 31770</div>
       <h1>PROJET MAISON<br>COLOMIERS</h1>
-      <p style="color:var(--dim);font-size:1rem;max-width:640px;line-height:1.6;margin-bottom:38px;">
+      <p style="color:var(--dim);font-size:1rem;max-width:640px;line-height:1.6;margin-bottom:26px;">
         Conception d une maison individuelle de plain pied<br>
         90 m² maximum sur terrain plat constructible
       </p>
+      <div class="team">
+        <div class="team-member">batiste</div>
+        <div class="team-member">mathys</div>
+        <div class="team-member chief">noah · chef de projet</div>
+        <div class="team-member">ilyes</div>
+      </div>
       <div class="hero-stats">
         <div class="stat"><div class="v">90 m²</div><div class="l">Surface max</div></div>
         <div class="stat"><div class="v">400 000 €</div><div class="l">Budget total</div></div>
@@ -939,14 +871,12 @@
     </div>
 
     <div class="mkt-doc" style="overflow-y:auto;">
-
       <div class="mkt-section">
         <div class="mkt-section-header">Introduction</div>
         <div class="mkt-section-body">
           Cette analyse porte sur le marché de recherche de terrains c est un marché qui a vu ses ventes diminuees en quelques annees c est un marché en <span class="mkt-green">maturité / déclin</span>
         </div>
       </div>
-
       <div class="mkt-section">
         <div class="mkt-section-header">Etude de la demande</div>
         <div class="mkt-2col">
@@ -964,7 +894,6 @@
           </div>
         </div>
       </div>
-
       <div class="mkt-section">
         <div class="mkt-section-header">Etude de l offre</div>
         <div class="mkt-2col">
@@ -982,7 +911,6 @@
           </div>
         </div>
       </div>
-
       <div class="mkt-section">
         <div class="mkt-section-header">L environnement</div>
         <div class="mkt-section-body">
@@ -993,7 +921,6 @@
           <p class="highlight">Les seules contraintes sont le plu et le ppr, sans crises particulières avec un marché moyennement concurrentiel.</p>
         </div>
       </div>
-
       <div class="mkt-section">
         <div class="mkt-section-header">Conclusion</div>
         <div class="mkt-section-body">
@@ -1002,7 +929,6 @@
           <p class="highlight">Ce type de marché etait en déclin et est actuellement entrain de se stabiliser ce qui indique une future augmentation des échanges.</p>
         </div>
       </div>
-
     </div>
 
     <div class="src" style="margin-top:10px;">source · document Etude de marche fourni par l eleve</div>
@@ -1036,22 +962,10 @@
         <div class="card">
           <h3>Caracteristiques du terrain</h3>
           <div class="terrain-data-grid">
-            <div class="terrain-data-item">
-              <div class="label">Prix</div>
-              <div class="value">169 000 €</div>
-            </div>
-            <div class="terrain-data-item">
-              <div class="label">Surface</div>
-              <div class="value">420 m²</div>
-            </div>
-            <div class="terrain-data-item">
-              <div class="label">TVA</div>
-              <div class="value">33 800 €</div>
-            </div>
-            <div class="terrain-data-item">
-              <div class="label">Prix TTC</div>
-              <div class="value">202 800 €</div>
-            </div>
+            <div class="terrain-data-item"><div class="label">Prix</div><div class="value">169 000 €</div></div>
+            <div class="terrain-data-item"><div class="label">Surface</div><div class="value">420 m²</div></div>
+            <div class="terrain-data-item"><div class="label">TVA</div><div class="value">33 800 €</div></div>
+            <div class="terrain-data-item"><div class="label">Prix TTC</div><div class="value">202 800 €</div></div>
             <div class="terrain-data-item" style="grid-column:span 2;">
               <div class="label">Prix au m² HT · TTC</div>
               <div class="value">402 €/m² HT · 483 €/m² TTC</div>
@@ -1069,7 +983,7 @@
                alt="Terrain 420 m² Colomiers"
                onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
           <div style="display:none;align-items:center;justify-content:center;height:180px;background:rgba(79,195,247,.08);border-radius:8px;border:1px dashed var(--line-soft);color:var(--dim2);font-size:.8rem;text-align:center;padding:12px;">
-            Photo du terrain<br>420 m² · Colomiers 31770<br><span style="font-size:.7rem;">voir l annonce SeLoger pour la photo</span>
+            Photo du terrain<br>420 m² · Colomiers 31770
           </div>
           <a class="terrain-link" href="https://www.seloger-construire.com/annonces/achat/terrain/colomiers-31/279421783/" target="_blank" rel="noopener noreferrer">
             Voir l annonce SeLoger
@@ -1080,14 +994,9 @@
         <div class="card">
           <h3>Situation geographique</h3>
           <div class="map-container">
-            <iframe
-              src="https://www.google.com/maps?q=114+chemin+de+Larramet,+Colomiers,+31770&output=embed"
-              allowfullscreen
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade">
-            </iframe>
+            <iframe src="https://www.google.com/maps?q=114+chemin+de+Larramet,+Colomiers,+31770&output=embed" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
           </div>
-          <div class="src">source · Google Maps · 114 chemin de Larramet · Colomiers 31770</div>
+          <div class="src">source · Google Maps · Colomiers 31770</div>
         </div>
       </div>
     </div>
@@ -1119,7 +1028,6 @@
           <div class="value">Projet I2d — Construction d'une maison individuelle</div>
           <div class="label">Membres du projet</div>
           <div class="value">Noah, Ilyes, Mathys, Baptiste</div>
-
           <div class="label">Chef de projet</div>
           <div class="value">Noah</div>
           <div class="label">Durée globale</div>
@@ -1150,235 +1058,35 @@
               </tr>
             </thead>
             <tbody>
+              <tr class="category"><td class="col-num">1</td><td colspan="10">Décodage du cahier des charges</td></tr>
+              <tr class="task-row"><td class="col-num">1.1</td><td class="col-title task-red">Analyse et définition des exigences de la famille</td><td class="col-resp"><span class="resp">tous</span></td><td class="col-pct"><div class="pct">100 %</div></td><td class="seance-cell"><div class="bar bar-blue-dark" style="left:3px; right:3px;"></div></td><td class="seance-cell"><div class="bar bar-blue-dark" style="left:3px; right:3px;"></div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td></tr>
+              <tr class="task-row"><td class="col-num">1.1.1</td><td class="col-title task-red">Définition du contexte du projet — Rôles du maître d'ouvrage et du maître d'œuvre</td><td class="col-resp"><span class="resp">noah, baptiste</span></td><td class="col-pct"><div class="pct">100 %</div></td><td class="seance-cell"><div class="bar bar-blue-dark" style="left:3px; right:3px;"></div></td><td class="seance-cell"><div class="bar bar-blue-dark" style="left:3px; right:3px;"></div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td></tr>
+              <tr class="task-row"><td class="col-num">1.2</td><td class="col-title task-red">Identification des contraintes réglementaires (PLU et PPR)</td><td class="col-resp"><span class="resp">baptiste</span></td><td class="col-pct"><div class="pct">90 %</div></td><td class="seance-cell"><div class="bar bar-blue-dark" style="left:3px; right:3px;"></div></td><td class="seance-cell"><div class="bar bar-blue-dark" style="left:3px; right:3px;"></div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td></tr>
+              <tr class="task-row"><td class="col-num">1.3</td><td class="col-title task-red">Exigences réglementaires thermiques RT2012 et RE2020</td><td class="col-resp"><span class="resp">mathys, noah</span></td><td class="col-pct"><div class="pct">100 %</div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"><div class="bar bar-blue-dark" style="left:3px; right:3px;"></div></td><td class="seance-cell"><div class="bar bar-blue-dark" style="left:3px; right:3px;"></div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td></tr>
+              <tr class="task-row"><td class="col-num">1.4</td><td class="col-title task-red">Synthèse et validation du cahier des charges</td><td class="col-resp"><span class="resp">ilyes</span></td><td class="col-pct"><div class="pct">100 %</div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"><div class="bar bar-blue-dark" style="left:3px; right:3px;"></div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td></tr>
 
-              <tr class="category">
-                <td class="col-num">1</td>
-                <td colspan="10">Décodage du cahier des charges</td>
-              </tr>
+              <tr class="category"><td class="col-num">2</td><td colspan="10">Évaluation de la compétitivité</td></tr>
+              <tr class="task-row"><td class="col-num">2.1</td><td class="col-title task-red">Choix d'un scénario d'implantation</td><td class="col-resp"><span class="resp">ilyes</span></td><td class="col-pct"><div class="pct">100 %</div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"><div class="bar bar-blue-light" style="left:3px; right:3px;"></div></td><td class="seance-cell"><div class="bar bar-blue-light" style="left:3px; right:3px;"></div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td></tr>
+              <tr class="task-row"><td class="col-num">2.2</td><td class="col-title task-red">Analyse du marché de l'immobilier columérin</td><td class="col-resp"><span class="resp">noah</span></td><td class="col-pct"><div class="pct">100 %</div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"><div class="bar bar-blue-light" style="left:3px; right:3px;"></div></td><td class="seance-cell"><div class="bar bar-blue-light" style="left:3px; right:3px;"></div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td></tr>
+              <tr class="task-row"><td class="col-num">2.3</td><td class="col-title task-red">Produire une étude mercatique avec questionnaire</td><td class="col-resp"><span class="resp">mathys</span></td><td class="col-pct"><div class="pct">100 %</div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"><div class="bar bar-blue-light" style="left:3px; right:3px;"></div></td><td class="seance-cell"><div class="bar bar-blue-light" style="left:3px; right:3px;"></div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td></tr>
+              <tr class="task-row"><td class="col-num">2.4</td><td class="col-title task-red">Synthèse de l'étude mercatique et validation du besoin</td><td class="col-resp"><span class="resp">ilyes</span></td><td class="col-pct"><div class="pct">100 %</div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"><div class="bar bar-blue-light" style="left:3px; right:3px;"></div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td></tr>
 
-              <tr class="task-row">
-                <td class="col-num">1.1</td>
-                <td class="col-title task-red">Analyse et définition des exigences de la famille (cahier des charges, besoin, contraintes)</td>
-                <td class="col-resp"><span class="resp">tous</span></td>
-                <td class="col-pct"><div class="pct">100 %</div></td>
-                <td class="seance-cell"><div class="bar bar-blue-dark" style="left:3px; right:3px;"></div></td>
-                <td class="seance-cell"><div class="bar bar-blue-dark" style="left:3px; right:3px;"></div></td>
-                <td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td>
-                <td class="seance-cell"></td><td class="seance-cell"></td>
-              </tr>
+              <tr class="category"><td class="col-num">3</td><td colspan="10">Planification du projet</td></tr>
+              <tr class="task-row"><td class="col-num">3.1</td><td class="col-title task-red">Diagramme de Gantt du projet d'étude</td><td class="col-resp"><span class="resp">noah</span></td><td class="col-pct"><div class="pct">100 %</div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"><div class="bar bar-red" style="left:3px; right:3px;"></div></td><td class="seance-cell"><div class="bar bar-red" style="left:3px; right:3px;"></div></td><td class="seance-cell"></td></tr>
+              <tr class="task-row"><td class="col-num">3.2</td><td class="col-title task-red">Estimation du prix</td><td class="col-resp"><span class="resp">baptiste, mathys</span></td><td class="col-pct"><div class="pct">100 %</div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"><div class="bar bar-red" style="left:3px; right:3px;"></div></td><td class="seance-cell"><div class="bar bar-red" style="left:3px; right:3px;"></div></td><td class="seance-cell"></td></tr>
+              <tr class="task-row"><td class="col-num">3.3</td><td class="col-title task-red">Répondre à la question : « À quoi ça sert ? »</td><td class="col-resp"><span class="resp">ilyes</span></td><td class="col-pct"><div class="pct">100 %</div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"><div class="bar bar-red" style="left:3px; right:3px;"></div></td><td class="seance-cell"></td></tr>
 
-              <tr class="task-row">
-                <td class="col-num">1.1.1</td>
-                <td class="col-title task-red">Définition du contexte du projet — Rôles du maître d'ouvrage et du maître d'œuvre, étapes de construction d'une maison</td>
-                <td class="col-resp"><span class="resp">noah, baptiste</span></td>
-                <td class="col-pct"><div class="pct">100 %</div></td>
-                <td class="seance-cell"><div class="bar bar-blue-dark" style="left:3px; right:3px;"></div></td>
-                <td class="seance-cell"><div class="bar bar-blue-dark" style="left:3px; right:3px;"></div></td>
-                <td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td>
-                <td class="seance-cell"></td><td class="seance-cell"></td>
-              </tr>
+              <tr class="category"><td class="col-num">4</td><td colspan="10">Proposition de solutions créatives</td></tr>
+              <tr class="task-row"><td class="col-num">4.1</td><td class="col-title task-red">Proposer des croquis</td><td class="col-resp"><span class="resp">ALL</span></td><td class="col-pct"><div class="pct">100 %</div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td></tr>
+              <tr class="task-row"><td class="col-num">4.2</td><td class="col-title task-red">Comparer les croquis de chacun</td><td class="col-resp"><span class="resp">ALL</span></td><td class="col-pct"><div class="pct">100 %</div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td></tr>
+              <tr class="task-row"><td class="col-num">4.3</td><td class="col-title task-red">Rendre compte de la séance / Justifier des choix</td><td class="col-resp"><span class="resp">noah, ilyes, mathys</span></td><td class="col-pct"><div class="pct">100 %</div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td></tr>
+              <tr class="task-row"><td class="col-num">4.4</td><td class="col-title task-red">Dessiner les plans sur Archi Facile</td><td class="col-resp"><span class="resp">noah, baptiste</span></td><td class="col-pct"><div class="pct">100 %</div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"><div class="bar bar-orange" style="left:3px; right:3px;"></div></td><td class="seance-cell"><div class="bar bar-orange" style="left:3px; right:3px;"></div></td><td class="seance-cell"></td></tr>
 
-              <tr class="task-row">
-                <td class="col-num">1.2</td>
-                <td class="col-title task-red">Identification des contraintes réglementaires liées à l'environnement (PLU et PPR de la commune, conception bioclimatique)</td>
-                <td class="col-resp"><span class="resp">baptiste</span></td>
-                <td class="col-pct"><div class="pct">90 %</div></td>
-                <td class="seance-cell"><div class="bar bar-blue-dark" style="left:3px; right:3px;"></div></td>
-                <td class="seance-cell"><div class="bar bar-blue-dark" style="left:3px; right:3px;"></div></td>
-                <td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td>
-                <td class="seance-cell"></td><td class="seance-cell"></td>
-              </tr>
-
-              <tr class="task-row">
-                <td class="col-num">1.3</td>
-                <td class="col-title task-red">Identification et définition des exigences réglementaires thermiques (Identifier les 5 postes pour respecter la RT2012 et définir les objectifs majeurs de la RE2020)</td>
-                <td class="col-resp"><span class="resp">mathys, noah</span></td>
-                <td class="col-pct"><div class="pct">100 %</div></td>
-                <td class="seance-cell"></td><td class="seance-cell"></td>
-                <td class="seance-cell"><div class="bar bar-blue-dark" style="left:3px; right:3px;"></div></td>
-                <td class="seance-cell"><div class="bar bar-blue-dark" style="left:3px; right:3px;"></div></td>
-                <td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td>
-              </tr>
-
-              <tr class="task-row">
-                <td class="col-num">1.4</td>
-                <td class="col-title task-red">Synthèse et validation du cahier des charges</td>
-                <td class="col-resp"><span class="resp">ilyes</span></td>
-                <td class="col-pct"><div class="pct">100 %</div></td>
-                <td class="seance-cell"></td><td class="seance-cell"></td>
-                <td class="seance-cell"><div class="bar bar-blue-dark" style="left:3px; right:3px;"></div></td>
-                <td class="seance-cell"></td><td class="seance-cell"></td>
-                <td class="seance-cell"></td><td class="seance-cell"></td>
-              </tr>
-
-              <tr class="category">
-                <td class="col-num">2</td>
-                <td colspan="10">Évaluation de la compétitivité</td>
-              </tr>
-
-              <tr class="task-row">
-                <td class="col-num">2.1</td>
-                <td class="col-title task-red">Choix d'un scénario d'implantation (localisation le projet et choisir un terrain, déterminer les dimensions et donner la surface du terrain choisi, déterminer alors le coût d'achat du terrain, en déduire une évaluation approximative du prix HT & TTC du projet immobilier envisagé)</td>
-                <td class="col-resp"><span class="resp">ilyes</span></td>
-                <td class="col-pct"><div class="pct">100 %</div></td>
-                <td class="seance-cell"></td><td class="seance-cell"></td>
-                <td class="seance-cell"><div class="bar bar-blue-light" style="left:3px; right:3px;"></div></td>
-                <td class="seance-cell"><div class="bar bar-blue-light" style="left:3px; right:3px;"></div></td>
-                <td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td>
-              </tr>
-
-              <tr class="task-row">
-                <td class="col-num">2.2</td>
-                <td class="col-title task-red">Analyse du marché de l'immobilier columérin (Prix terrain, ...)</td>
-                <td class="col-resp"><span class="resp">noah</span></td>
-                <td class="col-pct"><div class="pct">100 %</div></td>
-                <td class="seance-cell"></td><td class="seance-cell"></td>
-                <td class="seance-cell"><div class="bar bar-blue-light" style="left:3px; right:3px;"></div></td>
-                <td class="seance-cell"><div class="bar bar-blue-light" style="left:3px; right:3px;"></div></td>
-                <td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td>
-              </tr>
-
-              <tr class="task-row">
-                <td class="col-num">2.3</td>
-                <td class="col-title task-red">Produire une étude mercatique avec questionnaire (identification du prix psychologique, validation du besoin,...)</td>
-                <td class="col-resp"><span class="resp">mathys</span></td>
-                <td class="col-pct"><div class="pct">100 %</div></td>
-                <td class="seance-cell"></td><td class="seance-cell"></td>
-                <td class="seance-cell"><div class="bar bar-blue-light" style="left:3px; right:3px;"></div></td>
-                <td class="seance-cell"><div class="bar bar-blue-light" style="left:3px; right:3px;"></div></td>
-                <td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td>
-              </tr>
-
-              <tr class="task-row">
-                <td class="col-num">2.4</td>
-                <td class="col-title task-red">Synthèse de l'étude mercatique et validation du besoin</td>
-                <td class="col-resp"><span class="resp">ilyes</span></td>
-                <td class="col-pct"><div class="pct">100 %</div></td>
-                <td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td>
-                <td class="seance-cell"><div class="bar bar-blue-light" style="left:3px; right:3px;"></div></td>
-                <td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td>
-              </tr>
-
-              <tr class="category">
-                <td class="col-num">3</td>
-                <td colspan="10">Planification du projet</td>
-              </tr>
-
-              <tr class="task-row">
-                <td class="col-num">3.1</td>
-                <td class="col-title task-red">Diagramme de Gantt du projet d'étude (pas du projet de construction)</td>
-                <td class="col-resp"><span class="resp">noah</span></td>
-                <td class="col-pct"><div class="pct">100 %</div></td>
-                <td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td>
-                <td class="seance-cell"><div class="bar bar-red" style="left:3px; right:3px;"></div></td>
-                <td class="seance-cell"><div class="bar bar-red" style="left:3px; right:3px;"></div></td>
-                <td class="seance-cell"></td>
-              </tr>
-
-              <tr class="task-row">
-                <td class="col-num">3.2</td>
-                <td class="col-title task-red">Estimation du prix</td>
-                <td class="col-resp"><span class="resp">baptiste, mathys</span></td>
-                <td class="col-pct"><div class="pct">100 %</div></td>
-                <td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td>
-                <td class="seance-cell"><div class="bar bar-red" style="left:3px; right:3px;"></div></td>
-                <td class="seance-cell"><div class="bar bar-red" style="left:3px; right:3px;"></div></td>
-                <td class="seance-cell"></td>
-              </tr>
-
-              <tr class="task-row">
-                <td class="col-num">3.3</td>
-                <td class="col-title task-red">Répondre à la question : « À quoi ça sert ? »</td>
-                <td class="col-resp"><span class="resp">ilyes</span></td>
-                <td class="col-pct"><div class="pct">100 %</div></td>
-                <td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td>
-                <td class="seance-cell"><div class="bar bar-red" style="left:3px; right:3px;"></div></td>
-                <td class="seance-cell"></td>
-              </tr>
-
-              <tr class="category">
-                <td class="col-num">4</td>
-                <td colspan="10">Proposition de solutions créatives</td>
-              </tr>
-
-              <tr class="task-row">
-                <td class="col-num">4.1</td>
-                <td class="col-title task-red">Proposer des croquis</td>
-                <td class="col-resp"><span class="resp">ALL</span></td>
-                <td class="col-pct"><div class="pct">100 %</div></td>
-                <td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td>
-              </tr>
-
-              <tr class="task-row">
-                <td class="col-num">4.2</td>
-                <td class="col-title task-red">Comparer les croquis de chacun</td>
-                <td class="col-resp"><span class="resp">ALL</span></td>
-                <td class="col-pct"><div class="pct">100 %</div></td>
-                <td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td>
-              </tr>
-
-              <tr class="task-row">
-                <td class="col-num">4.3</td>
-                <td class="col-title task-red">Rendre compte de la séance / Justifier des choix</td>
-                <td class="col-resp"><span class="resp">noah, ilyes, mathys</span></td>
-                <td class="col-pct"><div class="pct">100 %</div></td>
-                <td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td>
-              </tr>
-
-              <tr class="task-row">
-                <td class="col-num">4.4</td>
-                <td class="col-title task-red">Dessiner les plans sur Archi Facile</td>
-                <td class="col-resp"><span class="resp">noah, baptiste</span></td>
-                <td class="col-pct"><div class="pct">100 %</div></td>
-                <td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td>
-                <td class="seance-cell"><div class="bar bar-orange" style="left:3px; right:3px;"></div></td>
-                <td class="seance-cell"><div class="bar bar-orange" style="left:3px; right:3px;"></div></td>
-                <td class="seance-cell"></td>
-              </tr>
-
-              <tr class="category">
-                <td class="col-num">5</td>
-                <td colspan="10">Conception détaillée</td>
-              </tr>
-
-              <tr class="task-row">
-                <td class="col-num">5.1</td>
-                <td class="col-title task-red">Modélisation Revit</td>
-                <td class="col-resp"><span class="resp">baptiste</span></td>
-                <td class="col-pct"><div class="pct">100 %</div></td>
-                <td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td>
-                <td class="seance-cell"><div class="bar bar-purple" style="left:3px; right:3px;"></div></td>
-                <td class="seance-cell"><div class="bar bar-purple" style="left:3px; right:3px;"></div></td>
-              </tr>
-
-              <tr class="task-row">
-                <td class="col-num">5.2</td>
-                <td class="col-title task-red">Vérification dimensionnelle et validation du projet</td>
-                <td class="col-resp"><span class="resp">noah</span></td>
-                <td class="col-pct"><div class="pct">0 %</div></td>
-                <td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td>
-                <td class="seance-cell"><div class="bar bar-purple" style="left:3px; right:3px;"></div></td>
-                <td class="seance-cell"><div class="bar bar-purple" style="left:3px; right:3px;"></div></td>
-              </tr>
-
-              <tr class="task-row">
-                <td class="col-num">5.3</td>
-                <td class="col-title task-red">Contrôle qualité de la maquette BIM</td>
-                <td class="col-resp"><span class="resp">ilyes</span></td>
-                <td class="col-pct"><div class="pct">0 %</div></td>
-                <td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td>
-                <td class="seance-cell"><div class="bar bar-purple" style="left:3px; right:3px;"></div></td>
-              </tr>
-
-              <tr class="task-row">
-                <td class="col-num">5.4</td>
-                <td class="col-title task-red">Présentation finale du projet au professeur</td>
-                <td class="col-resp"><span class="resp">mathys</span></td>
-                <td class="col-pct"><div class="pct">0 %</div></td>
-                <td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td>
-                <td class="seance-cell"><div class="bar bar-purple" style="left:3px; right:3px;"></div></td>
-              </tr>
-
+              <tr class="category"><td class="col-num">5</td><td colspan="10">Conception détaillée</td></tr>
+              <tr class="task-row"><td class="col-num">5.1</td><td class="col-title task-red">Modélisation Revit</td><td class="col-resp"><span class="resp">baptiste</span></td><td class="col-pct"><div class="pct">100 %</div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"><div class="bar bar-purple" style="left:3px; right:3px;"></div></td><td class="seance-cell"><div class="bar bar-purple" style="left:3px; right:3px;"></div></td></tr>
+              <tr class="task-row"><td class="col-num">5.2</td><td class="col-title task-red">Vérification dimensionnelle et validation du projet</td><td class="col-resp"><span class="resp">noah</span></td><td class="col-pct"><div class="pct">0 %</div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"><div class="bar bar-purple" style="left:3px; right:3px;"></div></td><td class="seance-cell"><div class="bar bar-purple" style="left:3px; right:3px;"></div></td></tr>
+              <tr class="task-row"><td class="col-num">5.3</td><td class="col-title task-red">Contrôle qualité de la maquette BIM</td><td class="col-resp"><span class="resp">ilyes</span></td><td class="col-pct"><div class="pct">0 %</div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"><div class="bar bar-purple" style="left:3px; right:3px;"></div></td></tr>
+              <tr class="task-row"><td class="col-num">5.4</td><td class="col-title task-red">Présentation finale du projet au professeur</td><td class="col-resp"><span class="resp">mathys</span></td><td class="col-pct"><div class="pct">0 %</div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"><div class="bar bar-purple" style="left:3px; right:3px;"></div></td></tr>
             </tbody>
           </table>
         </div>
@@ -1395,7 +1103,7 @@
           <h4>📘 À quoi sert un diagramme de Gantt ?</h4>
           <ul>
             <li>Visualiser le planning des tâches dans le temps</li>
-            <li>Répartir le travail entre Noah, Ilyes, Mathys et Baptiste</li>
+            <li>Répartir le travail entre les 4 membres</li>
             <li>Suivre l'avancement (% terminé) de chaque tâche</li>
             <li>Coordonner les dépendances entre les tâches</li>
             <li>Respecter les délais des 7 séances</li>
@@ -1406,8 +1114,213 @@
         <div class="footnote">
           <strong>Noah</strong> — Chef de projet · Équipe : Noah · Ilyes · Mathys · Baptiste · 1ère STI2D
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SLIDE 14 : COMPARAISON DES 4 PLANS ===== -->
+  <section class="slide">
+    <div class="slide-head">
+      <span class="slide-num">14</span>
+      <h2 class="slide-title">Comparaison des 4 plans · Choix final</h2>
+      <span class="slide-tag">CONCEPTION</span>
+    </div>
+
+    <div class="slide-body" style="grid-template-columns:1fr; overflow-y:auto;">
+      <div class="plans-grid">
+
+        <!-- PLAN 1 · BAPTISTE (GAGNANT) -->
+        <div class="plan-card winner">
+          <div class="plan-header">
+            <span class="author">PLAN 1 · BAPTISTE</span>
+            <span class="verdict ok">✓ RETENU</span>
+          </div>
+          <div class="plan-svg-wrap">
+            <svg viewBox="0 0 480 260">
+              <rect x="2" y="2" width="476" height="256" fill="none" stroke="#999" stroke-width="1"/>
+              <!-- Garage -->
+              <rect x="10" y="20" width="80" height="180" fill="#cfcfcf" stroke="#666" stroke-width="3"/>
+              <text x="50" y="105" text-anchor="middle" font-size="11" font-weight="800" fill="#000">Garage</text>
+              <text x="50" y="120" text-anchor="middle" font-size="9" fill="#000">18 m²</text>
+              <rect x="10" y="200" width="80" height="4" fill="#fff" stroke="#333"/>
+              <!-- Chambre parentale -->
+              <rect x="95" y="20" width="105" height="100" fill="#fdf6dc" stroke="#666" stroke-width="2"/>
+              <text x="147" y="65" text-anchor="middle" font-size="9" font-weight="700" fill="#000">Chambre parentale</text>
+              <text x="147" y="80" text-anchor="middle" font-size="9" fill="#000">12,5 m²</text>
+              <!-- Salle d'eau -->
+              <rect x="205" y="20" width="60" height="100" fill="#fdf6dc" stroke="#666" stroke-width="2"/>
+              <text x="235" y="60" text-anchor="middle" font-size="8" font-weight="700" fill="#000">Salle d'eau</text>
+              <text x="235" y="75" text-anchor="middle" font-size="8" fill="#000">5 m²</text>
+              <!-- WC -->
+              <rect x="270" y="20" width="38" height="100" fill="#fdf6dc" stroke="#666" stroke-width="2"/>
+              <text x="289" y="65" text-anchor="middle" font-size="8" font-weight="700" fill="#000">WC</text>
+              <text x="289" y="78" text-anchor="middle" font-size="8" fill="#000">2 m²</text>
+              <!-- Chambre 1 -->
+              <rect x="313" y="20" width="80" height="100" fill="#fdf6dc" stroke="#666" stroke-width="2"/>
+              <text x="353" y="65" text-anchor="middle" font-size="9" font-weight="700" fill="#000">Chambre 1</text>
+              <text x="353" y="80" text-anchor="middle" font-size="9" fill="#000">10 m²</text>
+              <!-- Chambre 2 -->
+              <rect x="398" y="20" width="80" height="100" fill="#fdf6dc" stroke="#666" stroke-width="2"/>
+              <text x="438" y="65" text-anchor="middle" font-size="9" font-weight="700" fill="#000">Chambre 2</text>
+              <text x="438" y="80" text-anchor="middle" font-size="9" fill="#000">10 m²</text>
+              <!-- Couloir -->
+              <rect x="95" y="125" width="383" height="45" fill="#fdf6dc" stroke="#666" stroke-width="1.5"/>
+              <text x="270" y="152" text-anchor="middle" font-size="9" font-weight="700" fill="#000">Couloir · 8,5 m²</text>
+              <!-- Bureau -->
+              <rect x="95" y="175" width="140" height="70" fill="#fdf6dc" stroke="#666" stroke-width="2"/>
+              <text x="165" y="208" text-anchor="middle" font-size="9" font-weight="700" fill="#000">Bureau / Salle de jeu</text>
+              <text x="165" y="223" text-anchor="middle" font-size="9" fill="#000">9 m²</text>
+              <!-- Séjour -->
+              <rect x="240" y="175" width="238" height="70" fill="#fdf6dc" stroke="#666" stroke-width="2.5"/>
+              <text x="359" y="207" text-anchor="middle" font-size="10" font-weight="800" fill="#000">Séjour - Salon - Cuisine</text>
+              <text x="359" y="223" text-anchor="middle" font-size="9" fill="#000">34 m²</text>
+              <!-- Baies Sud -->
+              <line x1="240" y1="245" x2="478" y2="245" stroke="#ffb74d" stroke-width="4"/>
+              <text x="360" y="256" text-anchor="middle" font-size="8" font-weight="700" fill="#b8860b" letter-spacing="1">◄ BAIES SUD ►</text>
+            </svg>
+          </div>
+          <div class="plan-info">
+            <b>Surface habitable</b> ≈ 91 m² · <b>Garage</b> 18 m² · <b>Total</b> ≈ 109 m²<br>
+            Toutes les pièces du cahier des charges sont présentes · zone nuit séparée de la zone jour · garage accolé pour monospace
+          </div>
+        </div>
+
+        <!-- PLAN 2 · ILYES -->
+        <div class="plan-card">
+          <div class="plan-header">
+            <span class="author">PLAN 2 · ILYES</span>
+            <span class="verdict ko">✗ ÉCARTÉ</span>
+          </div>
+          <div class="plan-svg-wrap">
+            <svg viewBox="0 0 480 260">
+              <rect x="2" y="2" width="476" height="256" fill="none" stroke="#999" stroke-width="1"/>
+              <rect x="30" y="20" width="110" height="110" fill="#fdf6dc" stroke="#666" stroke-width="2"/>
+              <text x="85" y="70" text-anchor="middle" font-size="10" font-weight="700" fill="#000">12,37 m²</text>
+              <rect x="145" y="20" width="130" height="110" fill="#fdf6dc" stroke="#666" stroke-width="2"/>
+              <text x="210" y="70" text-anchor="middle" font-size="10" font-weight="700" fill="#000">12,37 m²</text>
+              <rect x="280" y="20" width="130" height="110" fill="#fdf6dc" stroke="#666" stroke-width="3" stroke-dasharray="4 3"/>
+              <text x="345" y="70" text-anchor="middle" font-size="10" font-weight="700" fill="#000">12,37 m²</text>
+              <rect x="30" y="135" width="200" height="80" fill="#fdf6dc" stroke="#666" stroke-width="2"/>
+              <text x="130" y="180" text-anchor="middle" font-size="10" font-weight="700" fill="#000">7,85 m²</text>
+              <rect x="235" y="135" width="80" height="80" fill="#fdf6dc" stroke="#666" stroke-width="2"/>
+              <text x="275" y="180" text-anchor="middle" font-size="10" font-weight="700" fill="#000">7,29 m²</text>
+              <text x="400" y="160" text-anchor="middle" font-size="10" font-weight="700" fill="#000">29,3 m²</text>
+            </svg>
+          </div>
+          <div class="plan-info">
+            <span class="warn">✗ Plan de test incomplet</span> · pas de garage · pas de nom de pièces (chambre/séjour/etc) · WC et salle de bain absents
+          </div>
+        </div>
+
+        <!-- PLAN 3 · NOAH -->
+        <div class="plan-card">
+          <div class="plan-header">
+            <span class="author">PLAN 3 · NOAH</span>
+            <span class="verdict mid">⚠ INSUFFISANT</span>
+          </div>
+          <div class="plan-svg-wrap">
+            <svg viewBox="0 0 480 260">
+              <rect x="2" y="2" width="476" height="256" fill="none" stroke="#999" stroke-width="1"/>
+              <!-- Garage (petit) -->
+              <rect x="10" y="20" width="80" height="130" fill="#cfcfcf" stroke="#666" stroke-width="3"/>
+              <text x="50" y="80" text-anchor="middle" font-size="10" font-weight="800" fill="#000">Garage</text>
+              <text x="50" y="95" text-anchor="middle" font-size="9" fill="#c00">12,06 m²</text>
+              <text x="50" y="112" text-anchor="middle" font-size="8" fill="#c00">⚠ trop petit</text>
+              <!-- Chambre -->
+              <rect x="95" y="20" width="95" height="110" fill="#fdf6dc" stroke="#666" stroke-width="2"/>
+              <text x="142" y="70" text-anchor="middle" font-size="9" font-weight="700" fill="#000">Chambre</text>
+              <text x="142" y="84" text-anchor="middle" font-size="9" fill="#000">10,53 m²</text>
+              <!-- Salle de bain -->
+              <rect x="195" y="20" width="65" height="80" fill="#fdf6dc" stroke="#666" stroke-width="2"/>
+              <text x="227" y="55" text-anchor="middle" font-size="8" font-weight="700" fill="#000">salle de bain</text>
+              <text x="227" y="68" text-anchor="middle" font-size="8" fill="#000">5,17 m²</text>
+              <!-- WC -->
+              <rect x="195" y="105" width="65" height="25" fill="#fdf6dc" stroke="#666" stroke-width="1.5"/>
+              <text x="227" y="121" text-anchor="middle" font-size="7" fill="#000">WC 1,35 m²</text>
+              <!-- Chambre -->
+              <rect x="265" y="20" width="95" height="110" fill="#fdf6dc" stroke="#666" stroke-width="2"/>
+              <text x="312" y="70" text-anchor="middle" font-size="9" font-weight="700" fill="#000">chambre</text>
+              <text x="312" y="84" text-anchor="middle" font-size="9" fill="#000">10,13 m²</text>
+              <!-- Chambre -->
+              <rect x="365" y="20" width="95" height="110" fill="#fdf6dc" stroke="#666" stroke-width="2"/>
+              <text x="412" y="70" text-anchor="middle" font-size="9" font-weight="700" fill="#000">Chambre</text>
+              <text x="412" y="84" text-anchor="middle" font-size="9" fill="#000">10,47 m²</text>
+              <!-- Couloir -->
+              <rect x="95" y="135" width="365" height="50" fill="#fdf6dc" stroke="#666" stroke-width="1.5"/>
+              <text x="277" y="163" text-anchor="middle" font-size="9" font-weight="700" fill="#000">couloir · 18,37 m² (trop grand)</text>
+              <!-- Séjour -->
+              <rect x="95" y="190" width="365" height="55" fill="#fdf6dc" stroke="#666" stroke-width="2.5"/>
+              <text x="277" y="218" text-anchor="middle" font-size="10" font-weight="800" fill="#000">Sejour,cuisine · 24,08 m²</text>
+            </svg>
+          </div>
+          <div class="plan-info">
+            <b>Total habitable</b> ≈ 60 m² (trop petit) · couloir de 18 m² trop grand · <span class="warn">garage 12 m² trop petit pour un monospace</span> · surface totale loin des 90 m²
+          </div>
+        </div>
+
+        <!-- PLAN 4 · MATHYS -->
+        <div class="plan-card">
+          <div class="plan-header">
+            <span class="author">PLAN 4 · MATHYS</span>
+            <span class="verdict mid">⚠ ALTERNATIVE</span>
+          </div>
+          <div class="plan-svg-wrap">
+            <svg viewBox="0 0 480 260">
+              <rect x="2" y="2" width="476" height="256" fill="none" stroke="#999" stroke-width="1"/>
+              <!-- Garage -->
+              <rect x="10" y="20" width="90" height="200" fill="#cfcfcf" stroke="#666" stroke-width="3"/>
+              <text x="55" y="115" text-anchor="middle" font-size="11" font-weight="800" fill="#000">Garage</text>
+              <text x="55" y="130" text-anchor="middle" font-size="9" fill="#000">18 m²</text>
+              <!-- Séjour -->
+              <rect x="105" y="20" width="150" height="130" fill="#fdf6dc" stroke="#666" stroke-width="2.5"/>
+              <text x="180" y="80" text-anchor="middle" font-size="10" font-weight="700" fill="#000">Séjour</text>
+              <text x="180" y="95" text-anchor="middle" font-size="10" fill="#000">25 m²</text>
+              <!-- Pièces droite haut -->
+              <rect x="260" y="20" width="110" height="95" fill="#fdf6dc" stroke="#666" stroke-width="2"/>
+              <text x="315" y="65" text-anchor="middle" font-size="9" font-weight="700" fill="#000">13,5 m²</text>
+              <rect x="375" y="20" width="90" height="45" fill="#fdf6dc" stroke="#666" stroke-width="2"/>
+              <text x="420" y="46" text-anchor="middle" font-size="8" font-weight="700" fill="#000">5,25 m²</text>
+              <rect x="375" y="70" width="90" height="45" fill="#fdf6dc" stroke="#666" stroke-width="2"/>
+              <text x="420" y="96" text-anchor="middle" font-size="8" font-weight="700" fill="#000">6,08 m²</text>
+              <!-- Couloir -->
+              <rect x="260" y="120" width="205" height="35" fill="#fdf6dc" stroke="#666" stroke-width="1.5"/>
+              <text x="362" y="142" text-anchor="middle" font-size="9" font-weight="700" fill="#000">couloir · 5,03 m²</text>
+              <!-- Chambres bas -->
+              <rect x="260" y="160" width="100" height="85" fill="#fdf6dc" stroke="#666" stroke-width="2"/>
+              <text x="310" y="205" text-anchor="middle" font-size="9" font-weight="700" fill="#000">13,13 m²</text>
+              <rect x="365" y="160" width="100" height="85" fill="#fdf6dc" stroke="#666" stroke-width="2"/>
+              <text x="415" y="205" text-anchor="middle" font-size="9" font-weight="700" fill="#000">13,13 m²</text>
+            </svg>
+          </div>
+          <div class="plan-info">
+            <b>Surface habitable</b> ≈ 82 m² · <b>Garage</b> 18 m² · bonne organisation mais <span class="warn">plusieurs pièces non nommées</span> · séjour un peu excentré
+          </div>
+        </div>
 
       </div>
+
+      <!-- VERDICT FINAL -->
+      <div class="winner-summary">
+        <h3>Plan retenu · Plan 1 de Baptiste</h3>
+        <ul>
+          <li>Respecte la surface habitable de 90 m² maximum (91 m²)</li>
+          <li>Contient toutes les pièces obligatoires du cahier des charges</li>
+          <li>Garage accolé de 18 m² adapté à un monospace</li>
+          <li>Zone nuit (chambres) séparée de la zone jour (séjour)</li>
+          <li>Séjour-Salon-Cuisine spacieux de 34 m² avec grandes baies au Sud</li>
+          <li>Orientation bioclimatique Sud / Sud-Est respectée pour les pièces de vie</li>
+          <li>Couloir central qui dessert toutes les chambres sans traverser le séjour</li>
+          <li>Surface vitrée conforme à la RT2012 (≥ 1/6 de la surface habitable)</li>
+        </ul>
+        <div class="score">
+          <div class="score-item"><span class="k">Surface habitable</span><span class="v">91 m²</span></div>
+          <div class="score-item"><span class="k">Garage</span><span class="v">18 m²</span></div>
+          <div class="score-item"><span class="k">Pièces conformes</span><span class="v">9 / 9</span></div>
+          <div class="score-item"><span class="k">Orientation Sud</span><span class="v">✓ OUI</span></div>
+          <div class="score-item"><span class="k">Normes RT2012</span><span class="v">✓ VALIDÉ</span></div>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -1417,7 +1330,7 @@
 <nav class="nav">
   <button class="nav-btn" id="prev" aria-label="Precedent">◄</button>
   <div class="dots" id="dots"></div>
-  <span class="counter" id="counter">01 / 13</span>
+  <span class="counter" id="counter">01 / 14</span>
   <button class="nav-btn" id="next" aria-label="Suivant">►</button>
 </nav>
 
