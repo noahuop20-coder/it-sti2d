@@ -189,7 +189,6 @@
   .gantt-sheet .note-block li { font-size: 11px; color: #333; padding-left: 18px; position: relative; line-height: 1.4; }
   .gantt-sheet .note-block li::before { content: '✔'; color: #217346; font-weight: 700; position: absolute; left: 0; }
 
-  /* === SLIDE 14 : COMPARAISON DES PLANS === */
   .plans-grid { display:grid; grid-template-columns: 1fr 1fr; gap:16px; }
   .plan-card { background: rgba(19,43,71,.55); border: 1px solid var(--line-soft); border-radius: 10px; overflow: hidden; position: relative; display: flex; flex-direction: column; }
   .plan-card.winner { border-color: var(--green); box-shadow: 0 0 0 2px rgba(129,199,132,.35), 0 8px 28px rgba(129,199,132,.15); }
@@ -206,6 +205,7 @@
   .plan-info { padding: 10px 14px; font-size: .75rem; line-height: 1.45; color: var(--text); border-top: 1px solid var(--line-soft); background: rgba(10,25,41,.4); }
   .plan-info b { color: var(--accent); }
   .plan-info .warn { color: var(--red); }
+  .plan-info .good { color: var(--green); }
 
   .winner-summary { margin-top: 20px; background: linear-gradient(135deg, rgba(129,199,132,.12), rgba(79,195,247,.08)); border: 1px solid rgba(129,199,132,.35); border-radius: 10px; padding: 18px 22px; position: relative; }
   .winner-summary::before { content: '🏆'; position: absolute; top: -16px; left: 20px; font-size: 28px; background: var(--bg); padding: 0 8px; }
@@ -217,298 +217,6 @@
   .winner-summary .score-item { display: flex; flex-direction: column; }
   .winner-summary .score-item .k { font-size: .68rem; color: var(--dim); text-transform: uppercase; letter-spacing: 1.2px; }
   .winner-summary .score-item .v { font-size: 1.05rem; color: var(--green); font-weight: 800; font-family: 'Consolas', monospace; }
-
-  /* === SLIDE 12 : DEVIS === */
-  .devis-sheet {
-    background: #ffffff;
-    color: #000;
-    padding: 22px 26px;
-    border-radius: 10px;
-    font-family: Arial, 'Calibri', sans-serif;
-    font-size: 12px;
-    line-height: 1.35;
-    border: 1px solid rgba(79,195,247,.3);
-    box-shadow: 0 6px 26px rgba(0,0,0,.25);
-  }
-  .devis-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    padding-bottom: 14px;
-    border-bottom: 2px solid #2E75B6;
-    margin-bottom: 18px;
-    gap: 20px;
-    flex-wrap: wrap;
-  }
-  .devis-brand {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-  }
-  .devis-logo {
-    width: 60px; height: 60px;
-    background: #2E75B6;
-    color: #fff;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 22px;
-    font-weight: 900;
-    font-family: Georgia, serif;
-    letter-spacing: -1px;
-    box-shadow: 0 3px 8px rgba(46,117,182,.35);
-  }
-  .devis-brand-text h2 {
-    color: #1F4E79;
-    font-size: 17px;
-    font-weight: 900;
-    letter-spacing: .5px;
-    line-height: 1.1;
-  }
-  .devis-brand-text p {
-    font-size: 9.5px;
-    color: #555;
-    margin-top: 4px;
-    line-height: 1.4;
-  }
-  .devis-meta {
-    background: #eef4fa;
-    border: 1.5px solid #1F4E79;
-    border-radius: 6px;
-    padding: 10px 14px;
-    font-size: 11px;
-    min-width: 240px;
-  }
-  .devis-meta .row { display: flex; justify-content: space-between; gap: 14px; padding: 2px 0; }
-  .devis-meta .k { color: #1F3864; font-weight: 700; }
-  .devis-meta .v { color: #C00000; font-weight: 700; font-family: 'Consolas', monospace; }
-  .devis-meta h4 {
-    color: #1F4E79;
-    font-size: 12px;
-    font-weight: 900;
-    letter-spacing: 1px;
-    margin-bottom: 6px;
-    border-bottom: 1px solid #c5d5e8;
-    padding-bottom: 5px;
-  }
-
-  .devis-client {
-    display: flex;
-    justify-content: space-between;
-    gap: 20px;
-    margin-bottom: 16px;
-    flex-wrap: wrap;
-  }
-  .devis-client .box {
-    background: #f7fafd;
-    border: 1px solid #c5d5e8;
-    border-radius: 6px;
-    padding: 10px 14px;
-    font-size: 11px;
-    line-height: 1.55;
-    min-width: 220px;
-  }
-  .devis-client .box h5 {
-    color: #1F4E79;
-    font-size: 10.5px;
-    text-transform: uppercase;
-    letter-spacing: 1.2px;
-    margin-bottom: 5px;
-    font-weight: 800;
-  }
-  .devis-client .box p { color: #333; }
-  .devis-client .box strong { color: #1F3864; }
-
-  .devis-title-line {
-    font-size: 12.5px;
-    font-weight: 900;
-    color: #1F4E79;
-    margin-bottom: 10px;
-    letter-spacing: .4px;
-  }
-
-  .devis-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 10.5px;
-    margin-bottom: 16px;
-  }
-  .devis-table thead th {
-    background: #2E75B6;
-    color: #fff !important;
-    font-size: 10px !important;
-    text-transform: uppercase;
-    letter-spacing: .8px;
-    padding: 7px 8px !important;
-    text-align: left;
-    border: 1px solid #1F4E79 !important;
-    font-weight: 800 !important;
-  }
-  .devis-table td {
-    border: 1px solid #c5d5e8 !important;
-    padding: 7px 8px !important;
-    background: #fff;
-    color: #222 !important;
-    font-family: Arial, sans-serif !important;
-    font-size: 10.5px !important;
-    vertical-align: middle;
-  }
-  .devis-table tbody tr:nth-child(even) td { background: #f7fafd !important; }
-  .devis-table td.unit, .devis-table td.qty, .devis-table td.pu, .devis-table td.total {
-    text-align: center;
-    font-family: 'Consolas', monospace;
-  }
-  .devis-table td.total { text-align: right; font-weight: 700; color: #1F3864 !important; }
-  .devis-table .designation { font-weight: 600; color: #1F3864 !important; }
-
-  .devis-bottom {
-    display: grid;
-    grid-template-columns: 1.4fr 1fr;
-    gap: 20px;
-    margin-bottom: 16px;
-  }
-
-  .devis-conditions h4 {
-    color: #2E75B6;
-    font-size: 12px;
-    font-weight: 800;
-    margin-bottom: 8px;
-    letter-spacing: .3px;
-    text-decoration: underline;
-  }
-  .devis-conditions ul {
-    list-style: none;
-    font-size: 11px;
-    line-height: 1.7;
-    color: #333;
-  }
-  .devis-conditions li { padding-left: 14px; position: relative; }
-  .devis-conditions li::before {
-    content: '▸';
-    color: #2E75B6;
-    position: absolute;
-    left: 0;
-    font-weight: 800;
-  }
-  .devis-conditions .amount { color: #C00000; font-weight: 700; font-family: 'Consolas', monospace; }
-
-  .devis-totaux {
-    background: #eef4fa;
-    border: 1.5px solid #1F4E79;
-    border-radius: 6px;
-    padding: 12px 16px;
-    font-family: 'Consolas', monospace;
-    font-size: 12px;
-  }
-  .devis-totaux .row {
-    display: flex;
-    justify-content: space-between;
-    padding: 4px 0;
-    border-bottom: 1px dashed #c5d5e8;
-    color: #1F3864;
-  }
-  .devis-totaux .row:last-child { border-bottom: none; padding-top: 8px; margin-top: 4px; border-top: 2px solid #1F4E79; font-weight: 900; font-size: 13.5px; }
-  .devis-totaux .row.total-ttc { color: #C00000; font-size: 15px; }
-  .devis-totaux .k { font-weight: 700; letter-spacing: .3px; }
-  .devis-totaux .v { font-weight: 800; }
-
-  .devis-signatures {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    margin-top: 14px;
-  }
-  .devis-sign-box {
-    border: 1.5px solid #1F3864;
-    border-radius: 6px;
-    padding: 12px 16px;
-    min-height: 120px;
-    display: flex;
-    flex-direction: column;
-  }
-  .devis-sign-box h5 {
-    color: #2E75B6;
-    font-size: 11.5px;
-    font-weight: 800;
-    text-align: center;
-    margin-bottom: 8px;
-    letter-spacing: .5px;
-    text-decoration: underline;
-  }
-  .devis-sign-box .brand-small {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: auto;
-    justify-content: center;
-  }
-  .devis-sign-box .brand-small .logo-mini {
-    width: 32px; height: 32px;
-    background: #2E75B6;
-    color: #fff;
-    border-radius: 6px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 13px; font-weight: 900; font-family: Georgia, serif;
-  }
-  .devis-sign-box .brand-small span {
-    color: #1F4E79;
-    font-weight: 900;
-    font-size: 12px;
-  }
-  .devis-sign-box .client-info { font-size: 10.5px; line-height: 1.6; color: #333; }
-  .devis-sign-box .client-info .date { color: #2E75B6; font-weight: 700; }
-  .devis-sign-box .client-info .sign { color: #2E75B6; font-weight: 900; text-align: right; display: block; margin-top: 6px; }
-
-  .devis-footer {
-    margin-top: 14px;
-    text-align: center;
-    font-size: 9.5px;
-    color: #555;
-    border-top: 1px solid #c5d5e8;
-    padding-top: 8px;
-    font-style: italic;
-  }
-
-  .devis-comparison {
-    background: rgba(19,43,71,.55);
-    border: 1px solid var(--line-soft);
-    border-radius: 10px;
-    padding: 16px 20px;
-    margin-top: 16px;
-    position: relative;
-  }
-  .devis-comparison::before { content:''; position:absolute; top:-1px; left:18px; width:34px; height:3px; background: var(--accent); border-radius: 0 0 3px 3px; }
-  .devis-comparison h3 { font-size:.9rem; color: var(--accent); text-transform: uppercase; letter-spacing: 1.6px; margin-bottom: 12px; font-weight: 700; }
-  .devis-compare-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-  }
-  .devis-compare-box {
-    background: rgba(10,25,41,.4);
-    border: 1px solid var(--line-soft);
-    border-left: 3px solid var(--line);
-    border-radius: 6px;
-    padding: 12px 16px;
-    font-size: .8rem;
-    line-height: 1.6;
-  }
-  .devis-compare-box.old { border-left-color: var(--red); }
-  .devis-compare-box.new { border-left-color: var(--green); }
-  .devis-compare-box h4 {
-    font-size: .78rem;
-    font-weight: 800;
-    letter-spacing: 1.2px;
-    margin-bottom: 8px;
-    text-transform: uppercase;
-  }
-  .devis-compare-box.old h4 { color: var(--red); }
-  .devis-compare-box.new h4 { color: var(--green); }
-  .devis-compare-box ul { list-style: none; }
-  .devis-compare-box li { padding: 3px 0 3px 16px; position: relative; }
-  .devis-compare-box li::before { content: '›'; position: absolute; left: 0; color: var(--line); font-weight: 800; }
-  .devis-compare-box b { color: var(--accent); }
 
   @media (max-width:900px) {
     .slide { padding:24px 22px 90px; }
@@ -526,9 +234,6 @@
     .gantt-sheet .note-block ul { grid-template-columns: 1fr; }
     .plans-grid { grid-template-columns: 1fr; }
     .winner-summary ul { grid-template-columns: 1fr; }
-    .devis-bottom { grid-template-columns: 1fr; }
-    .devis-signatures { grid-template-columns: 1fr; }
-    .devis-compare-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -538,7 +243,7 @@
 
 <div class="deck" id="deck">
 
-  <!-- ===== SLIDE 1 : TITRE ===== -->
+  <!-- SLIDE 1 : TITRE -->
   <section class="slide active">
     <div class="hero">
       <div style="width:120px;margin-bottom:20px;">
@@ -574,7 +279,7 @@
     </div>
   </section>
 
-  <!-- ===== SLIDE 2 : CAHIER DES CHARGES ===== -->
+  <!-- SLIDE 2 : CAHIER DES CHARGES -->
   <section class="slide">
     <div class="slide-head">
       <span class="slide-num">02</span>
@@ -607,43 +312,21 @@
           <svg viewBox="0 0 560 470">
             <rect x="8" y="18" width="544" height="444" fill="none" stroke="#2a4a6b" stroke-width="1" stroke-dasharray="6 4"/>
             <text x="280" y="12" text-anchor="middle" fill="#5a7a9b" font-size="10" class="sv-mono" letter-spacing="2">TERRAIN · 420 m²</text>
-            <g transform="translate(508,448)">
-              <circle r="16" fill="none" stroke="#4fc3f7" stroke-width="1"/>
-              <line x1="0" y1="-14" x2="0" y2="14" stroke="#5a7a9b" stroke-width="1"/>
-              <line x1="-14" y1="0" x2="14" y2="0" stroke="#5a7a9b" stroke-width="1"/>
-              <polygon points="0,14 4,6 -4,6" fill="#ffb74d"/>
-              <text x="0" y="26" text-anchor="middle" fill="#ffb74d" font-size="8" font-weight="700">S</text>
-            </g>
             <rect x="30" y="50" width="110" height="240" fill="#16324f" stroke="#4fc3f7" stroke-width="2.2"/>
-            <text x="85" y="165" text-anchor="middle" fill="#8ecae6" font-size="12" font-weight="700" letter-spacing="1">GARAGE</text>
+            <text x="85" y="165" text-anchor="middle" fill="#8ecae6" font-size="12" font-weight="700">GARAGE</text>
             <text x="85" y="184" text-anchor="middle" fill="#4fc3f7" font-size="11" class="sv-mono">18 m²</text>
-            <line x1="30" y1="270" x2="140" y2="270" stroke="#ffb74d" stroke-width="3" stroke-dasharray="8 3"/>
             <rect x="140" y="50" width="400" height="360" fill="#132b47" stroke="#4fc3f7" stroke-width="3"/>
-            <rect x="140" y="50" width="110" height="150" fill="rgba(79,195,247,.05)" stroke="#4fc3f7" stroke-width="1.3"/>
-            <rect x="250" y="50" width="65" height="150" fill="rgba(79,195,247,.05)" stroke="#4fc3f7" stroke-width="1.3"/>
-            <rect x="315" y="50" width="25" height="150" fill="rgba(79,195,247,.05)" stroke="#4fc3f7" stroke-width="1.3"/>
-            <rect x="340" y="50" width="100" height="150" fill="rgba(79,195,247,.05)" stroke="#4fc3f7" stroke-width="1.3"/>
-            <rect x="440" y="50" width="100" height="150" fill="rgba(79,195,247,.05)" stroke="#4fc3f7" stroke-width="1.3"/>
-            <rect x="140" y="200" width="400" height="50" fill="rgba(79,195,247,.09)" stroke="#4fc3f7" stroke-width="1.3"/>
-            <rect x="140" y="250" width="48" height="160" fill="rgba(79,195,247,.05)" stroke="#4fc3f7" stroke-width="1.3"/>
-            <rect x="188" y="250" width="352" height="160" fill="rgba(255,183,77,.13)" stroke="#ffb74d" stroke-width="2.5"/>
-            <text x="195" y="120" text-anchor="middle" fill="#e8f4f8" font-size="10" font-weight="600">Ch. parentale</text>
-            <text x="282" y="120" text-anchor="middle" fill="#e8f4f8" font-size="10" font-weight="600">SDB</text>
-            <text x="327" y="120" text-anchor="middle" fill="#e8f4f8" font-size="9" font-weight="600">WC</text>
-            <text x="390" y="120" text-anchor="middle" fill="#e8f4f8" font-size="10" font-weight="600">Ch. enfant 1</text>
-            <text x="490" y="120" text-anchor="middle" fill="#e8f4f8" font-size="10" font-weight="600">Ch. enfant 2</text>
-            <text x="340" y="229" text-anchor="middle" fill="#8ecae6" font-size="10" font-weight="600">COULOIR · 8,5 m²</text>
+            <rect x="140" y="250" width="352" height="160" fill="rgba(255,183,77,.13)" stroke="#ffb74d" stroke-width="2.5"/>
             <text x="364" y="320" text-anchor="middle" fill="#ffb74d" font-size="14" font-weight="800">SEJOUR · SALON · CUISINE</text>
             <text x="364" y="342" text-anchor="middle" fill="#ffb74d" font-size="12" class="sv-mono" font-weight="700">36 m²</text>
             <line x1="200" y1="410" x2="540" y2="410" stroke="#ffb74d" stroke-width="4"/>
-            <text x="370" y="432" text-anchor="middle" fill="#ffb74d" font-size="9" class="sv-mono">◄ BAIES VITREES SUD ►</text>
           </svg>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ===== SLIDE 3 : ACTEURS ===== -->
+  <!-- SLIDE 3 : ACTEURS -->
   <section class="slide">
     <div class="slide-head">
       <span class="slide-num">03</span>
@@ -689,7 +372,7 @@
     </div>
   </section>
 
-  <!-- ===== SLIDE 4 : ETAPES ===== -->
+  <!-- SLIDE 4 : ETAPES -->
   <section class="slide">
     <div class="slide-head">
       <span class="slide-num">04</span>
@@ -753,7 +436,7 @@
     </div>
   </section>
 
-  <!-- ===== SLIDE 5 : PLU / PPR / BIOCLIMATIQUE ===== -->
+  <!-- SLIDE 5 : PLU / PPR / BIOCLIMATIQUE -->
   <section class="slide">
     <div class="slide-head">
       <span class="slide-num">05</span>
@@ -764,9 +447,7 @@
       <div>
         <div class="card" style="margin-bottom:16px;">
           <h3>PLU · Plan Local d Urbanisme</h3>
-          <ul class="clean">
-            <li>Regles d emprise au sol</li><li>Regles de hauteur</li><li>Regles de distances</li>
-          </ul>
+          <ul class="clean"><li>Regles d emprise au sol</li><li>Regles de hauteur</li><li>Regles de distances</li></ul>
           <div class="src">video sur le permis de construire et le PLU</div>
         </div>
         <div class="card" style="margin-bottom:16px;">
@@ -779,7 +460,6 @@
           <ul class="clean">
             <li>Pieces de vie orientees Sud et Sud Est</li>
             <li>Surface vitree au moins 1 sixieme de la surface habitable</li>
-            <li>Pour capter la lumiere et la chaleur naturelle</li>
           </ul>
           <div class="src">document Analyse et definition du cahier des charges</div>
         </div>
@@ -789,34 +469,24 @@
           <h3>Rose des vents · orientation du projet</h3>
           <svg viewBox="0 0 340 340">
             <circle cx="170" cy="170" r="130" fill="none" stroke="#2a4a6b"/>
-            <circle cx="170" cy="170" r="90" fill="none" stroke="#2a4a6b" stroke-dasharray="4 4"/>
             <path d="M 170 170 L 170 40 A 130 130 0 0 1 300 170 Z" fill="rgba(255,183,77,.15)"/>
-            <path d="M 170 170 L 170 40 A 130 130 0 0 1 300 170" fill="none" stroke="#ffb74d" stroke-width="2" stroke-dasharray="6 4"/>
             <line x1="170" y1="30" x2="170" y2="310" stroke="#4fc3f7" stroke-width="1.2"/>
             <line x1="30" y1="170" x2="310" y2="170" stroke="#4fc3f7" stroke-width="1.2"/>
             <polygon points="170,30 164,42 176,42" fill="#4fc3f7"/>
             <polygon points="170,310 164,298 176,298" fill="#ffb74d"/>
-            <polygon points="310,170 298,164 298,176" fill="#4fc3f7"/>
-            <polygon points="30,170 42,164 42,176" fill="#4fc3f7"/>
             <text x="170" y="22" text-anchor="middle" fill="#4fc3f7" font-size="11" font-weight="700">NORD</text>
             <text x="170" y="328" text-anchor="middle" fill="#ffb74d" font-size="12" font-weight="800">SUD</text>
             <text x="324" y="174" text-anchor="middle" fill="#4fc3f7" font-size="11" font-weight="700">EST</text>
             <text x="16" y="174" text-anchor="middle" fill="#4fc3f7" font-size="11" font-weight="700">OUEST</text>
             <line x1="170" y1="170" x2="270" y2="270" stroke="#ffb74d" stroke-width="3"/>
-            <circle cx="270" cy="270" r="6" fill="#ffb74d"/>
             <text x="280" y="288" fill="#ffb74d" font-size="11" font-weight="800">SUD-EST</text>
-            <g transform="translate(170,170)">
-              <rect x="-28" y="-22" width="56" height="44" fill="#132b47" stroke="#4fc3f7" stroke-width="1.5"/>
-              <path d="M -32 -22 L 0 -46 L 32 -22" fill="none" stroke="#4fc3f7" stroke-width="1.5"/>
-              <line x1="-22" y1="22" x2="22" y2="22" stroke="#ffb74d" stroke-width="3"/>
-            </g>
           </svg>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ===== SLIDE 6 : RT2012 / RE2020 ===== -->
+  <!-- SLIDE 6 : RT2012 / RE2020 -->
   <section class="slide">
     <div class="slide-head">
       <span class="slide-num">06</span>
@@ -857,7 +527,6 @@
           <li>Ameliorer la performance energetique en diminuant le besoin bioclimatique Bbiomax</li>
           <li>Garantir un confort d ete en cas de fortes chaleurs</li>
         </ul>
-        <div class="src">document Analyse et definition du cahier des charges</div>
         <h3 style="margin-top:22px;">Prescriptions RT2012</h3>
         <ul class="clean">
           <li>Epaisseur minimale d isolation</li>
@@ -869,7 +538,7 @@
     </div>
   </section>
 
-  <!-- ===== SLIDE 7 : BUDGET ===== -->
+  <!-- SLIDE 7 : BUDGET -->
   <section class="slide">
     <div class="slide-head">
       <span class="slide-num">07</span>
@@ -888,7 +557,6 @@
             <rect x="110" y="68" width="234" height="20" rx="3" fill="#4fc3f7"/>
             <text x="354" y="83" fill="#4fc3f7" font-size="11" class="sv-mono" font-weight="700">202 000 €</text>
           </svg>
-          <div class="src">document Analyse et definition du cahier des charges</div>
         </div>
         <div class="card">
           <h3>Options de terrains a Colomiers</h3>
@@ -900,7 +568,6 @@
               <tr><td>En Jacca</td><td>357 m²</td><td style="color:var(--accent);">79 000 €</td></tr>
             </tbody>
           </table>
-          <div class="src">recherche terrain Colomiers · SeLoger · Bien Ici</div>
         </div>
       </div>
       <div class="svg-wrap">
@@ -912,7 +579,6 @@
               <circle r="80" fill="none" stroke="#ffb74d" stroke-width="22" stroke-dasharray="271.4 502.6" transform="rotate(-90)"/>
               <circle r="80" fill="none" stroke="#4fc3f7" stroke-width="22" stroke-dasharray="231.2 502.6" stroke-dashoffset="-271.4" transform="rotate(-90)"/>
               <text y="-4" text-anchor="middle" fill="#fff" font-size="20" class="sv-mono" font-weight="800">367 k€</text>
-              <text y="16" text-anchor="middle" fill="#8ea9c4" font-size="9" class="sv-mono">option Centre</text>
             </g>
             <g transform="translate(40,290)">
               <rect width="14" height="14" rx="3" fill="#ffb74d"/>
@@ -921,8 +587,6 @@
               <rect y="28" width="14" height="14" rx="3" fill="#4fc3f7"/>
               <text x="22" y="39" fill="#e8f4f8" font-size="11">Terrain</text>
               <text x="200" y="39" fill="#4fc3f7" font-size="11" class="sv-mono" font-weight="700" text-anchor="end">169 000 €</text>
-              <text x="0" y="76" fill="#8ea9c4" font-size="10">Marge restante</text>
-              <text x="200" y="76" fill="#8ea9c4" font-size="11" class="sv-mono" text-anchor="end">33 000 €</text>
             </g>
           </svg>
         </div>
@@ -930,7 +594,7 @@
     </div>
   </section>
 
-  <!-- ===== SLIDE 8 : 4 REPONSES ===== -->
+  <!-- SLIDE 8 : 4 REPONSES -->
   <section class="slide">
     <div class="slide-head">
       <span class="slide-num">08</span>
@@ -944,34 +608,30 @@
           <p>Le cahier des charges impose une maison individuelle de plain pied de 90 m² maximum sur un terrain plat constructible a Colomiers</p>
           <p>Elle doit comprendre un salon sejour une cuisine une salle de bains une chambre parentale deux chambres d enfants un wc independant un cellier et un garage accole pour un monospace</p>
           <p>Le budget maximal est de 400 000 € terrain compris avec un prix de construction estime a 2 200 € par m²</p>
-          <p class="src">document Analyse et definition du cahier des charges</p>
         </div>
         <div class="qa">
           <h4>Q2 · Contexte roles et etapes</h4>
           <p>Une famille souhaite s installer durablement a Colomiers dans la metropole toulousaine</p>
           <p>Maitre d ouvrage le client qui porte le projet</p>
           <p>Maitre d oeuvre le professionnel retenu par le client pour executer et coordonner les travaux</p>
-          <p>Les 10 etapes vont du plan de financement jusqu a la livraison et l emmenagement en passant par le terrain le permis de construire les assurances et les travaux</p>
-          <p class="src">video sur les 10 etapes · video maitre d oeuvre / maitre d ouvrage</p>
+          <p>Les 10 etapes vont du plan de financement jusqu a la livraison et l emmenagement</p>
         </div>
         <div class="qa">
           <h4>Q3 · Contraintes PLU PPR et bioclimatique</h4>
           <p>Le PLU fixe les regles d emprise au sol de hauteur et de distances</p>
           <p>Le PPR informe sur les risques naturels de la commune</p>
-          <p>En conception bioclimatique les pieces de vie doivent etre orientees Sud et Sud Est et la surface vitree doit representer au moins 1 sixieme de la surface habitable pour capter la lumiere et la chaleur naturelle</p>
-          <p class="src">document Analyse et definition · video PLU</p>
+          <p>En conception bioclimatique les pieces de vie doivent etre orientees Sud et Sud Est et la surface vitree doit representer au moins 1 sixieme de la surface habitable</p>
         </div>
         <div class="qa">
           <h4>Q4 · Exigences thermiques RT2012 et RE2020</h4>
           <p>Les 5 postes de la RT2012 sont le chauffage la production d eau chaude sanitaire l eclairage la ventilation et la climatisation ou auxiliaires</p>
           <p>La RE2020 vise a reduire l empreinte carbone des batiments sur leur cycle de vie a ameliorer la performance energetique en diminuant le besoin bioclimatique Bbiomax et a garantir un confort d ete en cas de fortes chaleurs</p>
-          <p class="src">document Analyse et definition · video RT2012</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ===== SLIDE 9 : ENQUETE ===== -->
+  <!-- SLIDE 9 : ENQUETE -->
   <section class="slide">
     <div class="slide-head">
       <span class="slide-num">09</span>
@@ -1002,9 +662,7 @@
           </svg>
           Acceder au formulaire
         </a>
-        <div class="survey-url">
-          https://docs.google.com/forms/d/e/1FAIpQLSfkiPmt2njBu_MU9UJYGUHfG-Q2bi3euSEgBwSTsycS7juS4A/viewform?usp=sharing&ouid=102378487339154119491
-        </div>
+        <div class="survey-url">https://docs.google.com/forms/d/e/1FAIpQLSfkiPmt2njBu_MU9UJYGUHfG-Q2bi3euSEgBwSTsycS7juS4A/viewform?usp=sharing&ouid=102378487339154119491</div>
         <div class="survey-meta">
           <span>Google Forms</span><span>Reponses anonymes</span><span>Duree · environ 3 minutes</span>
         </div>
@@ -1012,7 +670,7 @@
     </div>
   </section>
 
-  <!-- ===== SLIDE 10 : ETUDE MERCATIQUE ===== -->
+  <!-- SLIDE 10 : ETUDE MERCATIQUE -->
   <section class="slide">
     <div class="slide-head">
       <span class="slide-num">10</span>
@@ -1053,32 +711,19 @@
             <tr><td>60,00</td><td>100</td><td>15,11</td><td>84,14</td><td>5</td><td>0,99</td><td>1,18</td><td>85,32</td><td>14,68</td></tr>
             <tr><td>65,00</td><td>105</td><td>15,86</td><td>100,00</td><td>1</td><td>0,20</td><td>0,20</td><td>100,20</td><td>-0,20</td></tr>
             <tr class="total">
-              <td>TOTAL</td>
-              <td>662</td>
-              <td>100</td>
+              <td>TOTAL</td><td>662</td><td>100</td>
               <td colspan="2">Vérification 100%</td>
-              <td>507</td>
-              <td>100</td>
+              <td>507</td><td>100</td>
               <td colspan="2">Vérification 100%</td>
               <td></td><td></td>
             </tr>
           </tbody>
         </table>
-        <div class="src">source · enquete terrain aupres de 662 personnes</div>
       </div>
-
       <div class="card">
         <h3>Prix psychologique · courbes cumulees</h3>
         <svg viewBox="0 0 520 340">
           <rect x="70" y="20" width="400" height="260" fill="rgba(19,43,71,.4)" stroke="#2a4a6b"/>
-          <g stroke="rgba(79,195,247,.1)">
-            <line x1="70" y1="20"  x2="470" y2="20"/>
-            <line x1="70" y1="72"  x2="470" y2="72"/>
-            <line x1="70" y1="124" x2="470" y2="124"/>
-            <line x1="70" y1="176" x2="470" y2="176"/>
-            <line x1="70" y1="228" x2="470" y2="228"/>
-            <line x1="70" y1="280" x2="470" y2="280"/>
-          </g>
           <line x1="70" y1="280" x2="470" y2="280" stroke="#4fc3f7" stroke-width="1.6"/>
           <line x1="70" y1="20"  x2="70"  y2="280" stroke="#4fc3f7" stroke-width="1.6"/>
           <g fill="#8ea9c4" font-size="10" font-family="Consolas" text-anchor="end">
@@ -1089,83 +734,33 @@
             <text x="62" y="232">20,00</text>
             <text x="62" y="284">0,00</text>
           </g>
-          <text x="20" y="150" fill="#5a7a9b" font-size="10" font-family="Consolas" text-anchor="middle" transform="rotate(-90 20 150)">Taux de (%)</text>
-          <g fill="#8ea9c4" font-size="9" font-family="Consolas" text-anchor="middle">
-            <text x="70"  y="296">10,00</text>
-            <text x="106" y="296">15,00</text>
-            <text x="143" y="296">20,00</text>
-            <text x="179" y="296">25,00</text>
-            <text x="215" y="296">30,00</text>
-            <text x="252" y="296">35,00</text>
-            <text x="288" y="296">40,00</text>
-            <text x="325" y="296">45,00</text>
-            <text x="361" y="296">50,00</text>
-            <text x="397" y="296">55,00</text>
-            <text x="434" y="296">60,00</text>
-            <text x="470" y="296">65,00</text>
-          </g>
-          <text x="270" y="318" fill="#5a7a9b" font-size="10" font-family="Consolas" text-anchor="middle">Prix de vente (€)</text>
-
           <polyline fill="none" stroke="#4fc3f7" stroke-width="2.5" stroke-linejoin="round"
             points="70,279.22 106.36,277.24 142.73,271.37 179.09,257.61 215.45,241.91 251.82,220.30 288.18,196.75 324.55,169.24 360.91,135.86 397.27,100.52 433.64,61.24 470,20"/>
-          <g fill="#4fc3f7">
-            <circle cx="70" cy="279.22" r="3"/><circle cx="106.36" cy="277.24" r="3"/>
-            <circle cx="142.73" cy="271.37" r="3"/><circle cx="179.09" cy="257.61" r="3"/>
-            <circle cx="215.45" cy="241.91" r="3"/><circle cx="251.82" cy="220.30" r="3"/>
-            <circle cx="288.18" cy="196.75" r="3"/><circle cx="324.55" cy="169.24" r="3"/>
-            <circle cx="360.91" cy="135.86" r="3"/><circle cx="397.27" cy="100.52" r="3"/>
-            <circle cx="433.64" cy="61.24" r="3"/><circle cx="470" cy="20" r="3"/>
-          </g>
           <polyline fill="none" stroke="#ef5350" stroke-width="2.5" stroke-linejoin="round"
             points="70,20 106.36,66.67 142.73,110.77 179.09,148.21 215.45,181.54 251.82,210.76 288.18,233.85 324.55,250.26 360.91,262.55 397.27,271.78 433.64,276.93 470,279.48"/>
-          <g fill="#ef5350">
-            <circle cx="70" cy="20" r="3"/><circle cx="106.36" cy="66.67" r="3"/>
-            <circle cx="142.73" cy="110.77" r="3"/><circle cx="179.09" cy="148.21" r="3"/>
-            <circle cx="215.45" cy="181.54" r="3"/><circle cx="251.82" cy="210.76" r="3"/>
-            <circle cx="288.18" cy="233.85" r="3"/><circle cx="324.55" cy="250.26" r="3"/>
-            <circle cx="360.91" cy="262.55" r="3"/><circle cx="397.27" cy="271.78" r="3"/>
-            <circle cx="433.64" cy="276.93" r="3"/><circle cx="470" cy="279.48" r="3"/>
-          </g>
           <line x1="259" y1="20" x2="259" y2="280" stroke="#ffb74d" stroke-width="1.5" stroke-dasharray="4 3"/>
           <circle cx="259" cy="215" r="6" fill="none" stroke="#ffb74d" stroke-width="2.5"/>
-          <circle cx="259" cy="215" r="3" fill="#ffb74d"/>
           <text x="259" y="203" text-anchor="middle" fill="#ffb74d" font-size="10" font-family="Consolas" font-weight="700">≈ 37,50 €</text>
         </svg>
         <div class="legend-inline">
           <span><div class="swatch" style="background:#4fc3f7;"></div>% cumule croissant</span>
           <span><div class="swatch" style="background:#ef5350;"></div>% cumule decroissant</span>
         </div>
-        <div class="src">source · image etude mercatique fournie par l eleve</div>
       </div>
-    </div>
-
-    <div class="card" style="margin-top:16px;">
-      <h3>Interpretation de l enquete mercatique</h3>
-      <p style="font-size:.92rem;line-height:1.7;">
-        J ai choisi ces nombres pour montrer que plus le prix augmente plus le nombre de personnes trouvant le produit trop cher augmente de 2 a 105 personnes
-        A l inverse plus le prix est bas plus le nombre de personnes doutant de sa mauvaise qualite est eleve de 91 a 1 personnes
-      </p>
-      <p style="font-size:.92rem;line-height:1.7;color:var(--accent);margin-top:10px;font-weight:600;">
-        Le prix de 35,00 € correspond au prix psychologique c est a dire le prix ou le pourcentage d acheteurs est maximal soit 50,41 %
-      </p>
-      <div class="src">source · analyse personnelle a partir des donnees d enquete</div>
     </div>
   </section>
 
-  <!-- ===== SLIDE 11 : ETUDE DE MARCHE ===== -->
+  <!-- SLIDE 11 : ETUDE DE MARCHE -->
   <section class="slide">
     <div class="slide-head">
       <span class="slide-num">11</span>
       <h2 class="slide-title">Etude de marche</h2>
       <span class="slide-tag">MARCHE</span>
     </div>
-
     <div class="mkt-doc" style="overflow-y:auto;">
       <div class="mkt-section">
         <div class="mkt-section-header">Introduction</div>
-        <div class="mkt-section-body">
-          Cette analyse porte sur le marché de recherche de terrains c est un marché qui a vu ses ventes diminuees en quelques annees c est un marché en <span class="mkt-green">maturité / déclin</span>
-        </div>
+        <div class="mkt-section-body">Cette analyse porte sur le marché de recherche de terrains c est un marché qui a vu ses ventes diminuees en quelques annees c est un marché en <span class="mkt-green">maturité / déclin</span></div>
       </div>
       <div class="mkt-section">
         <div class="mkt-section-header">Etude de la demande</div>
@@ -1179,7 +774,7 @@
         <div class="mkt-2col">
           <div class="mkt-2col-label">Analyse<br>qualitative de la<br>demande</div>
           <div class="mkt-2col-content">
-            <span class="mkt-question">Motivation / attente / frein / Profil type (âge, sexe, catégorie sociale, lieu d habitation…)</span>
+            <span class="mkt-question">Motivation / attente / frein / Profil type</span>
             <span class="highlight">Ce couple avec 2 enfants qui cherche a s installer dans la ville de Colomiers en banlieu toulousaine dans un quartier pavionnaire.</span>
           </div>
         </div>
@@ -1189,15 +784,15 @@
         <div class="mkt-2col">
           <div class="mkt-2col-label">Analyse des<br>produits</div>
           <div class="mkt-2col-content">
-            <span class="mkt-question">Produits proposés sur le marché en terme de : prix, design, technique, public visé…</span>
+            <span class="mkt-question">Produits proposés sur le marché</span>
             <p>Pour les propositions nous avons 3 possibilités avec une en centre ville de Colomiers de 420 m² au prix 169 000 € une autre dans le quartier de jacca de 357 m² pour 79 000 € et la dernière dans la zone du parc aeronautique avec 501 m² pour 199 000 €.</p>
           </div>
         </div>
         <div class="mkt-2col">
           <div class="mkt-2col-label">Analyse des<br>producteurs</div>
           <div class="mkt-2col-content">
-            <span class="mkt-question">Analyse des entreprises concurrentes (qui, place sur le marché : leader, challenger, 3<sup>ème</sup>…, part de marché, chiffre d affaire…)</span>
-            <p>Ce terrain est disponible sur le site SeLoger et est proposé par Maison France Confort. C est un site de marché immobilier a forte utilisation.</p>
+            <span class="mkt-question">Analyse des entreprises concurrentes</span>
+            <p>Ce terrain est disponible sur le site SeLoger et est proposé par Maison France Confort.</p>
           </div>
         </div>
       </div>
@@ -1206,7 +801,7 @@
         <div class="mkt-section-body">
           <p style="margin-bottom:6px;">Est ce un secteur très concurrentiel ou non ?</p>
           <p style="margin-bottom:6px;">Contexte de crise ou non ?</p>
-          <p style="margin-bottom:6px;">Présence de contraintes législatives importantes (loi, normes, brevets… ) ?</p>
+          <p style="margin-bottom:6px;">Présence de contraintes législatives importantes ?</p>
           <p style="margin-bottom:10px;">Présence de contraintes environnementales ?</p>
           <p class="highlight">Les seules contraintes sont le plu et le ppr, sans crises particulières avec un marché moyennement concurrentiel.</p>
         </div>
@@ -1215,234 +810,126 @@
         <div class="mkt-section-header">Conclusion</div>
         <div class="mkt-section-body">
           <p style="margin-bottom:6px;">Le marché est il un marché porteur ou en déclin ou niche ?</p>
-          <p style="margin-bottom:10px;">Cible visée par le produit (âge, sexe, catégorie sociale, lieu d habitation…).</p>
+          <p style="margin-bottom:10px;">Cible visée par le produit</p>
           <p class="highlight">Ce type de marché etait en déclin et est actuellement entrain de se stabiliser ce qui indique une future augmentation des échanges.</p>
         </div>
       </div>
     </div>
-
-    <div class="src" style="margin-top:10px;">source · document Etude de marche fourni par l eleve</div>
   </section>
 
-  <!-- ===== SLIDE 12 : DEVIS ESTIMATIF ===== -->
+  <!-- SLIDE 12 : DEVIS ESTIMATIF -->
   <section class="slide">
     <div class="slide-head">
       <span class="slide-num">12</span>
       <h2 class="slide-title">Devis estimatif · Construction maison 90 m²</h2>
       <span class="slide-tag">CHIFFRAGE</span>
     </div>
-
     <div class="slide-body" style="grid-template-columns:1fr; overflow-y:auto;">
-
-      <div class="devis-sheet">
-
-        <!-- ENTETE -->
-        <div class="devis-header">
-          <div class="devis-brand">
-            <div class="devis-logo">M&R</div>
-            <div class="devis-brand-text">
-              <h2>Maisons & Rénovations</h2>
-              <p>
-                Entreprise Maisons et Rénovations<br>
+      <div class="devis-sheet" style="background:#fff;color:#000;padding:22px 26px;border-radius:10px;font-family:Arial,sans-serif;font-size:12px;line-height:1.35;border:1px solid rgba(79,195,247,.3);">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;padding-bottom:14px;border-bottom:2px solid #2E75B6;margin-bottom:18px;gap:20px;flex-wrap:wrap;">
+          <div style="display:flex;align-items:center;gap:14px;">
+            <div style="width:60px;height:60px;background:#2E75B6;color:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;font-family:Georgia,serif;">M&R</div>
+            <div>
+              <h2 style="color:#1F4E79;font-size:17px;font-weight:900;">Maisons & Rénovations</h2>
+              <p style="font-size:9.5px;color:#555;margin-top:4px;line-height:1.4;">
                 18 rue des Travaux — 31770 Colomiers<br>
                 Tel 05.61.02.03.04 · contact@maisons-renovations.fr<br>
-                SARL au capital de 10 000 € · RCS Toulouse 000 000 000
+                SARL au capital de 10 000 € · RCS Toulouse
               </p>
             </div>
           </div>
-
-          <div class="devis-meta">
-            <h4>DEVIS · N°2026-0090</h4>
-            <div class="row"><span class="k">Date</span><span class="v">13/10/2026</span></div>
-            <div class="row"><span class="k">Code client</span><span class="v">0492</span></div>
-            <div class="row"><span class="k">Validité</span><span class="v">2 mois</span></div>
+          <div style="background:#eef4fa;border:1.5px solid #1F4E79;border-radius:6px;padding:10px 14px;font-size:11px;min-width:240px;">
+            <h4 style="color:#1F4E79;font-size:12px;font-weight:900;margin-bottom:6px;border-bottom:1px solid #c5d5e8;padding-bottom:5px;">DEVIS · N°2026-0090</h4>
+            <div style="display:flex;justify-content:space-between;"><span style="color:#1F3864;font-weight:700;">Date</span><span style="color:#C00000;font-weight:700;font-family:Consolas,monospace;">13/10/2026</span></div>
+            <div style="display:flex;justify-content:space-between;"><span style="color:#1F3864;font-weight:700;">Code client</span><span style="color:#C00000;font-weight:700;font-family:Consolas,monospace;">0492</span></div>
+            <div style="display:flex;justify-content:space-between;"><span style="color:#1F3864;font-weight:700;">Validité</span><span style="color:#C00000;font-weight:700;font-family:Consolas,monospace;">2 mois</span></div>
           </div>
         </div>
 
-        <!-- CLIENT -->
-        <div class="devis-client">
-          <div class="box">
-            <h5>Émetteur</h5>
-            <p><strong>Entreprise Maisons & Rénovations</strong><br>
-            18 rue des Travaux<br>
-            31770 Colomiers<br>
-            Siret 814 000 000 00029</p>
-          </div>
-          <div class="box">
-            <h5>Adresse du client</h5>
-            <p><strong>Famille Client</strong><br>
-            15 rue du Travail<br>
-            31770 Colomiers<br>
-            Projet · Maison individuelle 90 m² · terrain 420 m²</p>
-          </div>
-        </div>
+        <div style="font-size:12.5px;font-weight:900;color:#1F4E79;margin-bottom:10px;">Devis de construction maison individuelle 90 m² · Colomiers</div>
 
-        <div class="devis-title-line">Devis de construction maison individuelle 90 m² · Colomiers</div>
-
-        <!-- TABLEAU -->
-        <table class="devis-table">
+        <table style="width:100%;border-collapse:collapse;font-size:10.5px;margin-bottom:16px;">
           <thead>
-            <tr>
-              <th style="width:44%;">Désignation</th>
-              <th style="width:10%;text-align:center;">Unité</th>
-              <th style="width:10%;text-align:center;">Quantité</th>
-              <th style="width:18%;text-align:center;">Prix unitaire HT</th>
-              <th style="width:18%;text-align:right;">Total HT</th>
+            <tr style="background:#2E75B6;color:#fff;">
+              <th style="padding:7px 8px;text-align:left;border:1px solid #1F4E79;font-size:10px;text-transform:uppercase;letter-spacing:.8px;">Désignation</th>
+              <th style="padding:7px 8px;text-align:center;border:1px solid #1F4E79;font-size:10px;text-transform:uppercase;">Unité</th>
+              <th style="padding:7px 8px;text-align:center;border:1px solid #1F4E79;font-size:10px;text-transform:uppercase;">Qté</th>
+              <th style="padding:7px 8px;text-align:center;border:1px solid #1F4E79;font-size:10px;text-transform:uppercase;">PU HT</th>
+              <th style="padding:7px 8px;text-align:right;border:1px solid #1F4E79;font-size:10px;text-transform:uppercase;">Total HT</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td class="designation">Établissement du plan de la maison (architecte)</td>
-              <td class="unit">U</td><td class="qty">1</td><td class="pu">2 500,00 €</td><td class="total">2 500,00 €</td>
-            </tr>
-            <tr>
-              <td class="designation">Réalisation des travaux de terrassement</td>
-              <td class="unit">M2</td><td class="qty">90</td><td class="pu">85,00 €</td><td class="total">7 650,00 €</td>
-            </tr>
-            <tr>
-              <td class="designation">Maçonnerie globale (murs porteurs + dallage béton)</td>
-              <td class="unit">M2</td><td class="qty">90</td><td class="pu">950,00 €</td><td class="total">85 500,00 €</td>
-            </tr>
-            <tr>
-              <td class="designation">Charpente + couverture</td>
-              <td class="unit">M2</td><td class="qty">90</td><td class="pu">165,00 €</td><td class="total">14 850,00 €</td>
-            </tr>
-            <tr>
-              <td class="designation">Isolation + plâtrerie intérieure (laine de mouton + BA13)</td>
-              <td class="unit">M2</td><td class="qty">90</td><td class="pu">140,00 €</td><td class="total">12 600,00 €</td>
-            </tr>
-            <tr>
-              <td class="designation">Installation menuiserie extérieure complète (baies Sud, fenêtres, porte d'entrée)</td>
-              <td class="unit">U</td><td class="qty">1</td><td class="pu">13 500,00 €</td><td class="total">13 500,00 €</td>
-            </tr>
-            <tr>
-              <td class="designation">Portes intérieures et placards</td>
-              <td class="unit">U</td><td class="qty">1</td><td class="pu">3 000,00 €</td><td class="total">3 000,00 €</td>
-            </tr>
-            <tr>
-              <td class="designation">Raccordement électrique complet (aux normes RT2012)</td>
-              <td class="unit">M2</td><td class="qty">90</td><td class="pu">110,00 €</td><td class="total">9 900,00 €</td>
-            </tr>
-            <tr>
-              <td class="designation">Raccordement sanitaire complet (plomberie, WC, SDB)</td>
-              <td class="unit">U</td><td class="qty">1</td><td class="pu">8 500,00 €</td><td class="total">8 500,00 €</td>
-            </tr>
-            <tr>
-              <td class="designation">VMC double flux + pompe à chaleur (chauffage responsable)</td>
-              <td class="unit">U</td><td class="qty">1</td><td class="pu">11 000,00 €</td><td class="total">11 000,00 €</td>
-            </tr>
-            <tr>
-              <td class="designation">Revêtements sols et murs (carrelage grès cérame 33×33)</td>
-              <td class="unit">M2</td><td class="qty">90</td><td class="pu">90,00 €</td><td class="total">8 100,00 €</td>
-            </tr>
+            <tr><td style="padding:7px 8px;border:1px solid #c5d5e8;font-weight:600;color:#1F3864;">Établissement du plan de la maison (architecte)</td><td style="padding:7px 8px;border:1px solid #c5d5e8;text-align:center;font-family:Consolas,monospace;">U</td><td style="padding:7px 8px;border:1px solid #c5d5e8;text-align:center;font-family:Consolas,monospace;">1</td><td style="padding:7px 8px;border:1px solid #c5d5e8;text-align:center;font-family:Consolas,monospace;">2 500,00 €</td><td style="padding:7px 8px;border:1px solid #c5d5e8;text-align:right;font-family:Consolas,monospace;font-weight:700;color:#1F3864;">2 500,00 €</td></tr>
+            <tr style="background:#f7fafd;"><td style="padding:7px 8px;border:1px solid #c5d5e8;font-weight:600;color:#1F3864;">Réalisation des travaux de terrassement</td><td style="padding:7px 8px;border:1px solid #c5d5e8;text-align:center;font-family:Consolas,monospace;">M2</td><td style="padding:7px 8px;border:1px solid #c5d5e8;text-align:center;font-family:Consolas,monospace;">90</td><td style="padding:7px 8px;border:1px solid #c5d5e8;text-align:center;font-family:Consolas,monospace;">85,00 €</td><td style="padding:7px 8px;border:1px solid #c5d5e8;text-align:right;font-family:Consolas,monospace;font-weight:700;color:#1F3864;">7 650,00 €</td></tr>
+            <tr><td style="padding:7px 8px;border:1px solid #c5d5e8;font-weight:600;color:#1F3864;">Maçonnerie globale (murs porteurs + dallage béton)</td><td style="padding:7px 8px;border:1px solid #c5d5e8;text-align:center;font-family:Consolas,monospace;">M2</td><td style="padding:7px 8px;border:1px solid #c5d5e8;text-align:center;font-family:Consolas,monospace;">90</td><td style="padding:7px 8px;border:1px solid #c5d5e8;text-align:center;font-family:Consolas,monospace;">950,00 €</td><td style="padding:7px 8px;border:1px solid #c5d5e8;text-align:right;font-family:Consolas,monospace;font-weight:700;color:#1F3864;">85 500,00 €</td></tr>
+            <tr style="background:#f7fafd;"><td style="padding:7px 8px;border:1px solid #c5d5e8;font-weight:600;color:#1F3864;">Charpente + couverture</td><td style="padding:7px 8px;border:1px solid #c5d5e8;text-align:center;font-family:Consolas,monospace;">M2</td><td style="padding:7px 8px;border:1px solid #c5d5e8;text-align:center;font-family:Consolas,monospace;">90</td><td style="padding:7px 8px;border:1px solid #c5d5e8;text-align:center;font-family:Consolas,monospace;">165,00 €</td><td style="padding:7px 8px;border:1px solid #c5d5e8;text-align:right;font-family:Consolas,monospace;font-weight:700;color:#1F3864;">14 850,00 €</td></tr>
+            <tr><td style="padding:7px 8px;border:1px solid #c5d5e8;font-weight:600;color:#1F3864;">Isolation + plâtrerie (laine de mouton + BA13)</td><td style="padding:7px 8px;border:1px solid #c5d5e8;text-align:center;font-family:Consolas,monospace;">M2</td><td style="padding:7px 8px;border:1px solid #c5d5e8;text-align:center;font-family:Consolas,monospace;">90</td><td style="padding:7px 8px;border:1px solid #c5d5e8;text-align:center;font-family:Consolas,monospace;">140,00 €</td><td style="padding:7px 8px;border:1px solid #c5d5e8;text-align:right;font-family:Consolas,monospace;font-weight:700;color:#1F3864;">12 600,00 €</td></tr>
+            <tr style="background:#f7fafd;"><td style="padding:7px 8px;border:1px solid #c5d5e8;font-weight:600;color:#1F3864;">Menuiserie extérieure (baies Sud, fenêtres, porte d'entrée)</td><td style="padding:7px 8px;border:1px solid #c5d5e8;text-align:center;font-family:Consolas,monospace;">U</td><td style="padding:7px 8px;border:1px solid #c5d5e8;text-align:center;font-family:Consolas,monospace;">1</td><td style="padding:7px 8px;border:1px solid #c5d5e8;text-align:center;font-family:Consolas,monospace;">13 500,00 €</td><td style="padding:7px 8px;border:1px solid #c5d5e8;text-align:right;font-family:Consolas,monospace;font-weight:700;color:#1F3864;">13 500,00 €</td></tr>
+            <tr><td style="padding:7px 8px;border:1px solid #c5d5e8;font-weight:600;color:#1F3864;">Portes intérieures et placards</td><td style="padding:7px 8px;border:1px solid #c5d5e8;text-align:center;font-family:Consolas,monospace;">U</td><td style="padding:7px 8px;border:1px solid #c5d5e8;text-align:center;font-family:Consolas,monospace;">1</td><td style="padding:7px 8px;border:1px solid #c5d5e8;text-align:center;font-family:Consolas,monospace;">3 000,00 €</td><td style="padding:7px 8px;border:1px solid #c5d5e8;text-align:right;font-family:Consolas,monospace;font-weight:700;color:#1F3864;">3 000,00 €</td></tr>
+            <tr style="background:#f7fafd;"><td style="padding:7px 8px;border:1px solid #c5d5e8;font-weight:600;color:#1F3864;">Raccordement électrique complet (RT2012)</td><td style="padding:7px 8px;border:1px solid #c5d5e8;text-align:center;font-family:Consolas,monospace;">M2</td><td style="padding:7px 8px;border:1px solid #c5d5e8;text-align:center;font-family:Consolas,monospace;">90</td><td style="padding:7px 8px;border:1px solid #c5d5e8;text-align:center;font-family:Consolas,monospace;">110,00 €</td><td style="padding:7px 8px;border:1px solid #c5d5e8;text-align:right;font-family:Consolas,monospace;font-weight:700;color:#1F3864;">9 900,00 €</td></tr>
+            <tr><td style="padding:7px 8px;border:1px solid #c5d5e8;font-weight:600;color:#1F3864;">Raccordement sanitaire (plomberie, WC, SDB)</td><td style="padding:7px 8px;border:1px solid #c5d5e8;text-align:center;font-family:Consolas,monospace;">U</td><td style="padding:7px 8px;border:1px solid #c5d5e8;text-align:center;font-family:Consolas,monospace;">1</td><td style="padding:7px 8px;border:1px solid #c5d5e8;text-align:center;font-family:Consolas,monospace;">8 500,00 €</td><td style="padding:7px 8px;border:1px solid #c5d5e8;text-align:right;font-family:Consolas,monospace;font-weight:700;color:#1F3864;">8 500,00 €</td></tr>
+            <tr style="background:#f7fafd;"><td style="padding:7px 8px;border:1px solid #c5d5e8;font-weight:600;color:#1F3864;">VMC double flux + pompe à chaleur</td><td style="padding:7px 8px;border:1px solid #c5d5e8;text-align:center;font-family:Consolas,monospace;">U</td><td style="padding:7px 8px;border:1px solid #c5d5e8;text-align:center;font-family:Consolas,monospace;">1</td><td style="padding:7px 8px;border:1px solid #c5d5e8;text-align:center;font-family:Consolas,monospace;">11 000,00 €</td><td style="padding:7px 8px;border:1px solid #c5d5e8;text-align:right;font-family:Consolas,monospace;font-weight:700;color:#1F3864;">11 000,00 €</td></tr>
+            <tr><td style="padding:7px 8px;border:1px solid #c5d5e8;font-weight:600;color:#1F3864;">Revêtements sols et murs (grès cérame 33×33)</td><td style="padding:7px 8px;border:1px solid #c5d5e8;text-align:center;font-family:Consolas,monospace;">M2</td><td style="padding:7px 8px;border:1px solid #c5d5e8;text-align:center;font-family:Consolas,monospace;">90</td><td style="padding:7px 8px;border:1px solid #c5d5e8;text-align:center;font-family:Consolas,monospace;">90,00 €</td><td style="padding:7px 8px;border:1px solid #c5d5e8;text-align:right;font-family:Consolas,monospace;font-weight:700;color:#1F3864;">8 100,00 €</td></tr>
           </tbody>
         </table>
 
-        <!-- BAS : CONDITIONS + TOTAUX -->
-        <div class="devis-bottom">
-          <div class="devis-conditions">
-            <h4>Conditions de règlement</h4>
-            <ul>
-              <li>Acompte de 20 % à la commande · <span class="amount">35 420,00 €</span></li>
-              <li>Acompte de 30 % au début des travaux · <span class="amount">53 130,00 €</span></li>
-              <li>Solde à la livraison, paiement comptant dès réception</li>
-              <li>Devis valable 2 mois à compter de sa date d'émission</li>
+        <div style="display:grid;grid-template-columns:1.4fr 1fr;gap:20px;margin-bottom:16px;">
+          <div>
+            <h4 style="color:#2E75B6;font-size:12px;font-weight:800;margin-bottom:8px;text-decoration:underline;">Conditions de règlement</h4>
+            <ul style="list-style:none;font-size:11px;line-height:1.7;color:#333;">
+              <li>▸ Acompte de 20 % à la commande · <b style="color:#C00000;">35 420,00 €</b></li>
+              <li>▸ Acompte de 30 % au début des travaux · <b style="color:#C00000;">53 130,00 €</b></li>
+              <li>▸ Solde à la livraison, paiement comptant dès réception</li>
+              <li>▸ Devis valable 2 mois à compter de sa date d'émission</li>
             </ul>
           </div>
-
-          <div class="devis-totaux">
-            <div class="row"><span class="k">TOTAL HT</span><span class="v">177 100,00 €</span></div>
-            <div class="row"><span class="k">TVA 10 %</span><span class="v">17 710,00 €</span></div>
-            <div class="row total-ttc"><span class="k">TOTAL TTC</span><span class="v">194 810,00 €</span></div>
+          <div style="background:#eef4fa;border:1.5px solid #1F4E79;border-radius:6px;padding:12px 16px;font-family:Consolas,monospace;font-size:12px;">
+            <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px dashed #c5d5e8;color:#1F3864;"><span style="font-weight:700;">TOTAL HT</span><span style="font-weight:800;">177 100,00 €</span></div>
+            <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px dashed #c5d5e8;color:#1F3864;"><span style="font-weight:700;">TVA 10 %</span><span style="font-weight:800;">17 710,00 €</span></div>
+            <div style="display:flex;justify-content:space-between;padding-top:8px;margin-top:4px;border-top:2px solid #1F4E79;font-weight:900;font-size:15px;color:#C00000;"><span>TOTAL TTC</span><span>194 810,00 €</span></div>
           </div>
         </div>
 
-        <!-- SIGNATURES -->
-        <div class="devis-signatures">
-          <div class="devis-sign-box">
-            <h5>Pour l'entreprise</h5>
-            <div class="brand-small">
-              <div class="logo-mini">M&R</div>
-              <span>Maisons & Rénovations</span>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:14px;">
+          <div style="border:1.5px solid #1F3864;border-radius:6px;padding:12px 16px;min-height:120px;">
+            <h5 style="color:#2E75B6;font-size:11.5px;font-weight:800;text-align:center;margin-bottom:8px;text-decoration:underline;">Pour l'entreprise</h5>
+            <div style="display:flex;align-items:center;gap:8px;justify-content:center;margin-top:auto;">
+              <div style="width:32px;height:32px;background:#2E75B6;color:#fff;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;font-family:Georgia,serif;">M&R</div>
+              <span style="color:#1F4E79;font-weight:900;font-size:12px;">Maisons & Rénovations</span>
             </div>
           </div>
-          <div class="devis-sign-box">
-            <h5>Pour le client</h5>
-            <div class="client-info">
+          <div style="border:1.5px solid #1F3864;border-radius:6px;padding:12px 16px;min-height:120px;">
+            <h5 style="color:#2E75B6;font-size:11.5px;font-weight:800;text-align:center;margin-bottom:8px;text-decoration:underline;">Pour le client</h5>
+            <div style="font-size:10.5px;line-height:1.6;color:#333;">
               A Colomiers le 15/10/2026<br>
-              <strong>Bon pour accord et commande</strong><br>
+              <b>Bon pour accord et commande</b><br>
               Monsieur / Madame Client
-              <span class="sign">SIGNATURE</span>
+              <span style="color:#2E75B6;font-weight:900;text-align:right;display:block;margin-top:6px;">SIGNATURE</span>
             </div>
           </div>
         </div>
 
-        <div class="devis-footer">
+        <div style="margin-top:14px;text-align:center;font-size:9.5px;color:#555;border-top:1px solid #c5d5e8;padding-top:8px;font-style:italic;">
           SARL Maisons et Rénovations au capital de 10 000 € · Siret 814 000 000 00029 · RCS Toulouse · Code APE 4321A
         </div>
-
       </div>
-
-      <!-- COMPARAISON -->
-      <div class="devis-comparison">
-        <h3>Comparaison avec le devis existant</h3>
-        <div class="devis-compare-grid">
-          <div class="devis-compare-box old">
-            <h4>Devis Rénovation & Travaux (exemple)</h4>
-            <ul>
-              <li>Client · M et Mme Client · 15 rue du travail</li>
-              <li>Projet · Maison <b>120 m²</b> (4 pièces · plus grand)</li>
-              <li>Prix construction · <b>157 350 € HT</b></li>
-              <li>TVA 10 % · <b>15 735 €</b></li>
-              <li>Total TTC · <b>173 085 €</b></li>
-              <li>Prix au m² · ≈ 1 442 €/m² TTC</li>
-              <li>6 postes seulement · pas de PAC, pas de VMC</li>
-            </ul>
-          </div>
-          <div class="devis-compare-box new">
-            <h4>Notre devis Maisons & Rénovations</h4>
-            <ul>
-              <li>Client · Famille Client · 15 rue du Travail · Colomiers</li>
-              <li>Projet · Maison <b>90 m²</b> · plain pied · Colomiers</li>
-              <li>Prix construction · <b>177 100 € HT</b></li>
-              <li>TVA 10 % · <b>17 710 €</b></li>
-              <li>Total TTC · <b>194 810 €</b></li>
-              <li>Prix au m² · ≈ <b>2 165 €/m² TTC</b> · conforme au 2 200 €/m² du cahier des charges</li>
-              <li>11 postes détaillés · PAC, VMC double flux, carrelage grès cérame inclus</li>
-            </ul>
-          </div>
-        </div>
-        <div class="src">sources · devis exemple Rénovation & Travaux · document Analyse et definition du cahier des charges</div>
-      </div>
-
     </div>
   </section>
 
-  <!-- ===== SLIDE 13 : CHOIX DU TERRAIN ===== -->
+  <!-- SLIDE 13 : CHOIX DU TERRAIN -->
   <section class="slide">
     <div class="slide-head">
       <span class="slide-num">13</span>
       <h2 class="slide-title">Choix du terrain</h2>
       <span class="slide-tag">JUSTIFICATION</span>
     </div>
-
     <div class="slide-body cols-2-eq">
       <div>
         <div class="card" style="margin-bottom:16px;">
           <h3>Pourquoi avons-nous choisi ce terrain ?</h3>
-          <div class="terrain-quote">
-            Nous avons choisi ce terrain car il était moins cher que les autres terrains comparables.
-            Ce prix plus avantageux nous permet de mieux maîtriser notre budget et de consacrer davantage
-            de moyens à la construction de notre projet.
-          </div>
-          <div class="terrain-quote">
-            On a comparé avec plusieurs terrains constructibles et maisons les autres maisons étaient
-            plus chères pour moins d'espace exemple un coûtait 200 000 € pour 390 mètres carrés sans
-            être placer mieux.
-          </div>
-          <div class="src">source · document explicatif du choix du terrain fourni par l eleve</div>
+          <div class="terrain-quote">Nous avons choisi ce terrain car il était moins cher que les autres terrains comparables. Ce prix plus avantageux nous permet de mieux maîtriser notre budget et de consacrer davantage de moyens à la construction de notre projet.</div>
+          <div class="terrain-quote">On a comparé avec plusieurs terrains constructibles et maisons les autres maisons étaient plus chères pour moins d'espace exemple un coûtait 200 000 € pour 390 mètres carrés sans être placer mieux.</div>
         </div>
-
         <div class="card">
           <h3>Caracteristiques du terrain</h3>
           <div class="terrain-data-grid">
@@ -1450,63 +937,45 @@
             <div class="terrain-data-item"><div class="label">Surface</div><div class="value">420 m²</div></div>
             <div class="terrain-data-item"><div class="label">TVA</div><div class="value">33 800 €</div></div>
             <div class="terrain-data-item"><div class="label">Prix TTC</div><div class="value">202 800 €</div></div>
-            <div class="terrain-data-item" style="grid-column:span 2;">
-              <div class="label">Prix au m² HT · TTC</div>
-              <div class="value">402 €/m² HT · 483 €/m² TTC</div>
-            </div>
+            <div class="terrain-data-item" style="grid-column:span 2;"><div class="label">Prix au m² HT · TTC</div><div class="value">402 €/m² HT · 483 €/m² TTC</div></div>
           </div>
-          <div class="src">source · annonce SeLoger · Maisons France Confort</div>
         </div>
       </div>
-
       <div>
         <div class="card" style="margin-bottom:16px;">
           <h3>Photo du terrain</h3>
-          <img class="terrain-photo"
-               src="https://images.seloger.com/annonces/279421783/photo-terrain-colomiers.jpg"
-               alt="Terrain 420 m² Colomiers"
+          <img class="terrain-photo" src="https://images.seloger.com/annonces/279421783/photo-terrain-colomiers.jpg" alt="Terrain 420 m² Colomiers"
                onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
           <div style="display:none;align-items:center;justify-content:center;height:180px;background:rgba(79,195,247,.08);border-radius:8px;border:1px dashed var(--line-soft);color:var(--dim2);font-size:.8rem;text-align:center;padding:12px;">
             Photo du terrain<br>420 m² · Colomiers 31770
           </div>
-          <a class="terrain-link" href="https://www.seloger-construire.com/annonces/achat/terrain/colomiers-31/279421783/" target="_blank" rel="noopener noreferrer">
-            Voir l annonce SeLoger
-          </a>
-          <div class="src">source · SeLoger Construire · Maisons France Confort</div>
+          <a class="terrain-link" href="https://www.seloger-construire.com/annonces/achat/terrain/colomiers-31/279421783/" target="_blank" rel="noopener noreferrer">Voir l annonce SeLoger</a>
         </div>
-
         <div class="card">
           <h3>Situation geographique</h3>
           <div class="map-container">
             <iframe src="https://www.google.com/maps?q=114+chemin+de+Larramet,+Colomiers,+31770&output=embed" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
           </div>
-          <div class="src">source · Google Maps · Colomiers 31770</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ===== SLIDE 14 : DIAGRAMME DE GANTT ===== -->
+  <!-- SLIDE 14 : DIAGRAMME DE GANTT -->
   <section class="slide">
     <div class="slide-head">
       <span class="slide-num">14</span>
       <h2 class="slide-title">Diagramme de Gantt · Planification</h2>
       <span class="slide-tag">GESTION DE PROJET</span>
     </div>
-
     <div class="slide-body" style="grid-template-columns:1fr; overflow-y:auto;">
       <div class="gantt-sheet">
-
         <div class="sheet-title">Modèle de Diagramme de Gantt</div>
-
         <div class="sheet-link">
           <span class="icon">🔗</span>
           <span class="label">Lien du Google Sheet partagé au groupe :</span>
-          <a href="https://docs.google.com/spreadsheets/d/10QqpasTmNKYSTej1YwhpWiYKQ_UXb1cZK5o3oMdV3Ns/edit?gid=1115838130#gid=1115838130" target="_blank" rel="noopener noreferrer">
-            https://docs.google.com/spreadsheets/d/10QqpasTmNKYSTej1YwhpWiYKQ_UXb1cZK5o3oMdV3Ns/edit?gid=1115838130
-          </a>
+          <a href="https://docs.google.com/spreadsheets/d/10QqpasTmNKYSTej1YwhpWiYKQ_UXb1cZK5o3oMdV3Ns/edit?gid=1115838130" target="_blank" rel="noopener noreferrer">https://docs.google.com/spreadsheets/d/10QqpasTmNKYSTej1YwhpWiYKQ_UXb1cZK5o3oMdV3Ns/edit?gid=1115838130</a>
         </div>
-
         <div class="project-info">
           <div class="label">Titre du projet</div>
           <div class="value">Projet I2d — Construction d'une maison individuelle</div>
@@ -1517,21 +986,15 @@
           <div class="label">Durée globale</div>
           <div class="value">6 semaines — 7 séances</div>
         </div>
-
         <div class="gantt-scroll">
           <table class="gantt">
-            <colgroup>
-              <col class="col-num"><col class="col-title"><col class="col-resp"><col class="col-pct">
-              <col class="col-seance"><col class="col-seance"><col class="col-seance">
-              <col class="col-seance"><col class="col-seance"><col class="col-seance">
-              <col class="col-seance">
-            </colgroup>
+            <colgroup><col class="col-num"><col class="col-title"><col class="col-resp"><col class="col-pct"><col class="col-seance"><col class="col-seance"><col class="col-seance"><col class="col-seance"><col class="col-seance"><col class="col-seance"><col class="col-seance"></colgroup>
             <thead>
               <tr>
                 <th rowspan="2" class="hdr-fixed">NUMÉRO</th>
                 <th rowspan="2" class="hdr-fixed">TITRE DE LA TÂCHE</th>
-                <th rowspan="2" class="hdr-fixed">Responsable de la tâche</th>
-                <th rowspan="2" class="hdr-fixed">TÂCHE<br>TERMINÉE<br>(EN %)</th>
+                <th rowspan="2" class="hdr-fixed">Responsable</th>
+                <th rowspan="2" class="hdr-fixed">TÂCHE<br>TERMINÉE<br>(%)</th>
                 <th class="hdr-s1 group-header">SÉANCE 1</th>
                 <th class="hdr-s2 group-header">SÉANCE 2</th>
                 <th class="hdr-s3 group-header">SÉANCE 3</th>
@@ -1544,37 +1007,25 @@
             <tbody>
               <tr class="category"><td class="col-num">1</td><td colspan="10">Décodage du cahier des charges</td></tr>
               <tr class="task-row"><td class="col-num">1.1</td><td class="col-title task-red">Analyse et définition des exigences de la famille</td><td class="col-resp"><span class="resp">tous</span></td><td class="col-pct"><div class="pct">100 %</div></td><td class="seance-cell"><div class="bar bar-blue-dark" style="left:3px; right:3px;"></div></td><td class="seance-cell"><div class="bar bar-blue-dark" style="left:3px; right:3px;"></div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td></tr>
-              <tr class="task-row"><td class="col-num">1.1.1</td><td class="col-title task-red">Définition du contexte du projet — Rôles du maître d'ouvrage et du maître d'œuvre</td><td class="col-resp"><span class="resp">noah, baptiste</span></td><td class="col-pct"><div class="pct">100 %</div></td><td class="seance-cell"><div class="bar bar-blue-dark" style="left:3px; right:3px;"></div></td><td class="seance-cell"><div class="bar bar-blue-dark" style="left:3px; right:3px;"></div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td></tr>
-              <tr class="task-row"><td class="col-num">1.2</td><td class="col-title task-red">Identification des contraintes réglementaires (PLU et PPR)</td><td class="col-resp"><span class="resp">baptiste</span></td><td class="col-pct"><div class="pct">90 %</div></td><td class="seance-cell"><div class="bar bar-blue-dark" style="left:3px; right:3px;"></div></td><td class="seance-cell"><div class="bar bar-blue-dark" style="left:3px; right:3px;"></div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td></tr>
-              <tr class="task-row"><td class="col-num">1.3</td><td class="col-title task-red">Exigences réglementaires thermiques RT2012 et RE2020</td><td class="col-resp"><span class="resp">mathys, noah</span></td><td class="col-pct"><div class="pct">100 %</div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"><div class="bar bar-blue-dark" style="left:3px; right:3px;"></div></td><td class="seance-cell"><div class="bar bar-blue-dark" style="left:3px; right:3px;"></div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td></tr>
-              <tr class="task-row"><td class="col-num">1.4</td><td class="col-title task-red">Synthèse et validation du cahier des charges</td><td class="col-resp"><span class="resp">ilyes</span></td><td class="col-pct"><div class="pct">100 %</div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"><div class="bar bar-blue-dark" style="left:3px; right:3px;"></div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td></tr>
-
+              <tr class="task-row"><td class="col-num">1.2</td><td class="col-title task-red">Contraintes réglementaires (PLU et PPR)</td><td class="col-resp"><span class="resp">baptiste</span></td><td class="col-pct"><div class="pct">90 %</div></td><td class="seance-cell"><div class="bar bar-blue-dark" style="left:3px; right:3px;"></div></td><td class="seance-cell"><div class="bar bar-blue-dark" style="left:3px; right:3px;"></div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td></tr>
+              <tr class="task-row"><td class="col-num">1.3</td><td class="col-title task-red">Exigences thermiques RT2012 et RE2020</td><td class="col-resp"><span class="resp">mathys, noah</span></td><td class="col-pct"><div class="pct">100 %</div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"><div class="bar bar-blue-dark" style="left:3px; right:3px;"></div></td><td class="seance-cell"><div class="bar bar-blue-dark" style="left:3px; right:3px;"></div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td></tr>
               <tr class="category"><td class="col-num">2</td><td colspan="10">Évaluation de la compétitivité</td></tr>
               <tr class="task-row"><td class="col-num">2.1</td><td class="col-title task-red">Choix d'un scénario d'implantation</td><td class="col-resp"><span class="resp">ilyes</span></td><td class="col-pct"><div class="pct">100 %</div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"><div class="bar bar-blue-light" style="left:3px; right:3px;"></div></td><td class="seance-cell"><div class="bar bar-blue-light" style="left:3px; right:3px;"></div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td></tr>
-              <tr class="task-row"><td class="col-num">2.2</td><td class="col-title task-red">Analyse du marché de l'immobilier columérin</td><td class="col-resp"><span class="resp">noah</span></td><td class="col-pct"><div class="pct">100 %</div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"><div class="bar bar-blue-light" style="left:3px; right:3px;"></div></td><td class="seance-cell"><div class="bar bar-blue-light" style="left:3px; right:3px;"></div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td></tr>
-              <tr class="task-row"><td class="col-num">2.3</td><td class="col-title task-red">Produire une étude mercatique avec questionnaire</td><td class="col-resp"><span class="resp">mathys</span></td><td class="col-pct"><div class="pct">100 %</div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"><div class="bar bar-blue-light" style="left:3px; right:3px;"></div></td><td class="seance-cell"><div class="bar bar-blue-light" style="left:3px; right:3px;"></div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td></tr>
-              <tr class="task-row"><td class="col-num">2.4</td><td class="col-title task-red">Synthèse de l'étude mercatique et validation du besoin</td><td class="col-resp"><span class="resp">ilyes</span></td><td class="col-pct"><div class="pct">100 %</div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"><div class="bar bar-blue-light" style="left:3px; right:3px;"></div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td></tr>
-
+              <tr class="task-row"><td class="col-num">2.2</td><td class="col-title task-red">Analyse du marché immobilier</td><td class="col-resp"><span class="resp">noah</span></td><td class="col-pct"><div class="pct">100 %</div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"><div class="bar bar-blue-light" style="left:3px; right:3px;"></div></td><td class="seance-cell"><div class="bar bar-blue-light" style="left:3px; right:3px;"></div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td></tr>
+              <tr class="task-row"><td class="col-num">2.3</td><td class="col-title task-red">Étude mercatique avec questionnaire</td><td class="col-resp"><span class="resp">mathys</span></td><td class="col-pct"><div class="pct">100 %</div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"><div class="bar bar-blue-light" style="left:3px; right:3px;"></div></td><td class="seance-cell"><div class="bar bar-blue-light" style="left:3px; right:3px;"></div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td></tr>
               <tr class="category"><td class="col-num">3</td><td colspan="10">Planification du projet</td></tr>
-              <tr class="task-row"><td class="col-num">3.1</td><td class="col-title task-red">Diagramme de Gantt du projet d'étude</td><td class="col-resp"><span class="resp">noah</span></td><td class="col-pct"><div class="pct">100 %</div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"><div class="bar bar-red" style="left:3px; right:3px;"></div></td><td class="seance-cell"><div class="bar bar-red" style="left:3px; right:3px;"></div></td><td class="seance-cell"></td></tr>
+              <tr class="task-row"><td class="col-num">3.1</td><td class="col-title task-red">Diagramme de Gantt du projet</td><td class="col-resp"><span class="resp">noah</span></td><td class="col-pct"><div class="pct">100 %</div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"><div class="bar bar-red" style="left:3px; right:3px;"></div></td><td class="seance-cell"><div class="bar bar-red" style="left:3px; right:3px;"></div></td><td class="seance-cell"></td></tr>
               <tr class="task-row"><td class="col-num">3.2</td><td class="col-title task-red">Estimation du prix</td><td class="col-resp"><span class="resp">baptiste, mathys</span></td><td class="col-pct"><div class="pct">100 %</div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"><div class="bar bar-red" style="left:3px; right:3px;"></div></td><td class="seance-cell"><div class="bar bar-red" style="left:3px; right:3px;"></div></td><td class="seance-cell"></td></tr>
-              <tr class="task-row"><td class="col-num">3.3</td><td class="col-title task-red">Répondre à la question : « À quoi ça sert ? »</td><td class="col-resp"><span class="resp">ilyes</span></td><td class="col-pct"><div class="pct">100 %</div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"><div class="bar bar-red" style="left:3px; right:3px;"></div></td><td class="seance-cell"></td></tr>
-
               <tr class="category"><td class="col-num">4</td><td colspan="10">Proposition de solutions créatives</td></tr>
               <tr class="task-row"><td class="col-num">4.1</td><td class="col-title task-red">Proposer des croquis</td><td class="col-resp"><span class="resp">ALL</span></td><td class="col-pct"><div class="pct">100 %</div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td></tr>
-              <tr class="task-row"><td class="col-num">4.2</td><td class="col-title task-red">Comparer les croquis de chacun</td><td class="col-resp"><span class="resp">ALL</span></td><td class="col-pct"><div class="pct">100 %</div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td></tr>
-              <tr class="task-row"><td class="col-num">4.3</td><td class="col-title task-red">Rendre compte de la séance / Justifier des choix</td><td class="col-resp"><span class="resp">noah, ilyes, mathys</span></td><td class="col-pct"><div class="pct">100 %</div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td></tr>
-              <tr class="task-row"><td class="col-num">4.4</td><td class="col-title task-red">Dessiner les plans sur Archi Facile</td><td class="col-resp"><span class="resp">noah, baptiste</span></td><td class="col-pct"><div class="pct">100 %</div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"><div class="bar bar-orange" style="left:3px; right:3px;"></div></td><td class="seance-cell"><div class="bar bar-orange" style="left:3px; right:3px;"></div></td><td class="seance-cell"></td></tr>
-
+              <tr class="task-row"><td class="col-num">4.2</td><td class="col-title task-red">Dessiner les plans sur Archi Facile</td><td class="col-resp"><span class="resp">noah, baptiste</span></td><td class="col-pct"><div class="pct">100 %</div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"><div class="bar bar-orange" style="left:3px; right:3px;"></div></td><td class="seance-cell"><div class="bar bar-orange" style="left:3px; right:3px;"></div></td><td class="seance-cell"></td></tr>
               <tr class="category"><td class="col-num">5</td><td colspan="10">Conception détaillée</td></tr>
               <tr class="task-row"><td class="col-num">5.1</td><td class="col-title task-red">Modélisation Revit</td><td class="col-resp"><span class="resp">baptiste</span></td><td class="col-pct"><div class="pct">100 %</div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"><div class="bar bar-purple" style="left:3px; right:3px;"></div></td><td class="seance-cell"><div class="bar bar-purple" style="left:3px; right:3px;"></div></td></tr>
-              <tr class="task-row"><td class="col-num">5.2</td><td class="col-title task-red">Vérification dimensionnelle et validation du projet</td><td class="col-resp"><span class="resp">noah</span></td><td class="col-pct"><div class="pct">0 %</div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"><div class="bar bar-purple" style="left:3px; right:3px;"></div></td><td class="seance-cell"><div class="bar bar-purple" style="left:3px; right:3px;"></div></td></tr>
-              <tr class="task-row"><td class="col-num">5.3</td><td class="col-title task-red">Contrôle qualité de la maquette BIM</td><td class="col-resp"><span class="resp">ilyes</span></td><td class="col-pct"><div class="pct">0 %</div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"><div class="bar bar-purple" style="left:3px; right:3px;"></div></td></tr>
-              <tr class="task-row"><td class="col-num">5.4</td><td class="col-title task-red">Présentation finale du projet au professeur</td><td class="col-resp"><span class="resp">mathys</span></td><td class="col-pct"><div class="pct">0 %</div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"><div class="bar bar-purple" style="left:3px; right:3px;"></div></td></tr>
+              <tr class="task-row"><td class="col-num">5.2</td><td class="col-title task-red">Vérification et validation du projet</td><td class="col-resp"><span class="resp">noah</span></td><td class="col-pct"><div class="pct">0 %</div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"><div class="bar bar-purple" style="left:3px; right:3px;"></div></td><td class="seance-cell"><div class="bar bar-purple" style="left:3px; right:3px;"></div></td></tr>
+              <tr class="task-row"><td class="col-num">5.3</td><td class="col-title task-red">Présentation finale au professeur</td><td class="col-resp"><span class="resp">mathys</span></td><td class="col-pct"><div class="pct">0 %</div></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"></td><td class="seance-cell"><div class="bar bar-purple" style="left:3px; right:3px;"></div></td></tr>
             </tbody>
           </table>
         </div>
-
         <div class="legend">
           <div class="legend-item"><div class="legend-swatch" style="background:#0000FF;"></div> Décodage du cahier des charges</div>
           <div class="legend-item"><div class="legend-swatch" style="background:#BDD7EE;"></div> Évaluation de la compétitivité</div>
@@ -1582,27 +1033,12 @@
           <div class="legend-item"><div class="legend-swatch" style="background:#ED7D31;"></div> Solutions créatives</div>
           <div class="legend-item"><div class="legend-swatch" style="background:#7030A0;"></div> Conception détaillée</div>
         </div>
-
-        <div class="note-block">
-          <h4>📘 À quoi sert un diagramme de Gantt ?</h4>
-          <ul>
-            <li>Visualiser le planning des tâches dans le temps</li>
-            <li>Répartir le travail entre les 4 membres</li>
-            <li>Suivre l'avancement (% terminé) de chaque tâche</li>
-            <li>Coordonner les dépendances entre les tâches</li>
-            <li>Respecter les délais des 7 séances</li>
-            <li>Communiquer efficacement avec le professeur</li>
-          </ul>
-        </div>
-
-        <div class="footnote">
-          <strong>Noah</strong> — Chef de projet · Équipe : Noah · Ilyes · Mathys · Baptiste · 1ère STI2D
-        </div>
+        <div class="footnote"><strong>Noah</strong> — Chef de projet · Équipe : Noah · Ilyes · Mathys · Baptiste · 1ère STI2D</div>
       </div>
     </div>
   </section>
 
-  <!-- ===== SLIDE 15 : COMPARAISON DES 4 PLANS ===== -->
+  <!-- ===== SLIDE 15 : COMPARAISON DES 4 PLANS (RÉORGANISÉE) ===== -->
   <section class="slide">
     <div class="slide-head">
       <span class="slide-num">15</span>
@@ -1613,117 +1049,97 @@
     <div class="slide-body" style="grid-template-columns:1fr; overflow-y:auto;">
       <div class="plans-grid">
 
-        <div class="plan-card winner">
-          <div class="plan-header">
-            <span class="author">PLAN 1 · BAPTISTE</span>
-            <span class="verdict ok">✓ RETENU</span>
-          </div>
-          <div class="plan-svg-wrap">
-            <svg viewBox="0 0 480 260">
-              <rect x="2" y="2" width="476" height="256" fill="none" stroke="#999" stroke-width="1"/>
-              <rect x="10" y="20" width="80" height="180" fill="#cfcfcf" stroke="#666" stroke-width="3"/>
-              <text x="50" y="105" text-anchor="middle" font-size="11" font-weight="800" fill="#000">Garage</text>
-              <text x="50" y="120" text-anchor="middle" font-size="9" fill="#000">18 m²</text>
-              <rect x="10" y="200" width="80" height="4" fill="#fff" stroke="#333"/>
-              <rect x="95" y="20" width="105" height="100" fill="#fdf6dc" stroke="#666" stroke-width="2"/>
-              <text x="147" y="65" text-anchor="middle" font-size="9" font-weight="700" fill="#000">Chambre parentale</text>
-              <text x="147" y="80" text-anchor="middle" font-size="9" fill="#000">12,5 m²</text>
-              <rect x="205" y="20" width="60" height="100" fill="#fdf6dc" stroke="#666" stroke-width="2"/>
-              <text x="235" y="60" text-anchor="middle" font-size="8" font-weight="700" fill="#000">Salle d'eau</text>
-              <text x="235" y="75" text-anchor="middle" font-size="8" fill="#000">5 m²</text>
-              <rect x="270" y="20" width="38" height="100" fill="#fdf6dc" stroke="#666" stroke-width="2"/>
-              <text x="289" y="65" text-anchor="middle" font-size="8" font-weight="700" fill="#000">WC</text>
-              <text x="289" y="78" text-anchor="middle" font-size="8" fill="#000">2 m²</text>
-              <rect x="313" y="20" width="80" height="100" fill="#fdf6dc" stroke="#666" stroke-width="2"/>
-              <text x="353" y="65" text-anchor="middle" font-size="9" font-weight="700" fill="#000">Chambre 1</text>
-              <text x="353" y="80" text-anchor="middle" font-size="9" fill="#000">10 m²</text>
-              <rect x="398" y="20" width="80" height="100" fill="#fdf6dc" stroke="#666" stroke-width="2"/>
-              <text x="438" y="65" text-anchor="middle" font-size="9" font-weight="700" fill="#000">Chambre 2</text>
-              <text x="438" y="80" text-anchor="middle" font-size="9" fill="#000">10 m²</text>
-              <rect x="95" y="125" width="383" height="45" fill="#fdf6dc" stroke="#666" stroke-width="1.5"/>
-              <text x="270" y="152" text-anchor="middle" font-size="9" font-weight="700" fill="#000">Couloir · 8,5 m²</text>
-              <rect x="95" y="175" width="140" height="70" fill="#fdf6dc" stroke="#666" stroke-width="2"/>
-              <text x="165" y="208" text-anchor="middle" font-size="9" font-weight="700" fill="#000">Bureau / Salle de jeu</text>
-              <text x="165" y="223" text-anchor="middle" font-size="9" fill="#000">9 m²</text>
-              <rect x="240" y="175" width="238" height="70" fill="#fdf6dc" stroke="#666" stroke-width="2.5"/>
-              <text x="359" y="207" text-anchor="middle" font-size="10" font-weight="800" fill="#000">Séjour - Salon - Cuisine</text>
-              <text x="359" y="223" text-anchor="middle" font-size="9" fill="#000">34 m²</text>
-              <line x1="240" y1="245" x2="478" y2="245" stroke="#ffb74d" stroke-width="4"/>
-              <text x="360" y="256" text-anchor="middle" font-size="8" font-weight="700" fill="#b8860b" letter-spacing="1">◄ BAIES SUD ►</text>
-            </svg>
-          </div>
-          <div class="plan-info">
-            <b>Surface habitable</b> ≈ 91 m² · <b>Garage</b> 18 m² · <b>Total</b> ≈ 109 m²<br>
-            Toutes les pièces du cahier des charges sont présentes · zone nuit séparée de la zone jour · garage accolé pour monospace
-          </div>
-        </div>
-
+        <!-- PLAN 1 · ILYES -->
         <div class="plan-card">
           <div class="plan-header">
-            <span class="author">PLAN 2 · ILYES</span>
+            <span class="author">PLAN 1 · ILYES</span>
             <span class="verdict ko">✗ ÉCARTÉ</span>
           </div>
           <div class="plan-svg-wrap">
             <svg viewBox="0 0 480 260">
               <rect x="2" y="2" width="476" height="256" fill="none" stroke="#999" stroke-width="1"/>
               <rect x="30" y="20" width="110" height="110" fill="#fdf6dc" stroke="#666" stroke-width="2"/>
-              <text x="85" y="70" text-anchor="middle" font-size="10" font-weight="700" fill="#000">12,37 m²</text>
+              <text x="85" y="70" text-anchor="middle" font-size="10" font-weight="700">12,37 m²</text>
               <rect x="145" y="20" width="130" height="110" fill="#fdf6dc" stroke="#666" stroke-width="2"/>
-              <text x="210" y="70" text-anchor="middle" font-size="10" font-weight="700" fill="#000">12,37 m²</text>
+              <text x="210" y="70" text-anchor="middle" font-size="10" font-weight="700">12,37 m²</text>
               <rect x="280" y="20" width="130" height="110" fill="#fdf6dc" stroke="#666" stroke-width="3" stroke-dasharray="4 3"/>
-              <text x="345" y="70" text-anchor="middle" font-size="10" font-weight="700" fill="#000">12,37 m²</text>
+              <text x="345" y="70" text-anchor="middle" font-size="10" font-weight="700">12,37 m²</text>
               <rect x="30" y="135" width="200" height="80" fill="#fdf6dc" stroke="#666" stroke-width="2"/>
-              <text x="130" y="180" text-anchor="middle" font-size="10" font-weight="700" fill="#000">7,85 m²</text>
+              <text x="130" y="180" text-anchor="middle" font-size="10" font-weight="700">7,85 m²</text>
               <rect x="235" y="135" width="80" height="80" fill="#fdf6dc" stroke="#666" stroke-width="2"/>
-              <text x="275" y="180" text-anchor="middle" font-size="10" font-weight="700" fill="#000">7,29 m²</text>
-              <text x="400" y="160" text-anchor="middle" font-size="10" font-weight="700" fill="#000">29,3 m²</text>
+              <text x="275" y="180" text-anchor="middle" font-size="10" font-weight="700">7,29 m²</text>
+              <text x="400" y="160" text-anchor="middle" font-size="10" font-weight="700">29,3 m²</text>
             </svg>
           </div>
           <div class="plan-info">
-            <span class="warn">✗ Plan de test incomplet</span> · pas de garage · pas de nom de pièces (chambre/séjour/etc) · WC et salle de bain absents
+            <span class="warn">✗ Plan de test incomplet</span> · pas de garage · pas de nom de pièces (chambre/séjour/cuisine) · WC et salle de bains absents · pas de cellier
           </div>
         </div>
 
-        <div class="plan-card">
+        <!-- PLAN 2 · NOAH (AMÉLIORÉ, RETENU) -->
+        <div class="plan-card winner">
           <div class="plan-header">
-            <span class="author">PLAN 3 · NOAH</span>
-            <span class="verdict mid">⚠ INSUFFISANT</span>
+            <span class="author">PLAN 2 · NOAH (amélioré)</span>
+            <span class="verdict ok">✓ RETENU</span>
           </div>
           <div class="plan-svg-wrap">
-            <svg viewBox="0 0 480 260">
-              <rect x="2" y="2" width="476" height="256" fill="none" stroke="#999" stroke-width="1"/>
-              <rect x="10" y="20" width="80" height="130" fill="#cfcfcf" stroke="#666" stroke-width="3"/>
-              <text x="50" y="80" text-anchor="middle" font-size="10" font-weight="800" fill="#000">Garage</text>
-              <text x="50" y="95" text-anchor="middle" font-size="9" fill="#c00">12,06 m²</text>
-              <text x="50" y="112" text-anchor="middle" font-size="8" fill="#c00">⚠ trop petit</text>
-              <rect x="95" y="20" width="95" height="110" fill="#fdf6dc" stroke="#666" stroke-width="2"/>
-              <text x="142" y="70" text-anchor="middle" font-size="9" font-weight="700" fill="#000">Chambre</text>
-              <text x="142" y="84" text-anchor="middle" font-size="9" fill="#000">10,53 m²</text>
-              <rect x="195" y="20" width="65" height="80" fill="#fdf6dc" stroke="#666" stroke-width="2"/>
-              <text x="227" y="55" text-anchor="middle" font-size="8" font-weight="700" fill="#000">salle de bain</text>
-              <text x="227" y="68" text-anchor="middle" font-size="8" fill="#000">5,17 m²</text>
-              <rect x="195" y="105" width="65" height="25" fill="#fdf6dc" stroke="#666" stroke-width="1.5"/>
-              <text x="227" y="121" text-anchor="middle" font-size="7" fill="#000">WC 1,35 m²</text>
-              <rect x="265" y="20" width="95" height="110" fill="#fdf6dc" stroke="#666" stroke-width="2"/>
-              <text x="312" y="70" text-anchor="middle" font-size="9" font-weight="700" fill="#000">chambre</text>
-              <text x="312" y="84" text-anchor="middle" font-size="9" fill="#000">10,13 m²</text>
-              <rect x="365" y="20" width="95" height="110" fill="#fdf6dc" stroke="#666" stroke-width="2"/>
-              <text x="412" y="70" text-anchor="middle" font-size="9" font-weight="700" fill="#000">Chambre</text>
-              <text x="412" y="84" text-anchor="middle" font-size="9" fill="#000">10,47 m²</text>
-              <rect x="95" y="135" width="365" height="50" fill="#fdf6dc" stroke="#666" stroke-width="1.5"/>
-              <text x="277" y="163" text-anchor="middle" font-size="9" font-weight="700" fill="#000">couloir · 18,37 m² (trop grand)</text>
-              <rect x="95" y="190" width="365" height="55" fill="#fdf6dc" stroke="#666" stroke-width="2.5"/>
-              <text x="277" y="218" text-anchor="middle" font-size="10" font-weight="800" fill="#000">Sejour,cuisine · 24,08 m²</text>
+            <svg viewBox="0 0 480 280">
+              <rect x="2" y="2" width="476" height="276" fill="none" stroke="#999" stroke-width="1"/>
+              <!-- Garage -->
+              <rect x="15" y="25" width="70" height="180" fill="#cfcfcf" stroke="#666" stroke-width="3"/>
+              <text x="50" y="105" text-anchor="middle" font-size="11" font-weight="800" fill="#000">Garage</text>
+              <text x="50" y="120" text-anchor="middle" font-size="9" fill="#000">18 m²</text>
+              <rect x="15" y="195" width="70" height="6" fill="#fff" stroke="#333"/>
+              <!-- Chambre parentale -->
+              <rect x="90" y="25" width="95" height="95" fill="#fdf6dc" stroke="#666" stroke-width="2"/>
+              <text x="137" y="62" text-anchor="middle" font-size="8.5" font-weight="700" fill="#000">Chambre</text>
+              <text x="137" y="75" text-anchor="middle" font-size="8.5" font-weight="700" fill="#000">parentale</text>
+              <text x="137" y="92" text-anchor="middle" font-size="9" fill="#000">12 m²</text>
+              <!-- Salle d'eau -->
+              <rect x="185" y="25" width="55" height="95" fill="#fdf6dc" stroke="#666" stroke-width="2"/>
+              <text x="212" y="58" text-anchor="middle" font-size="8" font-weight="700" fill="#000">Salle</text>
+              <text x="212" y="71" text-anchor="middle" font-size="8" font-weight="700" fill="#000">d'eau</text>
+              <text x="212" y="88" text-anchor="middle" font-size="8" fill="#000">5 m²</text>
+              <!-- WC -->
+              <rect x="240" y="25" width="28" height="95" fill="#fdf6dc" stroke="#666" stroke-width="2"/>
+              <text x="254" y="62" text-anchor="middle" font-size="8" font-weight="700" fill="#000">WC</text>
+              <text x="254" y="75" text-anchor="middle" font-size="8" fill="#000">2 m²</text>
+              <!-- Chambre 1 -->
+              <rect x="268" y="25" width="92" height="95" fill="#fdf6dc" stroke="#666" stroke-width="2"/>
+              <text x="314" y="62" text-anchor="middle" font-size="9" font-weight="700" fill="#000">Chambre 1</text>
+              <text x="314" y="80" text-anchor="middle" font-size="9" fill="#000">11 m²</text>
+              <!-- Chambre 2 -->
+              <rect x="360" y="25" width="100" height="95" fill="#fdf6dc" stroke="#666" stroke-width="2"/>
+              <text x="410" y="62" text-anchor="middle" font-size="9" font-weight="700" fill="#000">Chambre 2</text>
+              <text x="410" y="80" text-anchor="middle" font-size="9" fill="#000">11 m²</text>
+              <!-- Couloir -->
+              <rect x="90" y="120" width="370" height="40" fill="#fdf6dc" stroke="#666" stroke-width="1.5"/>
+              <text x="275" y="144" text-anchor="middle" font-size="9" font-weight="700" fill="#000">Couloir central · 8 m²</text>
+              <!-- Cellier -->
+              <rect x="90" y="160" width="55" height="100" fill="#fdf6dc" stroke="#666" stroke-width="2"/>
+              <text x="117" y="215" text-anchor="middle" font-size="8" font-weight="700" fill="#000" transform="rotate(-90 117 215)">Cellier 5 m²</text>
+              <!-- Séjour -->
+              <rect x="145" y="160" width="315" height="100" fill="#fdf6dc" stroke="#666" stroke-width="2.5"/>
+              <text x="302" y="200" text-anchor="middle" font-size="11" font-weight="800" fill="#000">Séjour · Salon · Cuisine</text>
+              <text x="302" y="220" text-anchor="middle" font-size="10" fill="#000">35 m²</text>
+              <text x="302" y="238" text-anchor="middle" font-size="8" font-style="italic" fill="#555">zone jour plein Sud</text>
+              <!-- Baies Sud -->
+              <line x1="145" y1="258" x2="460" y2="258" stroke="#ffb74d" stroke-width="4"/>
+              <text x="302" y="272" text-anchor="middle" font-size="8" font-weight="700" fill="#b8860b" letter-spacing="1">◄ BAIES VITRÉES SUD ►</text>
+              <!-- Entrée -->
+              <circle cx="90" cy="180" r="4" fill="#2E75B6"/>
             </svg>
           </div>
           <div class="plan-info">
-            <b>Total habitable</b> ≈ 60 m² (trop petit) · couloir de 18 m² trop grand · <span class="warn">garage 12 m² trop petit pour un monospace</span> · surface totale loin des 90 m²
+            <b>Surface habitable</b> 89 m² · <b>Garage</b> 18 m² pour monospace · <span class="good">✓ Toutes les pièces conformes au cahier des charges</span><br>
+            Zone nuit séparée de la zone jour · Couloir central structurant · Séjour plein Sud avec grandes baies (RT2012)
           </div>
         </div>
 
+        <!-- PLAN 3 · MATHYS -->
         <div class="plan-card">
           <div class="plan-header">
-            <span class="author">PLAN 4 · MATHYS</span>
+            <span class="author">PLAN 3 · MATHYS</span>
             <span class="verdict mid">⚠ ALTERNATIVE</span>
           </div>
           <div class="plan-svg-wrap">
@@ -1754,26 +1170,73 @@
           </div>
         </div>
 
+        <!-- PLAN 4 · BAPTISTE (plan de l'image) -->
+        <div class="plan-card">
+          <div class="plan-header">
+            <span class="author">PLAN 4 · BAPTISTE</span>
+            <span class="verdict mid">⚠ INSUFFISANT</span>
+          </div>
+          <div class="plan-svg-wrap">
+            <svg viewBox="0 0 480 260">
+              <rect x="2" y="2" width="476" height="256" fill="none" stroke="#999" stroke-width="1"/>
+              <!-- Zone haut -->
+              <rect x="30" y="20" width="80" height="95" fill="#fdf6dc" stroke="#666" stroke-width="2"/>
+              <text x="70" y="70" text-anchor="middle" font-size="9" font-weight="700" fill="#000">15 m²</text>
+              <rect x="115" y="20" width="100" height="95" fill="#fdf6dc" stroke="#666" stroke-width="2"/>
+              <text x="165" y="70" text-anchor="middle" font-size="9" font-weight="700" fill="#000">16,08 m²</text>
+              <rect x="220" y="20" width="130" height="95" fill="#fdf6dc" stroke="#666" stroke-width="2"/>
+              <text x="285" y="70" text-anchor="middle" font-size="9" font-weight="700" fill="#000">14,44 m²</text>
+              <rect x="355" y="20" width="100" height="55" fill="#fdf6dc" stroke="#666" stroke-width="2"/>
+              <text x="405" y="52" text-anchor="middle" font-size="8" font-weight="700" fill="#000">5,25 m²</text>
+              <!-- Zone milieu -->
+              <rect x="30" y="120" width="80" height="90" fill="#fdf6dc" stroke="#666" stroke-width="2"/>
+              <text x="70" y="170" text-anchor="middle" font-size="9" font-weight="700" fill="#000">15 m²</text>
+              <rect x="115" y="120" width="100" height="35" fill="#fdf6dc" stroke="#666" stroke-width="1.5"/>
+              <text x="165" y="142" text-anchor="middle" font-size="8" font-weight="700" fill="#000">couloir 6 m²</text>
+              <rect x="115" y="160" width="100" height="50" fill="#fdf6dc" stroke="#666" stroke-width="2"/>
+              <text x="165" y="190" text-anchor="middle" font-size="9" font-weight="700" fill="#000">7,5 m²</text>
+              <rect x="220" y="120" width="60" height="35" fill="#fdf6dc" stroke="#666" stroke-width="1.5"/>
+              <text x="250" y="142" text-anchor="middle" font-size="7" font-weight="700" fill="#000">1,35 m²</text>
+              <rect x="285" y="120" width="65" height="35" fill="#fdf6dc" stroke="#666" stroke-width="1.5"/>
+              <text x="317" y="142" text-anchor="middle" font-size="7" font-weight="700" fill="#000">3,75 m²</text>
+              <rect x="355" y="80" width="100" height="75" fill="#fdf6dc" stroke="#666" stroke-width="2"/>
+              <text x="405" y="120" text-anchor="middle" font-size="9" font-weight="700" fill="#000">7,5 m²</text>
+              <text x="405" y="135" text-anchor="middle" font-size="7" fill="#666">2,25 m²</text>
+              <!-- Zone bas -->
+              <rect x="220" y="160" width="235" height="55" fill="#fdf6dc" stroke="#666" stroke-width="2"/>
+              <text x="337" y="192" text-anchor="middle" font-size="9" font-weight="700" fill="#000">15 m²</text>
+              <rect x="30" y="215" width="425" height="30" fill="#fdf6dc" stroke="#666" stroke-width="2.5"/>
+              <text x="242" y="235" text-anchor="middle" font-size="10" font-weight="800" fill="#000">25 m²</text>
+            </svg>
+          </div>
+          <div class="plan-info">
+            <b>Plan complexe</b> avec de nombreuses petites pièces · <span class="warn">pas de garage visible</span> · pas de chambre parentale identifiée · pas de séjour-salon-cuisine clairement délimité · WC et cellier non identifiés
+          </div>
+        </div>
+
       </div>
 
       <div class="winner-summary">
-        <h3>Plan retenu · Plan 1 de Baptiste</h3>
+        <h3>Plan retenu · Plan 2 de Noah (amélioré)</h3>
         <ul>
-          <li>Respecte la surface habitable de 90 m² maximum (91 m²)</li>
-          <li>Contient toutes les pièces obligatoires du cahier des charges</li>
+          <li>Surface habitable de 89 m² · respecte la limite des 90 m² maximum</li>
+          <li>Contient TOUTES les pièces obligatoires du cahier des charges</li>
           <li>Garage accolé de 18 m² adapté à un monospace</li>
-          <li>Zone nuit (chambres) séparée de la zone jour (séjour)</li>
-          <li>Séjour-Salon-Cuisine spacieux de 34 m² avec grandes baies au Sud</li>
+          <li>Zone nuit (chambres) séparée de la zone jour (séjour/cuisine)</li>
+          <li>Séjour-Salon-Cuisine spacieux de 35 m² avec grandes baies au Sud</li>
           <li>Orientation bioclimatique Sud / Sud-Est respectée pour les pièces de vie</li>
-          <li>Couloir central qui dessert toutes les chambres sans traverser le séjour</li>
+          <li>Couloir central structurant qui dessert toutes les chambres</li>
           <li>Surface vitrée conforme à la RT2012 (≥ 1/6 de la surface habitable)</li>
+          <li>Cellier accolé à la cuisine et au garage · WC indépendant</li>
+          <li>Plan respectant strictement le PLU et les contraintes réglementaires</li>
         </ul>
         <div class="score">
-          <div class="score-item"><span class="k">Surface habitable</span><span class="v">91 m²</span></div>
+          <div class="score-item"><span class="k">Surface habitable</span><span class="v">89 m²</span></div>
           <div class="score-item"><span class="k">Garage</span><span class="v">18 m²</span></div>
           <div class="score-item"><span class="k">Pièces conformes</span><span class="v">9 / 9</span></div>
           <div class="score-item"><span class="k">Orientation Sud</span><span class="v">✓ OUI</span></div>
           <div class="score-item"><span class="k">Normes RT2012</span><span class="v">✓ VALIDÉ</span></div>
+          <div class="score-item"><span class="k">Conformité PLU</span><span class="v">✓ VALIDÉ</span></div>
         </div>
       </div>
 
@@ -1782,7 +1245,6 @@
 
 </div>
 
-<!-- ===== NAVIGATION ===== -->
 <nav class="nav">
   <button class="nav-btn" id="prev" aria-label="Precedent">◄</button>
   <div class="dots" id="dots"></div>
